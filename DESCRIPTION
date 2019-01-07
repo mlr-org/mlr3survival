@@ -1,0 +1,47 @@
+Package: mlr3survival
+Title: Survival Analysis for mlr3
+Version: 0.1.0-9000
+Authors@R:
+    c(person(given = "Michel",
+             family = "Lang",
+             role = c("cre", "aut"),
+             email = "michellang@gmail.com",
+             comment = c(ORCID = "0000-0001-9754-0393")))
+Description: Provides extensions for surival analyis for mlr3.
+    This includes a specialized task type, models, and measures.
+License: MIT + file LICENSE
+Depends:
+    R (>= 3.1.0)
+Imports:
+    R6,
+    checkmate,
+    data.table,
+    mlr3,
+    mlr3misc,
+    paradox,
+    survival
+Suggests:
+    Hmisc,
+    logger,
+    rpart,
+    testthat
+Remotes:
+    mlr-org/mlr3misc,
+    mlr-org/mlr3
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+NeedsCompilation: no
+Roxygen: list(markdown = TRUE)
+URL: https://github.com/mlr-org/mlrsurvival
+BugReports: https://github.com/mlr-org/mlsurvival/issues
+RoxygenNote: 6.1.1
+Collate:
+    'LearnerSurv.R'
+    'MeasureSurv.R'
+    'PredictionSurv.R'
+    'TaskSurv.R'
+    'mlr_learners_surv_rpart.R'
+    'mlr_measures_harrells_c.R'
+    'mlr_tasks_surv_lung.R'
+    'zzz.R'

@@ -27,7 +27,8 @@ Suggests:
     testthat
 Remotes:
     mlr-org/mlr3misc,
-    mlr-org/mlr3
+    mlr-org/mlr3,
+    mlr-org/paradox
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true

@@ -1,5 +1,14 @@
-MeasureSurvivalHarrellsC = R6Class("MeasureSurvivalHarrellsC",
-  inherit = MeasureSurvival,
+#' @title Harrell's C-Index
+#'
+#' @name mlr_measures_harrells_c
+#' @format [R6::R6Class()] inheriting from [MeasureSurv].
+#'
+#' @description
+#' Calls [Hmisc::rcorr.cens()].
+#'
+#' @export
+MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
+  inherit = MeasureSurv,
   public = list(
     initialize = function(id = "harrells_c") {
       super$initialize(
@@ -12,18 +21,7 @@ MeasureSurvivalHarrellsC = R6Class("MeasureSurvivalHarrellsC",
 
     calculate = function(e) {
       p = e$prediction
-      positive = e$data$task$positive
-  #   s = getPredictionTruth(pred)
-  #   Hmisc::rcorr.cens(-1 * y, s)[["C Index"]]
+      Hmisc::rcorr.cens(-1 * p$risk, p$truth)[["C Index"]]
     }
   )
 )
-
-  # fun = function(task, model, pred, feats, extra.args) {
-  #   requirePackages("_Hmisc")
-  #   y = getPredictionResponse(pred)
-  #   if (anyMissing(y))
-  #     return(NA_real_)
-  #   s = getPredictionTruth(pred)
-  #   Hmisc::rcorr.cens(-1 * y, s)[["C Index"]]
-  # }

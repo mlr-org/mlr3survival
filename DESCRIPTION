@@ -18,7 +18,13 @@ Imports:
     data.table,
     mlr3,
     mlr3misc,
+    paradox,
     survival
+Suggests:
+    Hmisc,
+    logger,
+    rpart,
+    testthat
 Remotes:
     mlr-org/mlr3misc,
     mlr-org/mlr3
@@ -30,3 +36,12 @@ Roxygen: list(markdown = TRUE)
 URL: https://github.com/mlr-org/mlrsurvival
 BugReports: https://github.com/mlr-org/mlsurvival/issues
 RoxygenNote: 6.1.1
+Collate:
+    'LearnerSurv.R'
+    'MeasureSurv.R'
+    'PredictionSurv.R'
+    'TaskSurv.R'
+    'mlr_learners_surv_rpart.R'
+    'mlr_measures_harrells_c.R'
+    'mlr_tasks_surv_lung.R'
+    'zzz.R'

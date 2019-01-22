@@ -55,7 +55,7 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
     initialize = function(task = NULL, risk = NULL) {
       n = NULL
       if (!is.null(task)) {
-        self$row_ids = task$row_ids[[1L]]
+        self$row_ids = task$row_ids
         self$truth = task$truth()
         n = length(self$row_ids)
       }

@@ -10,9 +10,9 @@
 MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
   inherit = MeasureSurv,
   public = list(
-    initialize = function(id = "harrells_c") {
+    initialize = function() {
       super$initialize(
-        id = id,
+        id = "surv.harrells_c",
         range = 0:1,
         minimize = FALSE,
         packages = "Hmisc",

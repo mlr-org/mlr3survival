@@ -53,6 +53,7 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   public = list(
     risk = NULL,
     initialize = function(task = NULL, risk = NULL) {
+      self$task_type = "surv"
       n = NULL
       if (!is.null(task)) {
         self$row_ids = task$row_ids

@@ -29,7 +29,7 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
     },
 
     train = function(task) {
-      pars = self$params_train
+      pars = self$params("train")
       self$model = invoke(rpart::rpart, formula = task$formula, data = task$data(),
         method = "exp", .args = pars)
       self

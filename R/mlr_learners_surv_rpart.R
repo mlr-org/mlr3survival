@@ -8,11 +8,10 @@
 #' @export
 LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
   public = list(
-    initialize = function(id = "surv.rpart", param_vals = list(), predict_type = "risk") {
+    initialize = function(id = "surv.rpart") {
       super$initialize(
         id = id,
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        predict_type = predict_type,
         predict_types = "risk",
         packages = "rpart",
         param_set = ParamSet$new(
@@ -25,7 +24,6 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
             ParamInt$new(id = "xval", default = 10L, lower = 0L, tags = "train")
           )
         ),
-        param_vals = param_vals,
         properties = "missings"
       )
     },

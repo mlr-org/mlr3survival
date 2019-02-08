@@ -23,12 +23,9 @@ NULL
 #' @export
 LearnerSurv = R6Class("LearnerSurv", inherit = Learner,
   public = list(
-    initialize = function(id, feature_types = character(0L), predict_type = "risk", predict_types = "risk", packages = character(0L), param_set = ParamSet$new(), param_vals = list(), properties = character(0L)) {
-      super$initialize(id = id, task_type = "surv", feature_types = feature_types, predict_type = predict_type,
-        predict_types = predict_types, packages = packages, param_set = param_set, param_vals = param_vals,
-        properties = properties)
-      assert_subset(self$properties, mlr_reflections$learner_properties$surv)
-      private$.predict_type = predict_types[1L]
+    initialize = function(id, feature_types = character(0L), predict_types = "risk", packages = character(0L), param_set = ParamSet$new(), param_vals = list(), properties = character(0L)) {
+      super$initialize(id = id, task_type = "surv", feature_types = feature_types, predict_types = predict_types,
+        packages = packages, param_set = param_set, param_vals = param_vals, properties = properties)
     }
   )
 )

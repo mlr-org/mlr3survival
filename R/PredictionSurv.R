@@ -1,44 +1,34 @@
 #' @title Prediction Object for Survival
 #'
-#' @name PredictionSurv
-#' @format [R6Class] object inheriting from [Prediction].
+#' @usage NULL
+#' @format [R6::R6Class] object inheriting from [mlr3::Prediction].
+#'
 #' @description
 #' This object stores the predictions returned by a learner of class [LearnerSurv].
 #'
-#' @section Usage:
-#' Inherits from [Prediction]
+#' The `task_type` is set to `"surv"`.
+#'
+#' @section Construction:
 #' ```
-#' # Construction
-#' p = PredictionSurv$new(task, risk)
-#'
-#' # Members
-#' p$predict_types
-#' p$risk
-#' p$row_ids
-#' p$truth
-#'
-#' # S3 methods
-#' as.data.table(p)
+#' p = PredictionSurv$new(task = NULL, risk = NULL)
 #' ```
 #'
-#' @section Arguments:
-#' * `task` ([Task]):
-#'   Task used for prediction. Used to extract `row_ids` and `truth`.
-#'   Set to `NULL` to skip all argument checks during initialization.
-#'   Slots `p$row_ids` and `p$truth` need to be set manually in this case
-#' * `risk` (`numeric()`): Vector of risk scores.
+#' * `task` :: [TaskClassif]\cr
+#'   Task for which the predictions are made. Used to extract the row ids and the true
+#'   labels. Must be subsetted to test set.
 #'
-#' @section Details:
-#' * `$new()` initializes a new object of class [Prediction].
-#' * `$predict_types` ([character]) stores the predict types available: currently only "risk" is supported.
-#' * `$risk` stores the predicted risk scores.
-#' * `row_ids` stores the row IDs.
-#' * `$truth` stores the true survival times as [survival::Surv()] object.
-#' * The prediction object can be transformed to a simple [data.table()]
-#'   with [data.table::as.data.table].
-#'   True survival time and status are separate columns, named "time" and "status".
-#' @export
+#' * `risk` :: `numeric()`\cr
+#'   Vector of risk scores. One element for each observation in the test set.
+#'
+#' Note that it is allowed to initialize this object without any arguments in order
+#' to allow to manually construct [mlr3::Prediction] objects in a piecemeal fashion.
+#' Required are "row_ids", "truth", and "predict_type". Depending on the value of
+#' "predict_types", also "risk" must be set.
+#'
+#' @inheritSection mlr3::Prediction Fields
+#'
 #' @family Prediction
+#' @export
 #' @examples
 #' library(mlr3)
 #' task = mlr_tasks$get("lung")
@@ -46,8 +36,6 @@
 #' e = Experiment$new(task, learner)$train()$predict()
 #' p = e$prediction
 #' head(as.data.table(p))
-NULL
-
 PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   cloneable = FALSE,
   public = list(

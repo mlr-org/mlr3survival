@@ -2,18 +2,16 @@
 #'
 #' @name mlr_learners_survival.rpart
 #' @format [R6::R6Class] inheriting from [LearnerSurv].
+#' @include LearnerSurv.R
+#'
 #' @description
 #' A learner for a regression tree implemented in [rpart::rpart].
-#' @include LearnerSurv.R
 #' @export
 LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
   public = list(
     initialize = function(id = "surv.rpart") {
       super$initialize(
         id = id,
-        feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        predict_types = "risk",
-        packages = "rpart",
         param_set = ParamSet$new(
           params = list(
             ParamInt$new(id = "minsplit", default = 20L, lower = 1L, tags = "train"),
@@ -24,7 +22,10 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
             ParamInt$new(id = "xval", default = 10L, lower = 0L, tags = "train")
           )
         ),
-        properties = "missings"
+        predict_types = "risk",
+        feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
+        properties = "missings",
+        packages = "rpart"
       )
     },
 

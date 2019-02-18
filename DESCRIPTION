@@ -44,5 +44,6 @@ Collate:
     'TaskSurv.R'
     'mlr_learners_surv_rpart.R'
     'mlr_measures_harrells_c.R'
+    'mlr_measures_surv_harrells_c.R'
     'mlr_tasks_surv_lung.R'
     'zzz.R'

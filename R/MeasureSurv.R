@@ -1,17 +1,43 @@
 #' @title Survival Measure
 #'
-#' @name MeasureSurv
-#' @format [R6Class] object inheriting from [Measure].
+#' @usage NULL
+#' @format [R6::R6Class] object inheriting from [mlr3::Measure].
+#'
 #' @description
-#' This task specializes [Measure] for survival analysis problems.
+#' This measure specializes [mlr3::Measure] for classification problems.
+#' Predefined measures can be found in the [mlr3::Dictionary] [mlr3::mlr_measures].
 #'
-#' @section Usage:
-#' See [Measure].
+#' The `task_type` is set to `"classif"`.
 #'
-#' @section Details:
-#' `$task_type` is `"surv"`.
-NULL
-
+#' @section Construction:
+#' ```
+#' m = MeasureSurv$new(id, range, minimize, predict_type = "response",
+#'      task_properties = character(0L), packages = character(0L))
+#' ```
+#'
+#' * `id` :: `character(1)`\cr
+#'   Identifier for the measure.
+#'
+#' * `range` :: `numeric(2)`\cr
+#'   Feasible range for this measure as `c(lower_bound, upper_bound)`.
+#'
+#' * `minimize` :: `logical(1)`\cr
+#'   Set to `TRUE` if good predictions correspond to small values.
+#'
+#' * `predict_type` :: `character(1)`\cr
+#'   Required predict type of the [Learner].
+#'
+#' * `task_properties` :: `character()`\cr
+#'   Required task properties, see [Task].
+#'
+#' * `packages` :: `character()`\cr
+#'   Set of required packages.
+#'   Note that these packages will be loaded via [requireNamespace()], and are not attached.
+#'
+#' @inheritSection mlr3::Measure Fields
+#' @inheritSection mlr3::Measure Methods
+#'
+#' @family Measure
 #' @export
 MeasureSurv = R6Class("MeasureSurv", inherit = Measure, cloneable = FALSE,
   public = list(

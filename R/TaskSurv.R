@@ -1,22 +1,36 @@
 #' @title Survival Task
 #'
-#' @name TaskSurv
-#' @format [R6Class] object inheriting from [mlr3::Task]/[mlr3::TaskSupervised].
+#' @usage NULL
+#' @format [R6::R6Class] object inheriting from [Task]/[TaskSupervised].
+#'
 #' @description
 #' This task specializes [mlr3::Task] and [mlr3::TaskSupervised] for right-censored survival problems.
+#' The target column is assumed to be a factor.
+#' Predefined tasks are stored in [mlr3::mlr_tasks].
 #'
-#' @section Usage:
-#' Inherits from [mlr3::Task]/[mlr3::TaskSupervised].
+#' The `task_type` is set to `"surv"`.
+#'
+#' @section Construction:
 #' ```
-#' # Construction
-#' t = TaskSupervised$new(id, backend, time, status)
+#' t = TaskSurv$new(id, backend, time, status)
+#' ```
 #'
-#' @section Arguments:
-#' * `time` (`numeric()`):
-#'   Time of event.
-#' * `status` (`numeric()`):
-#'   Event indicator. 0 means "alive" (no event), 1 means dead (event).
+#' * `id` :: `character(1)`\cr
+#'   Name of the task.
 #'
+#' * `backend` :: [DataBackend]
+#'
+#' * `time` :: `numeric()`\cr
+#'   Event times.
+#'
+#' * `status` :: `integer()`\cr
+#'   Event indicator. "0" means alive (no event), "1" means dead (event).
+#'
+#' @inheritSection mlr3::TaskSupervised Fields
+#' @inheritSection mlr3::TaskSupervised Methods
+#'
+#' @family Task
+#' @export
 #' @examples
 #' library(mlr3)
 #' data("lung", package = "survival")
@@ -27,9 +41,6 @@
 #' task$feature_names
 #' task$formula
 #' task$truth()
-NULL
-
-#' @export
 TaskSurv = R6::R6Class("TaskSurv",
   inherit = TaskSupervised,
   public = list(

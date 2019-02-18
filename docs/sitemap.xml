@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/index.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/LearnerSurv.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/MeasureSurv.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/PredictionSurv.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/TaskSurv.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_survival.rpart.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_measures_harrells_c.html</loc>
+  </url>
+</urlset>

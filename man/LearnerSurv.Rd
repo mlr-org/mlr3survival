@@ -14,7 +14,7 @@ See \link{Learner}.
 
 \examples{
 library(mlr3)
-ids = mlr_learners$ids("^surv")
+ids = mlr_learners$keys("^surv")
 lrns = mlr_learners$mget(ids)
 names(lrns)
 

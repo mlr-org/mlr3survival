@@ -19,6 +19,6 @@
     <loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_survival.rpart.html</loc>
   </url>
   <url>
-    <loc>https://mlr3survival.mlr-org.com/reference/mlr_measures_harrells_c.html</loc>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_measures_surv.harrells_c.html</loc>
   </url>
 </urlset>

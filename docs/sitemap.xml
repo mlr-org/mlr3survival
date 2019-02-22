@@ -16,9 +16,18 @@
     <loc>https://mlr3survival.mlr-org.com/reference/TaskSurv.html</loc>
   </url>
   <url>
-    <loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_survival.rpart.html</loc>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_surv.coxph.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_surv.rpart.html</loc>
   </url>
   <url>
     <loc>https://mlr3survival.mlr-org.com/reference/mlr_measures_surv.harrells_c.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_tasks_lung.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_tasks_rats.html</loc>
   </url>
 </urlset>

@@ -122,7 +122,9 @@ The task_type is set to "surv"." />
 Task for which the predictions are made. Used to extract the row ids and the true
 labels. Must be subsetted to test set.</p></li>
 <li><p><code>risk</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric()</a></code><br />
-Vector of risk scores. One element for each observation in the test set.</p></li>
+Vector of risk scores. One element for each observation in the test set.
+The higher the risk, the more likely is an event.
+Used in measures like <a href='mlr_measures_surv.harrells_c.html'>mlr_measures_surv.harrells_c</a>.</p></li>
 </ul>
     <p>Note that it is allowed to initialize this object without any arguments in order
 to allow to manually construct <a href='https://www.rdocumentation.org/packages/mlr3/topics/Prediction'>mlr3::Prediction</a> objects in a piecemeal fashion.

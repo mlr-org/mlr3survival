@@ -1,6 +1,6 @@
 #' @title Survival Tree Learner
 #'
-#' @name mlr_learners_survival.rpart
+#' @name mlr_learners_surv.rpart
 #' @format [R6::R6Class] inheriting from [LearnerSurv].
 #' @include LearnerSurv.R
 #'
@@ -24,7 +24,7 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
         ),
         predict_types = "risk",
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        properties = c("weights", "missings"),
+        properties = c("weights", "missings", "importance", "selected_features"),
         packages = "rpart"
       )
     },
@@ -39,7 +39,7 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
     },
 
     predict = function(task) {
-      newdata = task$data()
+      newdata = task$data(cols = task$feature_names)
       risk = unname(predict(self$model, newdata = newdata, type = "vector"))
       PredictionSurv$new(task, risk = risk)
     },

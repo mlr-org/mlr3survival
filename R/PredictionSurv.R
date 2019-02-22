@@ -19,6 +19,8 @@
 #'
 #' * `risk` :: `numeric()`\cr
 #'   Vector of risk scores. One element for each observation in the test set.
+#'   The higher the risk, the more likely is an event.
+#'   Used in measures like [mlr_measures_surv.harrells_c].
 #'
 #' Note that it is allowed to initialize this object without any arguments in order
 #' to allow to manually construct [mlr3::Prediction] objects in a piecemeal fashion.
@@ -50,7 +52,7 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
       }
 
       self$predict_types = c("risk")[!is.null(risk)]
-      self$risk = assert_numeric(risk, len = n, any.missing = FALSE, lower = 0, null.ok = TRUE)
+      self$risk = assert_numeric(risk, len = n, any.missing = FALSE, null.ok = TRUE)
     }
   )
 )

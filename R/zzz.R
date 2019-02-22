@@ -11,13 +11,16 @@ NULL
   # let mlr3 know about survival
   mlr_reflections$task_types = union(mlr_reflections$task_types, "surv")
   mlr_reflections$task_col_roles$surv = c("feature", "target", "order", "groups", "weights")
-  mlr_reflections$learner_properties$surv = c("missings", "weights", "parallel", "importance")
+  mlr_reflections$task_properties$surv = c("weights", "groups")
+  mlr_reflections$learner_properties$surv = c("missings", "weights", "parallel", "importance", "selected_features")
   mlr_reflections$learner_predict_types$surv = "risk"
 
   # tasks
+  mlr_tasks$add("rats", load_rats)
   mlr_tasks$add("lung", load_lung)
 
   # learners
+  mlr_learners$add("surv.coxph", LearnerSurvCoxPH)
   mlr_learners$add("surv.rpart", LearnerSurvRpart)
 
   # measures

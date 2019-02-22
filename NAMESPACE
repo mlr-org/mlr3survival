@@ -2,6 +2,7 @@
 
 S3method(as.data.table,PredictionSurv)
 export(LearnerSurv)
+export(LearnerSurvCoxPH)
 export(LearnerSurvRpart)
 export(MeasureSurv)
 export(MeasureSurvHarrellsC)

@@ -19,6 +19,8 @@ Task for which the predictions are made. Used to extract the row ids and the tru
 labels. Must be subsetted to test set.
 \item \code{risk} :: \code{numeric()}\cr
 Vector of risk scores. One element for each observation in the test set.
+The higher the risk, the more likely is an event.
+Used in measures like \link{mlr_measures_surv.harrells_c}.
 }
 
 Note that it is allowed to initialize this object without any arguments in order

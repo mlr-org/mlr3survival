@@ -81,6 +81,9 @@ Returns the row ids of the \link{DataBackend} for observations with with role "u
 Returns all column names with role "target".
 \item \code{task_type} :: \code{character(1)}\cr
 Stores the type of the \link{Task}.
+\item \code{properties} :: \code{character()}\cr
+Set of task properties. Possible properties are are stored in
+\link[=mlr_reflections]{mlr_reflections$task_properties}.
 \item \code{groups} :: \code{\link[data.table:data.table]{data.table::data.table()}}\cr
 If the task has a designated column role "groups", table with two columns:
 "row_id" (\code{integer()} | \code{character()}) and the grouping variable \code{group} (\code{vector()}).
@@ -127,10 +130,10 @@ Subsets the task, reducing it to only keep the rows specified.
 \item \code{select(cols)}\cr
 \code{character()} -> \code{self}\cr
 Subsets the task, reducing it to only keep the columns specified.
-\item \code{levels(col)}\cr
+\item \code{levels(cols)}\cr
 \code{character()} -> named \code{list()}\cr
-Returns  the distinct levels of the column \code{col}.
-Only applicable for features with type "character",  "factor" or "ordered".
+Returns  the distinct levels of all columns in \code{cols}.
+Only applicable for features with type "character",  "factor" or "ordered", and is \code{NULL} otherwise.
 This function ignores the row roles, it returns all levels available in the \link{DataBackend}.
 \item \code{head(n = 6)}\cr
 \code{integer()} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr

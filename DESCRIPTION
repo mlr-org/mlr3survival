@@ -43,6 +43,7 @@ Collate:
     'PredictionSurv.R'
     'TaskSurv.R'
     'mlr_learners_surv_coxph.R'
+    'mlr_learners_surv_ranger.R'
     'mlr_learners_surv_rpart.R'
     'mlr_measures_harrells_c.R'
     'mlr_measures_surv_harrells_c.R'

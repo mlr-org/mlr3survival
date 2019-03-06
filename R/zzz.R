@@ -22,6 +22,7 @@ NULL
   # learners
   mlr_learners$add("surv.coxph", LearnerSurvCoxPH)
   mlr_learners$add("surv.rpart", LearnerSurvRpart)
+  mlr_learners$add("surv.ranger", LearnerSurvRanger)
 
   # measures
   mlr_measures$add("harrells_c", MeasureSurvHarrellsC)

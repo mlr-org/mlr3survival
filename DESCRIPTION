@@ -24,6 +24,7 @@ Suggests:
     Hmisc,
     logger,
     rpart,
+    ranger,
     testthat
 Remotes:
     mlr-org/mlr3misc,

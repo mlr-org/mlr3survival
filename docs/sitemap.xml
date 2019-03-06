@@ -22,6 +22,9 @@
     <loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_surv.rpart.html</loc>
   </url>
   <url>
+    <loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_surv_ranger.html</loc>
+  </url>
+  <url>
     <loc>https://mlr3survival.mlr-org.com/reference/mlr_measures_surv.harrells_c.html</loc>
   </url>
   <url>

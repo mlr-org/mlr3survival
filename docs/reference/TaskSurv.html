@@ -184,6 +184,9 @@ Returns the row ids of the <a href='https://www.rdocumentation.org/packages/mlr3
 Returns all column names with role "target".</p></li>
 <li><p><code>task_type</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
 Stores the type of the <a href='https://www.rdocumentation.org/packages/mlr3/topics/Task'>Task</a>.</p></li>
+<li><p><code>properties</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code><br />
+Set of task properties. Possible properties are are stored in
+<a href='https://www.rdocumentation.org/packages/mlr3/topics/mlr_reflections'>mlr_reflections$task_properties</a>.</p></li>
 <li><p><code>groups</code> :: <code><a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table()</a></code><br />
 If the task has a designated column role "groups", table with two columns:
 "row_id" (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer()</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code>) and the grouping variable <code>group</code> (<code><a href='https://www.rdocumentation.org/packages/base/topics/vector'>vector()</a></code>).
@@ -226,10 +229,10 @@ Subsets the task, reducing it to only keep the rows specified.</p></li>
 <li><p><code>select(cols)</code><br />
 <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code> -&gt; <code>self</code><br />
 Subsets the task, reducing it to only keep the columns specified.</p></li>
-<li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/levels'>levels(col)</a></code><br />
+<li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/levels'>levels(cols)</a></code><br />
 <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code> -&gt; named <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code><br />
-Returns  the distinct levels of the column <code>col</code>.
-Only applicable for features with type "character",  "factor" or "ordered".
+Returns  the distinct levels of all columns in <code>cols</code>.
+Only applicable for features with type "character",  "factor" or "ordered", and is <code>NULL</code> otherwise.
 This function ignores the row roles, it returns all levels available in the <a href='https://www.rdocumentation.org/packages/mlr3/topics/DataBackend'>DataBackend</a>.</p></li>
 <li><p><code><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head(n = 6)</a></code><br />
 <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer()</a></code> -&gt; <code><a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table()</a></code><br />

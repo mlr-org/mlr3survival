@@ -9,7 +9,7 @@
 #' @export
 LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
   public = list(
-    initialize = function(id = "surv.coxph") {
+    initialize = function(id = "coxph") {
       super$initialize(
         id = id,
         param_set = ParamSet$new(

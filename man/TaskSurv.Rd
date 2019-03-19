@@ -29,6 +29,8 @@ Event indicator. "0" means alive (no event), "1" means dead (event).
 \section{Fields}{
 
 
+
+
 \itemize{
 \item \code{backend} :: \link{DataBackend}.
 \item \code{col_info} :: \code{\link[data.table:data.table]{data.table::data.table()}}\cr

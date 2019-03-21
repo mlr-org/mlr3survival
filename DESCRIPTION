@@ -50,4 +50,5 @@ Collate:
     'mlr_measures_surv_harrells_c.R'
     'mlr_tasks_surv_lung.R'
     'mlr_tasks_surv_rats.R'
+    'mlr_tasks_surv_unemployment.R'
     'zzz.R'

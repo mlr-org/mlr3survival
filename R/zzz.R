@@ -18,6 +18,7 @@ NULL
   # tasks
   mlr_tasks$add("rats", load_rats)
   mlr_tasks$add("lung", load_lung)
+  mlr_tasks$add("unemployment", load_unemployment)
 
   # learners
   mlr_learners$add("surv.coxph", LearnerSurvCoxPH)

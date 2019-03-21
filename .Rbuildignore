@@ -1,3 +1,4 @@
+^inst/data-raw$
 ^tic\.R$
 ^appveyor\.yml$
 .ignore

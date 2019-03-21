@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Function reference • mlr3survival</title>
+<title>Unemployment Duration Task — mlr_tasks_unemployment • mlr3survival</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,7 +28,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Unemployment Duration Task — mlr_tasks_unemployment" />
+
+<meta property="og:description" content="A survival task for the "UnempDur" data set in package Ecdat.
+Contains the following columns of the original data set:
+"spell" (time), "censor1" (status), "age", "ui", "logwage", and "tenure"." />
+<meta name="twitter:card" content="summary" />
 
 
 <!-- mathjax -->
@@ -47,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -93,103 +98,39 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Unemployment Duration Task</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlrsurvival/blob/master/R/mlr_tasks_surv_unemployment.R'><code>R/mlr_tasks_surv_unemployment.R</code></a></small>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>A survival task for the "UnempDur" data set in package <a href='https://CRAN.R-project.org/package=Ecdat'><span class="pkg">Ecdat</span></a>.
+Contains the following columns of the original data set:
+"spell" (time), "censor1" (status), "age", "ui", "logwage", and "tenure".</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="LearnerSurv.html">LearnerSurv</a></code> </p>
-          </td>
-          <td><p>Survival Learner</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="MeasureSurv.html">MeasureSurv</a></code> </p>
-          </td>
-          <td><p>Survival Measure</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="PredictionSurv.html">PredictionSurv</a></code> </p>
-          </td>
-          <td><p>Prediction Object for Survival</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="TaskSurv.html">TaskSurv</a></code> </p>
-          </td>
-          <td><p>Survival Task</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mlr_learners_surv.coxph.html">LearnerSurvCoxPH</a></code> </p>
-          </td>
-          <td><p>Cox Proportional Hazard Learner</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mlr_learners_surv.ranger.html">LearnerSurvRanger</a></code> </p>
-          </td>
-          <td><p>Survival Ranger Learner</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mlr_learners_surv.rpart.html">LearnerSurvRpart</a></code> </p>
-          </td>
-          <td><p>Survival Tree Learner</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mlr_measures_surv.harrells_c.html">MeasureSurvHarrellsC</a></code> </p>
-          </td>
-          <td><p>Harrell's C-Index</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mlr_tasks_lung.html">mlr_tasks_lung</a></code> </p>
-          </td>
-          <td><p>Lung Cancer Survival Task</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mlr_tasks_rats.html">load_rats()</a></code> </p>
-          </td>
-          <td><p>Rats Survival Task</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mlr_tasks_unemployment.html">mlr_tasks_unemployment</a></code> </p>
-          </td>
-          <td><p>Unemployment Duration Task</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <p><a href='https://www.rdocumentation.org/packages/R6/topics/R6Class'>R6::R6Class</a> inheriting from <a href='TaskSurv.html'>TaskSurv</a>.</p>
+    
+    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+
+    <pre>mlr_tasks$get("unemployment")
+</pre>
+    
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#usage">Usage</a></li>
+          </ul>
+
   </div>
 </div>
 

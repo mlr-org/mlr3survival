@@ -2,6 +2,7 @@
 % Please edit documentation in R/mlr_tasks_surv_unemployment.R
 \name{mlr_tasks_unemployment}
 \alias{mlr_tasks_unemployment}
+\alias{load_unemployment}
 \title{Unemployment Duration Task}
 \format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskSurv}.}
 \description{

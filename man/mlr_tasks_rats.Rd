@@ -5,11 +5,9 @@
 \alias{load_rats}
 \title{Rats Survival Task}
 \format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskSurv}.}
-\usage{
-load_rats()
-}
 \description{
 A survival task for the \link[survival:rats]{survival::rats} data set.
+Columns have been converted to integer, column "sex" has been converted to a factor.
 }
 \section{Usage}{
 \preformatted{mlr_tasks$get("rats")

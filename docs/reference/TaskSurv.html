@@ -165,9 +165,6 @@ Returns all column names with <code>role == "feature"</code>.</p></li>
 <li><p><code>feature_types</code> :: <code><a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table()</a></code><br />
 Returns a table with columns <code>id</code> and <code>type</code> where <code>id</code> are the column names of "active" features of the task
 and <code>type</code> is the storage type.</p></li>
-<li><p><code>formula</code> :: <code><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula()</a></code><br />
-Constructs a <a href='https://www.rdocumentation.org/packages/stats/topics/formula'>stats::formula</a>, e.g. <code>[target] ~ [feature_1] + [feature_2] + ... + [feature_k]</code>, using
-the active features of the task.</p></li>
 <li><p><code>hash</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
 Hash (unique identifier) for this object.</p></li>
 <li><p><code>id</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
@@ -201,6 +198,12 @@ Returns <code>NULL</code> if there are is no weight column.</p></li>
 
     
     <ul>
+<li><p><code>survfit(strata = character())</code><br />
+<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code> -&gt; <code><a href='https://www.rdocumentation.org/packages/survival/topics/survfit'>survival::survfit()</a></code><br />
+Creates a <code><a href='https://www.rdocumentation.org/packages/survival/topics/survfit'>survival::survfit()</a></code> object for the survival times.
+Argument <code>strata</code> can be used to stratify into multiple groups.</p></li>
+</ul>
+    <ul>
 <li><p><code>truth(row_ids = NULL)</code> :: <code><a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table()</a></code><br />
 Table with true  labels for specified <code>row_ids</code>.
 Defaults to all rows in use.</p></li>
@@ -214,6 +217,10 @@ It is possible to provide multiple formats, the first format supported is select
 <p>Rows are subsetted to only contain observations with role "use".
 Columns are filtered to only contain features with roles "target" and "feature".
 If invalid <code>rows</code> or <code>cols</code> are specified, an exception is raised.</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula(rhs = NULL)</a></code><br />
+<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code> -&gt; <code>formula</code><br />
+Constructs a <a href='https://www.rdocumentation.org/packages/stats/topics/formula'>stats::formula</a>, e.g. <code>[target] ~ [feature_1] + [feature_2] + ... + [feature_k]</code>, using
+the features provided in argument <code>rhs</code> (defaults to all active features).</p></li>
 <li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/levels'>levels(cols = NULL)</a></code><br />
 <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code> -&gt; named <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code><br />
 Returns the distinct values of columns in <code>cols</code> for columns with storage type "character", "factor" or "ordered".
@@ -274,12 +281,9 @@ set of active rows. <code>cols</code> defaults to all columns with storage type 
 <span class='no'>task</span> <span class='kw'>=</span> <span class='no'>TaskSurv</span>$<span class='fu'>new</span>(<span class='st'>"lung"</span>, <span class='kw'>backend</span> <span class='kw'>=</span> <span class='no'>b</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"time"</span>, <span class='kw'>status</span> <span class='kw'>=</span> <span class='st'>"status"</span>)
 
 <span class='no'>task</span>$<span class='no'>target_names</span></div><div class='output co'>#&gt; [1] "time"   "status"</div><div class='input'><span class='no'>task</span>$<span class='no'>feature_names</span></div><div class='output co'>#&gt; [1] "age"       "inst"      "meal.cal"  "pat.karno" "ph.ecog"   "ph.karno" 
-#&gt; [7] "sex"       "wt.loss"  </div><div class='input'><span class='no'>task</span>$<span class='no'>formula</span></div><div class='output co'>#&gt; function(rhs = NULL) {
-#&gt;       tn = self$target_names
-#&gt;       lhs = sprintf("Surv(%s, %s)", tn[1L], tn[2L])
-#&gt;       formulate(lhs, rhs %??% self$feature_names, env = getNamespace("survival"))
-#&gt;     }
-#&gt; &lt;environment: 0xbc38b18&gt;</div><div class='input'><span class='no'>task</span>$<span class='fu'>truth</span>()</div><div class='output co'>#&gt;   [1]  306   166   166   559+  450   364   107   177   156   529+   11   429 
+#&gt; [7] "sex"       "wt.loss"  </div><div class='input'><span class='no'>task</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></span>()</div><div class='output co'>#&gt; Surv(time, status) ~ age + inst + meal.cal + pat.karno + ph.ecog + 
+#&gt;     ph.karno + sex + wt.loss
+#&gt; &lt;environment: namespace:survival&gt;</div><div class='input'><span class='no'>task</span>$<span class='fu'>truth</span>()</div><div class='output co'>#&gt;   [1]  306   166   166   559+  450   364   107   177   156   529+   11   429 
 #&gt;  [13]  170   351    15   181   283   201   524    13   212   524   288   654 
 #&gt;  [25]  363   442   199   550    54   558   207    92    60   551+  728   543+
 #&gt;  [37]  293   202   353   511+  267   511+  371   387   457    71   337   201 
@@ -297,7 +301,11 @@ set of active rows. <code>cols</code> defaults to all columns with storage type 
 #&gt; [181]   65     5   132   687  1022+  345   444   223   175    60   163    65 
 #&gt; [193]  208   821+  428   310   230   840+  305    11   132   226   426   705 
 #&gt; [205]  363    11   361   176   791    95   196+  167   806+  284   641   147 
-#&gt; [217]  740+  218   163   655   239    88   245   588+   30   179   310   477 </div></pre>
+#&gt; [217]  740+  218   163   655   239    88   245   588+   30   179   310   477 </div><div class='input'><span class='no'>task</span>$<span class='fu'>survfit</span>(<span class='st'>"age &gt; 50"</span>)</div><div class='output co'>#&gt; Call: survfit(formula = f, data = self$data(cols = vars))
+#&gt; 
+#&gt;                  n events median 0.95LCL 0.95UCL
+#&gt; age &gt; 50=FALSE  26     16    320     239      NA
+#&gt; age &gt; 50=TRUE  202    149    310     284     363</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

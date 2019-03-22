@@ -3,7 +3,7 @@
 #' @import mlr3
 #' @import mlr3misc
 #' @import paradox
-#' @importFrom survival Surv
+#' @importFrom survival Surv survfit
 #' @importFrom R6 R6Class
 NULL
 

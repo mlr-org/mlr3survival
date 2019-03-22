@@ -28,7 +28,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
       pars = self$params("train")
       if ("weights" %in% task$properties)
         pars = insert_named(pars, list(weights = task$weights$weight))
-      self$model = invoke(survival::coxph, formula = task$formula, data = task$data(), .args = pars)
+      self$model = invoke(survival::coxph, formula = task$formula(), data = task$data(), .args = pars)
       self
     },
 

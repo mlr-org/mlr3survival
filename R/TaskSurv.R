@@ -39,12 +39,11 @@
 #'
 #' task$target_names
 #' task$feature_names
-#' task$formula
+#' task$formula()
 #' task$truth()
 TaskSurv = R6::R6Class("TaskSurv",
   inherit = TaskSupervised,
   public = list(
-
     initialize = function(id, backend, time, status) {
       super$initialize(id = id, task_type = "surv", backend = backend, target = c(time, status))
       self$measures = list(mlr_measures$get("harrells_c"))
@@ -54,15 +53,12 @@ TaskSurv = R6::R6Class("TaskSurv",
       tn = self$target_names
       d = self$data(row_ids, cols = self$target_names)
       Surv(d[[tn[1L]]], d[[tn[2L]]])
-    }
-  ),
+    },
 
-  active = list(
-    formula = function() {
+    formula = function(rhs = NULL) {
       tn = self$target_names
-      f = as.formula(sprintf("Surv(%s, %s) ~ %s", tn[1L], tn[2L], paste0(self$feature_names, collapse = " + ")))
-      environment(f) = getNamespace("survival") # ensure that models find Surv()
-      f
+      lhs = sprintf("Surv(%s, %s)", tn[1L], tn[2L])
+      formulate(lhs, rhs %??% self$feature_names, env = getNamespace("survival"))
     }
   )
 )

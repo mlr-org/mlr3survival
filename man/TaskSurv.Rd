@@ -31,6 +31,8 @@ Event indicator. "0" means alive (no event), "1" means dead (event).
 
 
 
+
+
 \itemize{
 \item \code{backend} :: \link{DataBackend}.
 \item \code{col_info} :: \code{\link[data.table:data.table]{data.table::data.table()}}\cr
@@ -99,6 +101,14 @@ Returns \code{NULL} if there are is no weight column.
 }
 
 \section{Methods}{
+
+\itemize{
+\item \code{survfit(strata = character())}\cr
+\code{character()} -> \code{\link[survival:survfit]{survival::survfit()}}\cr
+Creates a \code{\link[survival:survfit]{survival::survfit()}} object for the survival times.
+Argument \code{strata} can be used to stratify into multiple groups.
+}
+
 
 
 \itemize{
@@ -181,8 +191,9 @@ task = TaskSurv$new("lung", backend = b, time = "time", status = "status")
 
 task$target_names
 task$feature_names
-task$formula
+task$formula()
 task$truth()
+task$survfit("age > 50")
 }
 \concept{Task}
 \keyword{datasets}

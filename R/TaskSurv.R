@@ -26,8 +26,16 @@
 #' * `status` :: `integer()`\cr
 #'   Event indicator. "0" means alive (no event), "1" means dead (event).
 #'
+#' @section Fields:
 #' @inheritSection mlr3::TaskSupervised Fields
+#'
+#' @section Methods:
+#' * `survfit(strata = character())`\cr
+#'   `character()` -> [survival::survfit()]\cr
+#'   Creates a [survival::survfit()] object for the survival times.
+#'   Argument `strata` can be used to stratify into multiple groups.
 #' @inheritSection mlr3::TaskSupervised Methods
+#'
 #'
 #' @family Task
 #' @export
@@ -41,6 +49,7 @@
 #' task$feature_names
 #' task$formula()
 #' task$truth()
+#' task$survfit("age > 50")
 TaskSurv = R6::R6Class("TaskSurv",
   inherit = TaskSupervised,
   public = list(
@@ -59,6 +68,13 @@ TaskSurv = R6::R6Class("TaskSurv",
       tn = self$target_names
       lhs = sprintf("Surv(%s, %s)", tn[1L], tn[2L])
       formulate(lhs, rhs %??% self$feature_names, env = getNamespace("survival"))
+    },
+
+    survfit = function(strata = character()) {
+      assert_character(strata, any.missing = FALSE)
+      f = self$formula(rhs = strata)
+      vars = unique(unlist(extract_vars(f)))
+      survfit(f, self$data(cols = vars))
     }
   )
 )

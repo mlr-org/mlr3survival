@@ -274,9 +274,12 @@ set of active rows. <code>cols</code> defaults to all columns with storage type 
 <span class='no'>task</span> <span class='kw'>=</span> <span class='no'>TaskSurv</span>$<span class='fu'>new</span>(<span class='st'>"lung"</span>, <span class='kw'>backend</span> <span class='kw'>=</span> <span class='no'>b</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"time"</span>, <span class='kw'>status</span> <span class='kw'>=</span> <span class='st'>"status"</span>)
 
 <span class='no'>task</span>$<span class='no'>target_names</span></div><div class='output co'>#&gt; [1] "time"   "status"</div><div class='input'><span class='no'>task</span>$<span class='no'>feature_names</span></div><div class='output co'>#&gt; [1] "age"       "inst"      "meal.cal"  "pat.karno" "ph.ecog"   "ph.karno" 
-#&gt; [7] "sex"       "wt.loss"  </div><div class='input'><span class='no'>task</span>$<span class='no'>formula</span></div><div class='output co'>#&gt; Surv(time, status) ~ age + inst + meal.cal + pat.karno + ph.ecog + 
-#&gt;     ph.karno + sex + wt.loss
-#&gt; &lt;environment: namespace:survival&gt;</div><div class='input'><span class='no'>task</span>$<span class='fu'>truth</span>()</div><div class='output co'>#&gt;   [1]  306   166   166   559+  450   364   107   177   156   529+   11   429 
+#&gt; [7] "sex"       "wt.loss"  </div><div class='input'><span class='no'>task</span>$<span class='no'>formula</span></div><div class='output co'>#&gt; function(rhs = NULL) {
+#&gt;       tn = self$target_names
+#&gt;       lhs = sprintf("Surv(%s, %s)", tn[1L], tn[2L])
+#&gt;       formulate(lhs, rhs %??% self$feature_names, env = getNamespace("survival"))
+#&gt;     }
+#&gt; &lt;environment: 0xbc38b18&gt;</div><div class='input'><span class='no'>task</span>$<span class='fu'>truth</span>()</div><div class='output co'>#&gt;   [1]  306   166   166   559+  450   364   107   177   156   529+   11   429 
 #&gt;  [13]  170   351    15   181   283   201   524    13   212   524   288   654 
 #&gt;  [25]  363   442   199   550    54   558   207    92    60   551+  728   543+
 #&gt;  [37]  293   202   353   511+  267   511+  371   387   457    71   337   201 

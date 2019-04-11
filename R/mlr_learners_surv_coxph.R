@@ -15,7 +15,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
         id = id,
         param_set = ParamSet$new(
           params = list(
-            ParamFct$new(id = "ties", default = "efron", levels = c("efron", "breslow", "exact"))
+            ParamFct$new(id = "ties", default = "efron", levels = c("efron", "breslow", "exact"), tags = "train")
           )
         ),
         predict_types = "risk",

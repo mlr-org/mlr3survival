@@ -10,6 +10,6 @@
 LearnerSurvCoxPH
 }
 \description{
-A learner for a Cox PH model implemented in \link[survival:coxph]{survival::coxph}.
+A \link{LearnerSurv} for a Cox PH model implemented in \link[survival:coxph]{survival::coxph} in package \CRANpkg{survival}.
 }
 \keyword{datasets}

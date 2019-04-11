@@ -10,6 +10,6 @@
 LearnerSurvRpart
 }
 \description{
-A learner for a regression tree implemented in \link[rpart:rpart]{rpart::rpart}.
+A \link{LearnerSurv} for a regression tree implemented in \link[rpart:rpart]{rpart::rpart} in package \CRANpkg{rpart}.
 }
 \keyword{datasets}

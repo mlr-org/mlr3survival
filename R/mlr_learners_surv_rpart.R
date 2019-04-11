@@ -5,7 +5,8 @@
 #' @include LearnerSurv.R
 #'
 #' @description
-#' A learner for a regression tree implemented in [rpart::rpart].
+#' A [LearnerSurv] for a regression tree implemented in [rpart::rpart] in package \CRANpkg{rpart}.
+#'
 #' @export
 LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
   public = list(

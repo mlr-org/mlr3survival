@@ -10,6 +10,6 @@
 LearnerSurvRanger
 }
 \description{
-A learner for a survival random forest implemented in \code{\link[ranger:ranger]{ranger::ranger()}}.
+A \link{LearnerSurv} for a survival random forest implemented in \code{\link[ranger:ranger]{ranger::ranger()}} in package \CRANpkg{ranger}.
 }
 \keyword{datasets}

@@ -5,7 +5,8 @@
 #' @include LearnerSurv.R
 #'
 #' @description
-#' A learner for a Cox PH model implemented in [survival::coxph].
+#' A [LearnerSurv] for a Cox PH model implemented in [survival::coxph] in package \CRANpkg{survival}.
+#'
 #' @export
 LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
   public = list(

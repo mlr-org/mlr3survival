@@ -4,7 +4,7 @@
 #' @format [R6::R6Class()] inheriting from [LearnerSurv].
 #'
 #' @description
-#' A learner for a survival random forest implemented in [ranger::ranger()].
+#' A [LearnerSurv] for a survival random forest implemented in [ranger::ranger()] in package \CRANpkg{ranger}.
 #'
 #' @export
 LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,

@@ -1,14 +1,14 @@
 
 # package checks ----------------------------------------------------------
 
-if (ci_has_env("TravisCI")) {
+if (inherits(ci(), "TravisCI")) {
   do_package_checks(
     args = "--as-cran",
     error_on = "error"
   )
 }
 
-if (ci_has_env("AppVeyorCI")) {
+if (inherits(ci(), "AppVeyorCI")) {
   do_package_checks(
     args = c("--as-cran", "--no-manual", "--no-vignettes", "--no-build-vignettes"),
     build_args = c("--no-build-vignettes"),
@@ -34,7 +34,7 @@ if (ci_has_env("id_rsa")) {
 # only deploy man files on Travis on non-cron builds
 # only run codecov on Travis
 
-if (ci_has_env("TravisCI") && !ci_is_env("TRAVIS_EVENT_TYPE", "cron")) {
+if (inherits(ci(), "TravisCI") && !ci_is_env("TRAVIS_EVENT_TYPE", "cron")) {
 
   if (ci_get_branch() == "master") {
     get_stage("deploy") %>%

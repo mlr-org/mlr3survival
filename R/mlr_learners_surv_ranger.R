@@ -33,12 +33,12 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
             ParamInt$new(id = "num.threads", lower = 1L, tags = c("train", "predict")),
             ParamLgl$new(id = "save.memory", default = FALSE, tags = "train"),
             ParamLgl$new(id = "verbose", default = TRUE, tags = c("train", "predict")),
-            ParamInt$new(id = "seed", tags = c("train", "predict"))
+            ParamLgl$new(id = "oob.error", default = TRUE, tags = "train")
           )
         ),
         predict_types = "risk",
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        properties = c("weights", "importance"),
+        properties = c("weights", "importance", "oob_error"),
         packages = "ranger"
       )
     },
@@ -73,6 +73,10 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
         stopf("No importance stored")
 
       sort(self$model$variable.importance, decreasing = TRUE)
+    },
+
+    oob_error = function() {
+      mod$prediction.error
     }
   )
 )

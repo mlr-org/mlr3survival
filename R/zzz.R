@@ -12,7 +12,7 @@ NULL
   mlr_reflections$task_types = union(mlr_reflections$task_types, "surv")
   mlr_reflections$task_col_roles$surv = c("feature", "target", "label", "order", "groups", "weights")
   mlr_reflections$task_properties$surv = c("weights", "groups")
-  mlr_reflections$learner_properties$surv = c("missings", "weights", "parallel", "importance", "selected_features")
+  mlr_reflections$learner_properties$surv = mlr_reflections$learner_properties$regr
   mlr_reflections$learner_predict_types$surv = "risk"
 
   # tasks

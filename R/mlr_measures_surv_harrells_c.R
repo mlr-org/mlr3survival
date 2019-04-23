@@ -20,9 +20,8 @@ MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
       )
     },
 
-    calculate = function(e) {
-      p = e$prediction
-      Hmisc::rcorr.cens(-1 * p$risk, p$truth)[["C Index"]]
+    calculate = function(experiment, prediction = experiment$prediction) {
+      Hmisc::rcorr.cens(-1 * prediction$risk, prediction$truth)[["C Index"]]
     }
   )
 )

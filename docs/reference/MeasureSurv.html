@@ -162,10 +162,9 @@ Stores required properties of the Task.</p></li>
 ResampleResult -&gt; <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code><br />
 Aggregates multiple performance scores into a single score using the <code>aggregate</code> function of the measure.
 Operates on a ResampleResult as returned by resample.</p></li>
-<li><p><code>calculate(e)</code><br />
-Experiment -&gt; <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code><br />
-Takes an Experiment, extracts the predictions (as well as other possibly needed objects), and calculates
-a score.</p></li>
+<li><p><code>calculate(experiment = NULL, prediction = experiment$prediction)</code><br />
+(Experiment, Prediction) -&gt; <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code><br />
+Takes an Experiment and a Prediction (defaults to prediction stored in experiment), and calculates a numeric score.</p></li>
 </ul>
     
 

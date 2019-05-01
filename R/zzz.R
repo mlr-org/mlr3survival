@@ -7,27 +7,40 @@
 #' @importFrom R6 R6Class
 NULL
 
-.onLoad = function(libname, pkgname) {
+register_package = function() {
   # let mlr3 know about survival
-  mlr_reflections$task_types = union(mlr_reflections$task_types, "surv")
-  mlr_reflections$task_col_roles$surv = c("feature", "target", "label", "order", "groups", "weights")
-  mlr_reflections$task_properties$surv = c("weights", "groups")
-  mlr_reflections$learner_properties$surv = mlr_reflections$learner_properties$regr
-  mlr_reflections$learner_predict_types$surv = "risk"
+  x = getFromNamespace("mlr_reflections", ns = "mlr3")
+  x$task_types = union(x$task_types, "surv")
+  x$task_col_roles$surv = c("feature", "target", "label", "order", "groups", "weights")
+  x$task_properties$surv = c("weights", "groups")
+  x$learner_properties$surv = x$learner_properties$regr
+  x$learner_predict_types$surv = "risk"
 
   # tasks
-  mlr_tasks$add("rats", load_rats)
-  mlr_tasks$add("lung", load_lung)
-  mlr_tasks$add("unemployment", load_unemployment)
+  x = getFromNamespace("mlr_tasks", ns = "mlr3")
+  x$add("rats", load_rats)
+  x$add("lung", load_lung)
+  x$add("unemployment", load_unemployment)
 
   # learners
-  mlr_learners$add("surv.coxph", LearnerSurvCoxPH)
-  mlr_learners$add("surv.rpart", LearnerSurvRpart)
-  mlr_learners$add("surv.ranger", LearnerSurvRanger)
+  x = getFromNamespace("mlr_learners", ns = "mlr3")
+  x$add("surv.coxph", LearnerSurvCoxPH)
+  x$add("surv.rpart", LearnerSurvRpart)
+  x$add("surv.ranger", LearnerSurvRanger)
 
   # measures
-  mlr_measures$add("harrells_c", MeasureSurvHarrellsC)
+  x = getFromNamespace("mlr_measures", ns = "mlr3")
+  x$add("harrells_c", MeasureSurvHarrellsC)
 }
 
-if (FALSE) {
-}
+.onLoad = function(libname, pkgname) { # nocov start
+  register_package()
+  setHook(packageEvent("mlr3", "onLoad"), function(...) register_package(), action = "append")
+} # nocov end
+
+.onUnload = function(libpath) { # nocov start
+  event = packageEvent("mlr3", "onLoad")
+  hooks = getHook(event)
+  pkgname = vapply(hooks, function(x) environment(x)$pkgname, NA_character_)
+  setHook(event, hooks[pkgname != "mlr3survival"], action = "replace")
+} # nocov end

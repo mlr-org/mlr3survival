@@ -35,7 +35,7 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/mlr-org/mlrsurvival
+URL: https://github.com/mlr-org/mlr3survival
 BugReports: https://github.com/mlr-org/mlsurvival/issues
 RoxygenNote: 6.1.1
 Collate:

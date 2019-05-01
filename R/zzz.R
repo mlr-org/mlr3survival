@@ -7,7 +7,7 @@
 #' @importFrom R6 R6Class
 NULL
 
-register_package = function() {
+register_mlr3 = function() {
   # let mlr3 know about survival
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_types = union(x$task_types, "surv")
@@ -34,8 +34,8 @@ register_package = function() {
 }
 
 .onLoad = function(libname, pkgname) { # nocov start
-  register_package()
-  setHook(packageEvent("mlr3", "onLoad"), function(...) register_package(), action = "append")
+  register_mlr3()
+  setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(), action = "append")
 } # nocov end
 
 .onUnload = function(libpath) { # nocov start

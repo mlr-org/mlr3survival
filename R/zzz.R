@@ -9,7 +9,7 @@ NULL
 
 register_mlr3 = function() {
   # let mlr3 know about survival
-  x = getFromNamespace("mlr_reflections", ns = "mlr3")
+  x = utils:getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_types = union(x$task_types, "surv")
   x$task_col_roles$surv = c("feature", "target", "label", "order", "groups", "weights")
   x$task_properties$surv = c("weights", "groups")
@@ -17,19 +17,19 @@ register_mlr3 = function() {
   x$learner_predict_types$surv = "risk"
 
   # tasks
-  x = getFromNamespace("mlr_tasks", ns = "mlr3")
+  x = utils:getFromNamespace("mlr_tasks", ns = "mlr3")
   x$add("rats", load_rats)
   x$add("lung", load_lung)
   x$add("unemployment", load_unemployment)
 
   # learners
-  x = getFromNamespace("mlr_learners", ns = "mlr3")
+  x = utils:getFromNamespace("mlr_learners", ns = "mlr3")
   x$add("surv.coxph", LearnerSurvCoxPH)
   x$add("surv.rpart", LearnerSurvRpart)
   x$add("surv.ranger", LearnerSurvRanger)
 
   # measures
-  x = getFromNamespace("mlr_measures", ns = "mlr3")
+  x = utils:getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("harrells_c", MeasureSurvHarrellsC)
 }
 

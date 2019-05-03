@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Lung Cancer Survival Task — mlr_tasks_lung • mlr3survival</title>
+<title>Survival Ranger Learner — LearnerSurvRanger • mlr3survival</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,10 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Lung Cancer Survival Task — mlr_tasks_lung" />
+<meta property="og:title" content="Survival Ranger Learner — LearnerSurvRanger" />
 
-<meta property="og:description" content="A survival task for the survival::lung data set.
-Columns have been converted to integer, column "sex" has been converted to a factor." />
+<meta property="og:description" content="A LearnerSurv for a survival random forest implemented in ranger::ranger() in package ranger." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -99,24 +98,19 @@ Columns have been converted to integer, column "sex" has been converted to a fac
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Lung Cancer Survival Task</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr3survival/blob/master/R/TaskSurv_lung_lung.R'><code>R/TaskSurv_lung_lung.R</code></a></small>
+    <h1>Survival Ranger Learner</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr3survival/blob/master/R/LearnerSurvRanger.R'><code>R/LearnerSurvRanger.R</code></a></small>
     </div>
 
     
-    <p>A survival task for the <a href='https://www.rdocumentation.org/packages/survival/topics/lung'>survival::lung</a> data set.
-Columns have been converted to integer, column "sex" has been converted to a factor.</p>
+    <p>A <a href='LearnerSurv.html'>LearnerSurv</a> for a survival random forest implemented in <code><a href='https://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger::ranger()</a></code> in package <a href='https://CRAN.R-project.org/package=ranger'><span class="pkg">ranger</span></a>.</p>
     
 
+    <pre class="usage"><span class='no'>LearnerSurvRanger</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p><a href='https://www.rdocumentation.org/packages/R6/topics/R6Class'>R6::R6Class</a> inheriting from <a href='TaskSurv.html'>TaskSurv</a>.</p>
-    
-    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
-
-    <pre>mlr_tasks$get("lung")
-</pre>
+    <p><code><a href='https://www.rdocumentation.org/packages/R6/topics/R6Class'>R6::R6Class()</a></code> inheriting from <a href='LearnerSurv.html'>LearnerSurv</a>.</p>
     
 
   </div>
@@ -125,8 +119,6 @@ Columns have been converted to integer, column "sex" has been converted to a fac
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-
-      <li><a href="#usage">Usage</a></li>
           </ul>
 
   </div>

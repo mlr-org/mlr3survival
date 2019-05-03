@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Lung Cancer Survival Task — mlr_tasks_lung • mlr3survival</title>
+<title>Harrell's C-Index — MeasureSurvHarrellsC • mlr3survival</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,10 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Lung Cancer Survival Task — mlr_tasks_lung" />
+<meta property="og:title" content="Harrell's C-Index — MeasureSurvHarrellsC" />
 
-<meta property="og:description" content="A survival task for the survival::lung data set.
-Columns have been converted to integer, column "sex" has been converted to a factor." />
+<meta property="og:description" content="Calls Hmisc::rcorr.cens()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -99,24 +98,19 @@ Columns have been converted to integer, column "sex" has been converted to a fac
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Lung Cancer Survival Task</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr3survival/blob/master/R/TaskSurv_lung_lung.R'><code>R/TaskSurv_lung_lung.R</code></a></small>
+    <h1>Harrell's C-Index</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr3survival/blob/master/R/MeasureSurvHarrellsC.R'><code>R/MeasureSurvHarrellsC.R</code></a></small>
     </div>
 
     
-    <p>A survival task for the <a href='https://www.rdocumentation.org/packages/survival/topics/lung'>survival::lung</a> data set.
-Columns have been converted to integer, column "sex" has been converted to a factor.</p>
+    <p>Calls <code><a href='https://www.rdocumentation.org/packages/Hmisc/topics/rcorr.cens'>Hmisc::rcorr.cens()</a></code>.</p>
     
 
+    <pre class="usage"><span class='no'>MeasureSurvHarrellsC</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p><a href='https://www.rdocumentation.org/packages/R6/topics/R6Class'>R6::R6Class</a> inheriting from <a href='TaskSurv.html'>TaskSurv</a>.</p>
-    
-    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
-
-    <pre>mlr_tasks$get("lung")
-</pre>
+    <p><code><a href='https://www.rdocumentation.org/packages/R6/topics/R6Class'>R6::R6Class()</a></code> inheriting from <a href='MeasureSurv.html'>MeasureSurv</a>.</p>
     
 
   </div>
@@ -125,8 +119,6 @@ Columns have been converted to integer, column "sex" has been converted to a fac
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-
-      <li><a href="#usage">Usage</a></li>
           </ul>
 
   </div>

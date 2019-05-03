@@ -1,6 +1,6 @@
 #' @title Survival Ranger Learner
 #'
-#' @name mlr_learners_surv.ranger
+#' @aliases mlr_learners_surv.ranger
 #' @format [R6::R6Class()] inheriting from [LearnerSurv].
 #'
 #' @description

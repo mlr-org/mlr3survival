@@ -1,6 +1,6 @@
 #' @title Cox Proportional Hazard Learner
 #'
-#' @name mlr_learners_surv.coxph
+#' @aliases mlr_learners_surv.coxph
 #' @format [R6::R6Class] inheriting from [LearnerSurv].
 #' @include LearnerSurv.R
 #'

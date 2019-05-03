@@ -1,6 +1,6 @@
 #' @title Survival Tree Learner
 #'
-#' @name mlr_learners_surv.rpart
+#' @aliases mlr_learners_surv.rpart
 #' @format [R6::R6Class] inheriting from [LearnerSurv].
 #' @include LearnerSurv.R
 #'

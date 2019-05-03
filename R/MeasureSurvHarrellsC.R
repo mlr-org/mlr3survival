@@ -1,6 +1,6 @@
 #' @title Harrell's C-Index
 #'
-#' @name mlr_measures_surv.harrells_c
+#' @aliases mlr_measures_surv.harrells_c
 #' @format [R6::R6Class()] inheriting from [MeasureSurv].
 #' @include MeasureSurv.R
 #'

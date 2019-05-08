@@ -37,7 +37,7 @@ Note that these packages will be loaded via \code{\link[=requireNamespace]{requi
 
 \itemize{
 \item \code{id} :: \code{character(1)}\cr
-Stores the identifier of the measure.
+Identifier of the measure.
 \item \code{minimize} :: \code{logical(1)}\cr
 Is \code{TRUE} if the best value is reached via minimization and \code{FALSE} by maximization.
 \item \code{packages} :: \code{character()}\cr
@@ -58,7 +58,7 @@ Stores required properties of the \link{Task}.
 \itemize{
 \item \code{aggregate(rr)}\cr
 \link{ResampleResult} -> \code{numeric(1)}\cr
-Aggregates multiple performance scores into a single score using the \code{aggregate} function of the measure.
+Aggregates multiple performance scores into a single score using the \code{aggregator} function of the measure.
 Operates on a \link{ResampleResult} as returned by \link{resample}.
 \item \code{calculate(experiment = NULL, prediction = experiment$prediction)}\cr
 (\link{Experiment}, \link{Prediction}) -> \code{numeric(1)}\cr

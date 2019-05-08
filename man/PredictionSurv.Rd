@@ -11,7 +11,8 @@ This object stores the predictions returned by a learner of class \link{LearnerS
 The \code{task_type} is set to \code{"surv"}.
 }
 \section{Construction}{
-\preformatted{p = PredictionSurv$new(task = NULL, risk = NULL)
+\preformatted{p = PredictionSurv$new(task = NULL, risk = NULL,
+  row_ids = task$row_ids, truth = task$truth())
 }
 \itemize{
 \item \code{task} :: \link{TaskClassif}\cr
@@ -21,30 +22,18 @@ labels. Must be subsetted to test set.
 Vector of risk scores. One element for each observation in the test set.
 The higher the risk, the more likely is an event.
 Used in measures like \link{mlr_measures_surv.harrells_c}.
+\item \code{row_ids} :: (\code{integer()} | \code{character()})\cr
+Row ids of the task. Per default, these are extracted from the \code{task}.
+\item \code{truth} :: \code{survival::Surv()}\cr
+Observed survival times. Per default, these are extracted from the \code{task}.
 }
-
-Note that it is allowed to initialize this object without any arguments in order
-to allow to manually construct \link[mlr3:Prediction]{mlr3::Prediction} objects in a piecemeal fashion.
-Required are "row_ids", "truth", and "predict_type". Depending on the value of
-"predict_types", also "risk" must be set.
 }
 
 \section{Fields}{
 
+See \link[mlr3:Prediction]{mlr3::Prediction}.
 
-\itemize{
-\item \code{row_ids} :: (\code{integer()} | \code{character()})\cr
-Vector of row ids for which predictions are stored.
-\item \code{truth} :: \code{any}\cr
-Vector of true labels.
-\item \code{response} :: \code{any}\cr
-Vector of predicted labels.
-\item \code{task_type} :: \code{character(1)}\cr
-Stores the type of the \link{Task}.
-\item \code{predict_types} :: \code{character()}\cr
-Vector of predict types this object stores.
-}
-
+The field \code{task_type} is set to \code{"surv"}.
 }
 
 \examples{

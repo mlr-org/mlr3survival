@@ -10,7 +10,8 @@
 #'
 #' @section Construction:
 #' ```
-#' p = PredictionSurv$new(task = NULL, risk = NULL)
+#' p = PredictionSurv$new(task = NULL, risk = NULL,
+#'   row_ids = task$row_ids, truth = task$truth())
 #' ```
 #'
 #' * `task` :: [TaskClassif]\cr
@@ -22,12 +23,16 @@
 #'   The higher the risk, the more likely is an event.
 #'   Used in measures like [mlr_measures_surv.harrells_c].
 #'
-#' Note that it is allowed to initialize this object without any arguments in order
-#' to allow to manually construct [mlr3::Prediction] objects in a piecemeal fashion.
-#' Required are "row_ids", "truth", and "predict_type". Depending on the value of
-#' "predict_types", also "risk" must be set.
+#' * `row_ids` :: (`integer()` | `character()`)\cr
+#'   Row ids of the task. Per default, these are extracted from the `task`.
 #'
-#' @inheritSection mlr3::Prediction Fields
+#' * `truth` :: `survival::Surv()`\cr
+#'   Observed survival times. Per default, these are extracted from the `task`.
+#'
+#' @section Fields:
+#' See [mlr3::Prediction].
+#'
+#' The field `task_type` is set to `"surv"`.
 #'
 #' @family Prediction
 #' @export
@@ -42,17 +47,13 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   cloneable = FALSE,
   public = list(
     risk = NULL,
-    initialize = function(task = NULL, risk = NULL) {
+    initialize = function(task = NULL, risk = NULL, row_ids = task$row_ids, truth = task$truth()) {
       self$task_type = "surv"
-      n = NULL
-      if (!is.null(task)) {
-        self$row_ids = task$row_ids
-        self$truth = task$truth()
-        n = length(self$row_ids)
-      }
-
-      self$predict_types = c("risk")[!is.null(risk)]
+      self$row_ids = assert_atomic_vector(row_ids)
+      n = length(row_ids)
       self$risk = assert_numeric(risk, len = n, any.missing = FALSE, null.ok = TRUE)
+      self$truth = assert_surv(truth, len = n, any.missing = FALSE)
+      self$predict_types = c("risk")[!is.null(risk)]
     }
   )
 )
@@ -61,7 +62,18 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
 as.data.table.PredictionSurv = function(x, ...) {
   tab = data.table(row_id = x$row_ids, risk = x$risk)
   truth = x$truth
-  if (!is.null(truth))
-    tab[, c("time", "status") := list(truth[, 1L], truth[, 2L])]
-  tab
+  tab[, c("time", "status") := list(x$truth[, 1L], x$truth[, 2L])]
+  setcolorder(tab, c("row_id", "time", "status"))[]
+}
+
+#' @export
+rbind.PredictionSurv = function(...) {
+  dots = list(...)
+  assert_list(dots, "PredictionSurv")
+
+  x = map_dtr(dots, function(p) {
+    list(row_ids = p$row_ids, risk = p$risk)
+  }, .fill = FALSE)
+
+  PredictionSurv$new(row_ids = x$row_ids, truth = do.call(c, map(dots, "truth")), risk = x$risk)
 }

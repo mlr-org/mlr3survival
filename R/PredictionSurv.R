@@ -53,15 +53,15 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
 
       self$predict_types = c("risk")[!is.null(risk)]
       self$risk = assert_numeric(risk, len = n, any.missing = FALSE, null.ok = TRUE)
-    }
-  )
+    })
 )
 
 #' @export
 as.data.table.PredictionSurv = function(x, ...) {
   tab = data.table(row_id = x$row_ids, risk = x$risk)
   truth = x$truth
-  if (!is.null(truth))
+  if (!is.null(truth)) {
     tab[, c("time", "status") := list(truth[, 1L], truth[, 2L])]
+  }
   tab
 }

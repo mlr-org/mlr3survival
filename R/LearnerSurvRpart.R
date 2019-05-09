@@ -32,8 +32,9 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
 
     train = function(task) {
       pars = self$params("train")
-      if ("weights" %in% task$properties)
+      if ("weights" %in% task$properties) {
         pars = insert_named(pars, list(weights = task$weights$weight))
+      }
       self$model = invoke(rpart::rpart, formula = task$formula(), data = task$data(),
         method = "exp", .args = pars)
       self
@@ -46,16 +47,17 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
     },
 
     importance = function() {
-      if (is.null(self$model))
+      if (is.null(self$model)) {
         stopf("No model stored")
+      }
       # importance is only present if there is at least on split
       sort(self$model$variable.importance %??% set_names(numeric()), decreasing = TRUE)
     },
 
     selected_features = function() {
-      if (is.null(self$model))
+      if (is.null(self$model)) {
         stopf("No model stored")
+      }
       unique(setdiff(self$model$frame$var, "<leaf>"))
-    }
-  )
+    })
 )

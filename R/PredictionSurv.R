@@ -61,7 +61,6 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
 #' @export
 as.data.table.PredictionSurv = function(x, ...) {
   tab = data.table(row_id = x$row_ids, risk = x$risk)
-  truth = x$truth
   tab[, c("time", "status") := list(x$truth[, 1L], x$truth[, 2L])]
   setcolorder(tab, c("row_id", "time", "status"))[]
 }

@@ -44,6 +44,5 @@ MeasureSurv = R6Class("MeasureSurv", inherit = Measure, cloneable = FALSE,
     initialize = function(id, range, minimize, predict_type = "risk", task_properties = character(0L), packages = character(0L)) {
       super$initialize(id, task_type = "surv", range = range, minimize = minimize, predict_type = predict_type,
         task_properties = task_properties, packages = packages)
-    }
-  )
+    })
 )

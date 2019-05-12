@@ -75,6 +75,5 @@ TaskSurv = R6::R6Class("TaskSurv",
       f = self$formula(rhs = strata)
       vars = unique(unlist(extract_vars(f)))
       survfit(f, self$data(cols = vars))
-    }
-  )
+    })
 )

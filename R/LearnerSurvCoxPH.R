@@ -27,8 +27,9 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
 
     train = function(task) {
       pars = self$params("train")
-      if ("weights" %in% task$properties)
+      if ("weights" %in% task$properties) {
         pars = insert_named(pars, list(weights = task$weights$weight))
+      }
       self$model = invoke(survival::coxph, formula = task$formula(), data = task$data(), .args = pars)
       self
     },
@@ -41,18 +42,19 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
 
     importance = function() {
       # TODO: renames factors and logicals, so the returned names are not valid
-      if (is.null(self$model))
+      if (is.null(self$model)) {
         stopf("No model stored")
+      }
       p = summary(self$model)$coefficients[, 5L]
       sort(1 - p, decreasing = TRUE)
     },
 
     selected_features = function() {
       # TODO: renames factors and logicals, so the returned names are not valid
-      if (is.null(self$model))
+      if (is.null(self$model)) {
         stopf("No model stored")
+      }
       beta = coef(self$model)
       names(beta)[!is.na(beta)]
-    }
-  )
+    })
 )

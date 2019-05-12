@@ -50,4 +50,5 @@ Collate:
     'TaskSurv_lung_lung.R'
     'TaskSurv_rats.R'
     'TaskSurv_unemployment.R'
+    'assertions.R'
     'zzz.R'

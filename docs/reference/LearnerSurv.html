@@ -142,7 +142,7 @@ Set of required packages.</p></li>
     
     <ul>
 <li><p><code>id</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
-Stores the identifier of the learner.</p></li>
+Identifier of the learner.</p></li>
 <li><p><code>task_type</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
 Stores the type of class this learner can operate on, e.g. <code>"classif"</code> or <code>"regr"</code>.
 A complete list of task types is stored in <code><a href='https://www.rdocumentation.org/packages/mlr3/topics/mlr_reflections'>mlr_reflections$task_types</a></code>.</p></li>
@@ -165,7 +165,7 @@ Stores the names of required packages.</p></li>
 Optionally stores a second <a href='https://www.rdocumentation.org/packages/mlr3/topics/Learner'>Learner</a> which is activated as fallback if this first <a href='https://www.rdocumentation.org/packages/mlr3/topics/Learner'>Learner</a> fails during
 train or predict.
 This mechanism is disabled unless you explicitly assign a learner to this slot.
-Additionally, you need to catch raised exceptions via encapsulation, see <code><a href='https://www.rdocumentation.org/packages/mlr3/topics/mlr_control'>mlr_control()</a></code>.</p></li>
+Additionally, you need to enable encapsulation for the fallback learner to work, see <code><a href='https://www.rdocumentation.org/packages/mlr3/topics/mlr_control'>mlr_control()</a></code>.</p></li>
 <li><p><code>hash</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
 Hash (unique identifier) for this object.</p></li>
 </ul>
@@ -177,7 +177,7 @@ Hash (unique identifier) for this object.</p></li>
 <li><p><code>params(tag)</code><br />
 <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> -&gt; named <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code><br />
 Returns a list of hyperparameter settings from <code>param_set</code> where the corresponding parameters in <code>param_set</code> are tagged
-with <code>tag</code>. I.e., <code>l$params("train")</code> returns all settings of hyperparameters used in the training step.</p></li>
+with <code>tag</code>. I.e., <code>l$params("train")</code> returns all settings of hyperparameters relevant in the training step.</p></li>
 <li><p><code>train(task)</code><br />
 <a href='https://www.rdocumentation.org/packages/mlr3/topics/Task'>Task</a> -&gt; <code>self</code><br />
 Train the learner on the complete <a href='https://www.rdocumentation.org/packages/mlr3/topics/Task'>Task</a>. The resulting model is stored in <code>l$model</code>.</p></li>

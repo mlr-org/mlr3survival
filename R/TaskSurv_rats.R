@@ -16,6 +16,7 @@ load_rats = function() {
   data = load_dataset("rats", "survival")
   data = map_at(data, c("rx", "time", "status"), as.integer)
   data$sex = factor(data$sex, levels = c("f", "m"))
+
   b = as_data_backend(data)
   b$hash = "_mlr3_survival_rats_"
   TaskSurv$new("rats", b, time = "time", status = "status")

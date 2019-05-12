@@ -24,3 +24,8 @@ sanity_check.LearnerSurv = function(e) {
   e$performance >= 0.6
 }
 registerS3method("sanity_check", "LearnerSurv", sanity_check.LearnerSurv)
+
+expect_prediction_surv = function(p) {
+  expect_prediction(p)
+  expect_is(p, "PredictionSurv")
+}

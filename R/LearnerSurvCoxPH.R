@@ -56,5 +56,6 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
       }
       beta = coef(self$model)
       names(beta)[!is.na(beta)]
-    })
+    }
+  )
 )

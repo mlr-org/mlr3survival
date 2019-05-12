@@ -59,5 +59,6 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
         stopf("No model stored")
       }
       unique(setdiff(self$model$frame$var, "<leaf>"))
-    })
+    }
+  )
 )

@@ -21,38 +21,25 @@ Name of the task.
 \item \code{backend} :: \link{DataBackend}
 \item \code{time} :: \code{numeric()}\cr
 Event times.
-\item \code{status} :: \code{integer()}\cr
-Event indicator. "0" means alive (no event), "1" means dead (event).
+\item \code{status} :: \code{integer()} | \code{logical()}\cr
+Event indicator. "0"/\code{FALSE} means alive (no event), "1"/\code{TRUE} means dead (event).
 }
 }
 
 \section{Fields}{
 
-
-
-
-See \link{Task}.
-
+See \link[mlr3:TaskSupervised]{mlr3::TaskSupervised}.
 }
 
 \section{Methods}{
 
+All methods from \link[mlr3:TaskSupervised]{mlr3::TaskSupervised}, and additionally:
 \itemize{
 \item \code{survfit(strata = character())}\cr
 \code{character()} -> \code{\link[survival:survfit]{survival::survfit()}}\cr
 Creates a \code{\link[survival:survfit]{survival::survfit()}} object for the survival times.
 Argument \code{strata} can be used to stratify into multiple groups.
 }
-
-
-
-All methods from \link{Task}, and additionally:
-\itemize{
-\item \code{truth(row_ids = NULL)} :: \code{\link[data.table:data.table]{data.table::data.table()}}\cr
-Table with true  labels for specified \code{row_ids}.
-Defaults to all rows in use.
-}
-
 }
 
 \examples{

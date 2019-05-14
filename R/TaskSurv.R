@@ -23,19 +23,19 @@
 #' * `time` :: `numeric()`\cr
 #'   Event times.
 #'
-#' * `status` :: `integer()`\cr
-#'   Event indicator. "0" means alive (no event), "1" means dead (event).
+#' * `status` :: `integer()` | `logical()`\cr
+#'   Event indicator. "0"/`FALSE` means alive (no event), "1"/`TRUE` means dead (event).
 #'
 #' @section Fields:
-#' @inheritSection mlr3::TaskSupervised Fields
+#' See [mlr3::TaskSupervised].
 #'
 #' @section Methods:
+#' All methods from [mlr3::TaskSupervised], and additionally:
+#'
 #' * `survfit(strata = character())`\cr
 #'   `character()` -> [survival::survfit()]\cr
 #'   Creates a [survival::survfit()] object for the survival times.
 #'   Argument `strata` can be used to stratify into multiple groups.
-#' @inheritSection mlr3::TaskSupervised Methods
-#'
 #'
 #' @family Task
 #' @export
@@ -61,7 +61,7 @@ TaskSurv = R6::R6Class("TaskSurv",
     truth = function(row_ids = NULL) {
       tn = self$target_names
       d = self$data(row_ids, cols = self$target_names)
-      Surv(d[[tn[1L]]], d[[tn[2L]]])
+      Surv(d[[tn[1L]]], as.logical(d[[tn[2L]]]))
     },
 
     formula = function(rhs = NULL) {

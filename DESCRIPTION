@@ -25,6 +25,7 @@ Suggests:
     logger,
     rpart,
     ranger,
+    survAUC,
     testthat
 Remotes:
     mlr-org/mlr3misc,

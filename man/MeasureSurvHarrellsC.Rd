@@ -10,6 +10,6 @@
 MeasureSurvHarrellsC
 }
 \description{
-Calls \code{\link[Hmisc:rcorr.cens]{Hmisc::rcorr.cens()}}.
+Calculates Harrell's C, equivalent to the Fortran implementation in \CRANpkg{Hmisc}.
 }
 \keyword{datasets}

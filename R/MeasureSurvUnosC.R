@@ -8,7 +8,7 @@
 #' Calls [survAUC::UnoC()].
 #'
 #' @export
-MeasureSurvUnosC = R6Class("MeasureSurvHarrellsC",
+MeasureSurvUnosC = R6Class("MeasureSurvUnosC",
   inherit = MeasureSurv,
   public = list(
     initialize = function() {

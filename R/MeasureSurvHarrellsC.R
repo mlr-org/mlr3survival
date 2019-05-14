@@ -5,7 +5,7 @@
 #' @include MeasureSurv.R
 #'
 #' @description
-#' Calls [Hmisc::rcorr.cens()].
+#' Calculates Harrell's C, equivalent to the Fortran implementation in \CRANpkg{Hmisc}.
 #'
 #' @export
 MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
@@ -15,13 +15,27 @@ MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
       super$initialize(
         id = "surv.harrells_c",
         range = 0:1,
-        minimize = FALSE,
-        packages = "Hmisc",
+        minimize = FALSE
       )
     },
 
     calculate = function(experiment, prediction = experiment$prediction) {
-      Hmisc::rcorr.cens(-1 * prediction$risk, prediction$truth)[["C Index"]]
+      cindex(prediction$truth, prediction$risk)
     }
   )
 )
+
+#' @useDynLib mlr3survival c_cindex
+cindex = function(S, x) {
+  assert_surv(S)
+  assert_numeric(x)
+  if (anyMissing(S))
+    return(NA_real_)
+
+  ord = order(S[, 1L])
+  time = as.double(S[, 1L])[ord]
+  status = as.logical(S[, 2L])[ord]
+  x = -as.double(x)[ord]
+
+  .Call(c_cindex, time, status, x, PACKAGE = "mlr3survival")
+}

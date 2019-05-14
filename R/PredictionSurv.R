@@ -52,7 +52,7 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
       self$row_ids = assert_atomic_vector(row_ids)
       n = length(row_ids)
       self$risk = assert_numeric(risk, len = n, null.ok = TRUE)
-      self$truth = assert_surv(truth, len = n, any.missing = TRUE)
+      self$truth = assert_surv(truth, len = n)
       self$predict_types = c("risk")[!is.null(risk)]
     }
   )

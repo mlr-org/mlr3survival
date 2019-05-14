@@ -41,7 +41,8 @@
 #' @export
 #' @examples
 #' library(mlr3)
-#' data("lung", package = "survival")
+#' lung = mlr3misc::load_dataset("lung", package = "survival")
+#' lung$status = (lung$status == 2L)
 #' b = as_data_backend(lung)
 #' task = TaskSurv$new("lung", backend = b, time = "time", status = "status")
 #'
@@ -56,6 +57,10 @@ TaskSurv = R6::R6Class("TaskSurv",
     initialize = function(id, backend, time, status) {
       super$initialize(id = id, task_type = "surv", backend = backend, target = c(time, status))
       self$measures = list(mlr_measures$get("surv.harrells_c"))
+
+      status = self$data(cols = status)[[1L]]
+      if (!is.logical(status))
+        assert_integerish(status, lower = 0, upper = 1)
     },
 
     truth = function(row_ids = NULL) {

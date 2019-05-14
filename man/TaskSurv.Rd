@@ -44,7 +44,8 @@ Argument \code{strata} can be used to stratify into multiple groups.
 
 \examples{
 library(mlr3)
-data("lung", package = "survival")
+lung = mlr3misc::load_dataset("lung", package = "survival")
+lung$status = (lung$status == 2L)
 b = as_data_backend(lung)
 task = TaskSurv$new("lung", backend = b, time = "time", status = "status")
 

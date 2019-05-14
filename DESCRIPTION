@@ -21,6 +21,7 @@ Imports:
     paradox,
     survival
 Suggests:
+    evaluate,
     logger,
     rpart,
     ranger,

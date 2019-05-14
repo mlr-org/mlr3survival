@@ -55,7 +55,7 @@ TaskSurv = R6::R6Class("TaskSurv",
   public = list(
     initialize = function(id, backend, time, status) {
       super$initialize(id = id, task_type = "surv", backend = backend, target = c(time, status))
-      self$measures = list(mlr_measures$get("harrells_c"))
+      self$measures = list(mlr_measures$get("surv.harrells_c"))
     },
 
     truth = function(row_ids = NULL) {

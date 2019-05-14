@@ -31,7 +31,8 @@ register_mlr3 = function() {
 
   # measures
   x = utils::getFromNamespace("mlr_measures", ns = "mlr3")
-  x$add("harrells_c", MeasureSurvHarrellsC)
+  x$add("surv.harrells_c", MeasureSurvHarrellsC)
+  x$add("surv.unos_c", MeasureSurvUnosC)
 }
 
 .onLoad = function(libname, pkgname) {

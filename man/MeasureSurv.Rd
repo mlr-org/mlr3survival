@@ -13,7 +13,7 @@ The \code{task_type} is set to \code{"classif"}.
 }
 \section{Construction}{
 \preformatted{m = MeasureSurv$new(id, range, minimize, predict_type = "response",
-     task_properties = character(0L), packages = character(0L))
+     task_properties = character(0L), na_score = FALSE, packages = character(0L))
 }
 
 For a description of the arguments, see \link[mlr3:Measure]{mlr3::Measure}.

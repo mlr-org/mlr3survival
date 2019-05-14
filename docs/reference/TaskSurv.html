@@ -127,28 +127,23 @@ Name of the task.</p></li>
 <li><p><code>backend</code> :: <a href='https://www.rdocumentation.org/packages/mlr3/topics/DataBackend'>DataBackend</a></p></li>
 <li><p><code>time</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric()</a></code><br />
 Event times.</p></li>
-<li><p><code>status</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer()</a></code><br />
-Event indicator. "0" means alive (no event), "1" means dead (event).</p></li>
+<li><p><code>status</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer()</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical()</a></code><br />
+Event indicator. "0"/<code>FALSE</code> means alive (no event), "1"/<code>TRUE</code> means dead (event).</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="fields"><a class="anchor" href="#fields"></a>Fields</h2>
 
     
-    <p>See <a href='https://www.rdocumentation.org/packages/mlr3/topics/Task'>Task</a>.</p>
+    <p>See <a href='https://www.rdocumentation.org/packages/mlr3/topics/TaskSupervised'>mlr3::TaskSupervised</a>.</p>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-    <ul>
+    <p>All methods from <a href='https://www.rdocumentation.org/packages/mlr3/topics/TaskSupervised'>mlr3::TaskSupervised</a>, and additionally:</p><ul>
 <li><p><code>survfit(strata = character())</code><br />
 <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code> -&gt; <code><a href='https://www.rdocumentation.org/packages/survival/topics/survfit'>survival::survfit()</a></code><br />
 Creates a <code><a href='https://www.rdocumentation.org/packages/survival/topics/survfit'>survival::survfit()</a></code> object for the survival times.
 Argument <code>strata</code> can be used to stratify into multiple groups.</p></li>
-</ul>
-    <p>All methods from <a href='https://www.rdocumentation.org/packages/mlr3/topics/Task'>Task</a>, and additionally:</p><ul>
-<li><p><code>truth(row_ids = NULL)</code> :: <code><a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table()</a></code><br />
-Table with true  labels for specified <code>row_ids</code>.
-Defaults to all rows in use.</p></li>
 </ul>
     
 
@@ -161,25 +156,22 @@ Defaults to all rows in use.</p></li>
 <span class='no'>task</span>$<span class='no'>target_names</span></div><div class='output co'>#&gt; [1] "time"   "status"</div><div class='input'><span class='no'>task</span>$<span class='no'>feature_names</span></div><div class='output co'>#&gt; [1] "age"       "inst"      "meal.cal"  "pat.karno" "ph.ecog"   "ph.karno" 
 #&gt; [7] "sex"       "wt.loss"  </div><div class='input'><span class='no'>task</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></span>()</div><div class='output co'>#&gt; Surv(time, status) ~ age + inst + meal.cal + pat.karno + ph.ecog + 
 #&gt;     ph.karno + sex + wt.loss
-#&gt; &lt;environment: namespace:survival&gt;</div><div class='input'><span class='no'>task</span>$<span class='fu'>truth</span>()</div><div class='output co'>#&gt;   [1]  306   166   166   559+  450   364   107   177   156   529+   11   429 
-#&gt;  [13]  170   351    15   181   283   201   524    13   212   524   288   654 
-#&gt;  [25]  363   442   199   550    54   558   207    92    60   551+  728   543+
-#&gt;  [37]  293   202   353   511+  267   511+  371   387   457    71   337   201 
-#&gt;  [49]  404+  222    62   458+  356+  353   163    31   567   340   229   444+
-#&gt;  [61]  315+  182   156   329   364+  291   179   144   376+  384+  268   292+
-#&gt;  [73]  142   413+  266+  194   320   181   613   285   301+  348   197   382+
-#&gt;  [85]  303+  296+  180   186   145   707   269+  300+  284+  350   272+  292+
-#&gt;  [97]  332+  285   259+  110    61   286   270    81   131   225+  269   225+
-#&gt; [109]  243+  279+  276+  455    88   135    79    59   240+  202+  235+  105 
-#&gt; [121]  224+  239   237+  301   173+  252+  221+  185+   92+   13   222+  192+
-#&gt; [133]  183   211+   81   175+  197+  203+  116   188+  191+  105+  174+  177+
-#&gt; [145]  624   371   394   520   574   118   390  1010+   12   473    26   533 
-#&gt; [157]  107    53   122   814   965+   93   210   731   460   153   433   145 
-#&gt; [169]  583    95   303   519   643   883   765   735   189    53   246   689 
-#&gt; [181]   65     5   132   687  1022+  345   444   223   175    60   163    65 
-#&gt; [193]  208   821+  428   310   230   840+  305    11   132   226   426   705 
-#&gt; [205]  363    11   361   176   791    95   196+  167   806+  284   641   147 
-#&gt; [217]  740+  218   163   655   239    88   245   588+   30   179   310   477 </div><div class='input'><span class='no'>task</span>$<span class='fu'>survfit</span>(<span class='st'>"age &gt; 50"</span>)</div><div class='output co'>#&gt; Call: survfit(formula = f, data = self$data(cols = vars))
+#&gt; &lt;environment: namespace:survival&gt;</div><div class='input'><span class='no'>task</span>$<span class='fu'>truth</span>()</div><div class='output co'>#&gt;   [1]  306  166  166  559  450  364  107  177  156  529   11  429  170  351   15
+#&gt;  [16]  181  283  201  524   13  212  524  288  654  363  442  199  550   54  558
+#&gt;  [31]  207   92   60  551  728  543  293  202  353  511  267  511  371  387  457
+#&gt;  [46]   71  337  201  404  222   62  458  356  353  163   31  567  340  229  444
+#&gt;  [61]  315  182  156  329  364  291  179  144  376  384  268  292  142  413  266
+#&gt;  [76]  194  320  181  613  285  301  348  197  382  303  296  180  186  145  707
+#&gt;  [91]  269  300  284  350  272  292  332  285  259  110   61  286  270   81  131
+#&gt; [106]  225  269  225  243  279  276  455   88  135   79   59  240  202  235  105
+#&gt; [121]  224  239  237  301  173  252  221  185   92   13  222  192  183  211   81
+#&gt; [136]  175  197  203  116  188  191  105  174  177  624  371  394  520  574  118
+#&gt; [151]  390 1010   12  473   26  533  107   53  122  814  965   93  210  731  460
+#&gt; [166]  153  433  145  583   95  303  519  643  883  765  735  189   53  246  689
+#&gt; [181]   65    5  132  687 1022  345  444  223  175   60  163   65  208  821  428
+#&gt; [196]  310  230  840  305   11  132  226  426  705  363   11  361  176  791   95
+#&gt; [211]  196  167  806  284  641  147  740  218  163  655  239   88  245  588   30
+#&gt; [226]  179  310  477</div><div class='input'><span class='no'>task</span>$<span class='fu'>survfit</span>(<span class='st'>"age &gt; 50"</span>)</div><div class='output co'>#&gt; Call: survfit(formula = f, data = self$data(cols = vars))
 #&gt; 
 #&gt;                  n events median 0.95LCL 0.95UCL
 #&gt; age &gt; 50=FALSE  26     16    320     239      NA

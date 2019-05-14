@@ -120,52 +120,19 @@ Predefined measures can be found in the <a href='https://www.rdocumentation.org/
     <pre>m = MeasureSurv$new(id, range, minimize, predict_type = "response",
      task_properties = character(0L), packages = character(0L))
 </pre>
-<ul>
-<li><p><code>id</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
-Identifier for the measure.</p></li>
-<li><p><code>range</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(2)</a></code><br />
-Feasible range for this measure as <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(lower_bound, upper_bound)</a></code>.</p></li>
-<li><p><code>minimize</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code><br />
-Set to <code>TRUE</code> if good predictions correspond to small values.</p></li>
-<li><p><code>predict_type</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
-Required predict type of the Learner.</p></li>
-<li><p><code>task_properties</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code><br />
-Required task properties, see Task.</p></li>
-<li><p><code>packages</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code><br />
-Set of required packages.
-Note that these packages will be loaded via <code><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace()</a></code>, and are not attached.</p></li>
-</ul>
+    <p>For a description of the arguments, see <a href='https://www.rdocumentation.org/packages/mlr3/topics/Measure'>mlr3::Measure</a>.
+The <code>task_type</code> is set to <code>"surv"</code>.
+Currently only possible value for <code>predict_types</code> is "risk".</p>
     
     <h2 class="hasAnchor" id="fields"><a class="anchor" href="#fields"></a>Fields</h2>
 
     
-    <ul>
-<li><p><code>id</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
-Identifier of the measure.</p></li>
-<li><p><code>minimize</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code><br />
-Is <code>TRUE</code> if the best value is reached via minimization and <code>FALSE</code> by maximization.</p></li>
-<li><p><code>packages</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code><br />
-Stores the names of required packages.</p></li>
-<li><p><code>range</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(2)</a></code><br />
-Stores the feasible range of the measure.</p></li>
-<li><p><code>task_type</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code><br />
-Stores the required type of the Task.</p></li>
-<li><p><code>task_properties</code> :: <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code><br />
-Stores required properties of the Task.</p></li>
-</ul>
+    <p>See Measure.</p>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-    <ul>
-<li><p><code><a href='https://www.rdocumentation.org/packages/stats/topics/aggregate'>aggregate(rr)</a></code><br />
-ResampleResult -&gt; <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code><br />
-Aggregates multiple performance scores into a single score using the <code>aggregator</code> function of the measure.
-Operates on a ResampleResult as returned by resample.</p></li>
-<li><p><code>calculate(experiment = NULL, prediction = experiment$prediction)</code><br />
-(Experiment, Prediction) -&gt; <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code><br />
-Takes an Experiment and a Prediction (defaults to prediction stored in experiment), and calculates a numeric score.</p></li>
-</ul>
+    <p>See Measure.</p>
     
 
   </div>

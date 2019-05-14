@@ -13,30 +13,15 @@
 #' l = LearnerSurv$new(id, param_set = ParamSet$new(), param_vals = list(), predict_types = character(),
 #'      feature_types = character(), properties = character(), packages = character())
 #' ```
+#' For a description of the arguments, see [mlr3::Learner].
+#' `task_type` is set to `"surv"`.
+#' Currently only possible value for `predict_types` is "risk".
 #'
-#' * `id` :: `character(1)`\cr
-#'   Identifier for the learner.
+#' @section Fields:
+#' See [mlr3::Learner].
 #'
-#' * `param_set` :: [paradox::ParamSet]\cr
-#'   Set of hyperparameters.
-#'
-#' * `param_vals` :: named `list()`\cr
-#'   List of hyperparameter settings.
-#'
-#' * `predict_types` :: `character()`\cr
-#'   Supported predict types. Must be a subset of [`mlr_reflections$learner_predict_types`][mlr_reflections].
-#'
-#' * `feature_types` :: `character()`\cr
-#'   Feature types the learner operates on. Must be a subset of `mlr_reflections$task_feature_types`.
-#'
-#' * `properties` :: `character()`\cr
-#'   Set of properties of the learner. Must be a subset of [`mlr_reflections$learner_properties`][mlr_reflections].
-#'
-#' * `packages` :: `character()`\cr
-#'   Set of required packages.
-#'
-#' @inheritSection mlr3::Learner Fields
-#' @inheritSection mlr3::Learner Methods
+#' @section Methods:
+#' See [mlr3::Learner].
 #'
 #' @family Learner
 #' @export

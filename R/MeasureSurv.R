@@ -14,28 +14,15 @@
 #' m = MeasureSurv$new(id, range, minimize, predict_type = "response",
 #'      task_properties = character(0L), packages = character(0L))
 #' ```
+#' For a description of the arguments, see [mlr3::Measure].
+#' The `task_type` is set to `"surv"`.
+#' Currently only possible value for `predict_types` is "risk".
 #'
-#' * `id` :: `character(1)`\cr
-#'   Identifier for the measure.
+#' @section Fields:
+#' See [Measure].
 #'
-#' * `range` :: `numeric(2)`\cr
-#'   Feasible range for this measure as `c(lower_bound, upper_bound)`.
-#'
-#' * `minimize` :: `logical(1)`\cr
-#'   Set to `TRUE` if good predictions correspond to small values.
-#'
-#' * `predict_type` :: `character(1)`\cr
-#'   Required predict type of the [Learner].
-#'
-#' * `task_properties` :: `character()`\cr
-#'   Required task properties, see [Task].
-#'
-#' * `packages` :: `character()`\cr
-#'   Set of required packages.
-#'   Note that these packages will be loaded via [requireNamespace()], and are not attached.
-#'
-#' @inheritSection mlr3::Measure Fields
-#' @inheritSection mlr3::Measure Methods
+#' @section Methods:
+#' See [Measure].
 #'
 #' @family Measure
 #' @export

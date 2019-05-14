@@ -15,56 +15,20 @@ The \code{task_type} is set to \code{"classif"}.
 \preformatted{m = MeasureSurv$new(id, range, minimize, predict_type = "response",
      task_properties = character(0L), packages = character(0L))
 }
-\itemize{
-\item \code{id} :: \code{character(1)}\cr
-Identifier for the measure.
-\item \code{range} :: \code{numeric(2)}\cr
-Feasible range for this measure as \code{c(lower_bound, upper_bound)}.
-\item \code{minimize} :: \code{logical(1)}\cr
-Set to \code{TRUE} if good predictions correspond to small values.
-\item \code{predict_type} :: \code{character(1)}\cr
-Required predict type of the \link{Learner}.
-\item \code{task_properties} :: \code{character()}\cr
-Required task properties, see \link{Task}.
-\item \code{packages} :: \code{character()}\cr
-Set of required packages.
-Note that these packages will be loaded via \code{\link[=requireNamespace]{requireNamespace()}}, and are not attached.
-}
+
+For a description of the arguments, see \link[mlr3:Measure]{mlr3::Measure}.
+The \code{task_type} is set to \code{"surv"}.
+Currently only possible value for \code{predict_types} is "risk".
 }
 
 \section{Fields}{
 
-
-\itemize{
-\item \code{id} :: \code{character(1)}\cr
-Identifier of the measure.
-\item \code{minimize} :: \code{logical(1)}\cr
-Is \code{TRUE} if the best value is reached via minimization and \code{FALSE} by maximization.
-\item \code{packages} :: \code{character()}\cr
-Stores the names of required packages.
-\item \code{range} :: \code{numeric(2)}\cr
-Stores the feasible range of the measure.
-\item \code{task_type} :: \code{character(1)}\cr
-Stores the required type of the \link{Task}.
-\item \code{task_properties} :: \code{character()}\cr
-Stores required properties of the \link{Task}.
-}
-
+See \link{Measure}.
 }
 
 \section{Methods}{
 
-
-\itemize{
-\item \code{aggregate(rr)}\cr
-\link{ResampleResult} -> \code{numeric(1)}\cr
-Aggregates multiple performance scores into a single score using the \code{aggregator} function of the measure.
-Operates on a \link{ResampleResult} as returned by \link{resample}.
-\item \code{calculate(experiment = NULL, prediction = experiment$prediction)}\cr
-(\link{Experiment}, \link{Prediction}) -> \code{numeric(1)}\cr
-Takes an \link{Experiment} and a \link{Prediction} (defaults to prediction stored in experiment), and calculates a numeric score.
-}
-
+See \link{Measure}.
 }
 
 \concept{Measure}

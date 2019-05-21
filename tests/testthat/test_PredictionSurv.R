@@ -2,7 +2,7 @@ context("PredictionSurv")
 
 test_that("Construction", {
   task = mlr_tasks$get("lung")
-  p = PredictionSurv$new(task = task, risk = runif(task$nrow))
+  p = PredictionSurv$new(row_ids = task$row_ids, truth = task$truth(), risk = runif(task$nrow))
   expect_prediction_surv(p)
 })
 

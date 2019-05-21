@@ -47,16 +47,28 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   cloneable = FALSE,
   public = list(
     risk = NULL,
-    initialize = function(task = NULL, risk = NULL, row_ids = task$row_ids, truth = task$truth()) {
-      self$task_type = "surv"
+    initialize = function(row_ids, truth, risk = NULL) {
       self$row_ids = assert_atomic_vector(row_ids)
-      n = length(row_ids)
-      self$risk = assert_numeric(risk, len = n, null.ok = TRUE)
-      self$truth = assert_surv(truth, len = n)
+      self$truth = assert_surv(truth)
+      self$risk = assert_numeric(risk, null.ok = TRUE)
+      self$task_type = "surv"
       self$predict_types = c("risk")[!is.null(risk)]
     }
   )
 )
+
+#' @export
+convert_prediction.TaskSurv = function(task, predicted) {
+  n = task$nrow
+  assert_numeric(predicted$risk, len = n, any.missing = FALSE, null.ok = TRUE)
+  predicted
+}
+
+#' @export
+as_prediction.TaskSurv = function(task, row_ids, predicted) {
+  PredictionSurv$new(row_ids = row_ids, truth = task$truth(row_ids), risk = predicted$risk)
+}
+
 
 #' @export
 as.data.table.PredictionSurv = function(x, ...) {

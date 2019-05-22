@@ -42,6 +42,7 @@ RoxygenNote: 6.1.1
 Collate:
     'LearnerSurv.R'
     'LearnerSurvCoxPH.R'
+    'LearnerSurvFeatureless.R'
     'LearnerSurvRanger.R'
     'LearnerSurvRpart.R'
     'MeasureSurv.R'

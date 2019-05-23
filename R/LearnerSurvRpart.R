@@ -6,6 +6,7 @@
 #'
 #' @description
 #' A [LearnerSurv] for a regression tree implemented in [rpart::rpart] in package \CRANpkg{rpart}.
+#' Parameter `xval` has been set to 0 per default.
 #'
 #' @export
 LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
@@ -20,9 +21,10 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
             ParamInt$new(id = "maxcompete", default = 4L, lower = 0L, tags = "train"),
             ParamInt$new(id = "maxsurrogate", default = 5L, lower = 0L, tags = "train"),
             ParamInt$new(id = "maxdepth", default = 30L, lower = 1L, upper = 30L, tags = "train"),
-            ParamInt$new(id = "xval", default = 10L, lower = 0L, tags = "train")
+            ParamInt$new(id = "xval", default = 0L, lower = 0L, tags = "train")
           )
         ),
+        param_vals = list(xval = 0L),
         predict_types = "risk",
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
         properties = c("weights", "missings", "importance", "selected_features"),

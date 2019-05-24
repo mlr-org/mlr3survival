@@ -33,9 +33,9 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
       invoke(survival::coxph, formula = task$formula(), data = task$data(), .args = pars)
     },
 
-    predict = function(task) {
+    predict = function(task, model = self$model) {
       newdata = task$data(cols = task$feature_names)
-      risk = unname(predict(self$model, newdata = newdata, type = "lp"))
+      risk = unname(predict(model, newdata = newdata, type = "lp"))
       list(risk = risk)
     },
 

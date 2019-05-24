@@ -57,10 +57,10 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
       )
     },
 
-    predict = function(task) {
+    predict = function(task, model = self$model) {
       pars = self$params("predict")
       newdata = task$data(cols = task$feature_names)
-      p = predict(object = self$model, data = newdata)
+      p = predict(object = model, data = newdata)
 
       list(risk = rowMeans(p$chf))
     },

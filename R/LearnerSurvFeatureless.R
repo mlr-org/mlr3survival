@@ -24,7 +24,7 @@ LearnerSurvFeatureless = R6Class("LearnerSurvFeatureless", inherit = LearnerSurv
       list(features = task$feature_names)
     },
 
-    predict = function(task) {
+    predict = function(task, model = self$model) {
       list(risk = runif(task$nrow))
     },
 

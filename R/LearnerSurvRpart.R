@@ -40,9 +40,9 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
       invoke(rpart::rpart, formula = task$formula(), data = task$data(), method = "exp", .args = pars)
     },
 
-    predict = function(task) {
+    predict = function(task, model = self$model) {
       newdata = task$data(cols = task$feature_names)
-      list(risk = unname(predict(self$model, newdata = newdata, type = "vector")))
+      list(risk = unname(predict(model, newdata = newdata, type = "vector")))
     },
 
     importance = function() {

@@ -72,7 +72,7 @@ TaskSurv = R6::R6Class("TaskSurv",
     formula = function(rhs = NULL) {
       tn = self$target_names
       lhs = sprintf("Surv(%s, %s)", tn[1L], tn[2L])
-      formulate(lhs, rhs %??% self$feature_names, env = getNamespace("survival"))
+      formulate(lhs, rhs %??% ".", env = getNamespace("survival"))
     },
 
     survfit = function(strata = character()) {

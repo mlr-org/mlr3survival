@@ -61,7 +61,7 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
 convert_prediction.TaskSurv = function(task, predicted) {
   n = task$nrow
   assert_numeric(predicted$risk, len = n, any.missing = FALSE, null.ok = TRUE)
-  predicted
+  set_class(predicted, c("PredictionDataSurv", "PredictionData"))
 }
 
 #' @export

@@ -22,7 +22,7 @@ Imports:
     survival
 Suggests:
     evaluate,
-    logger,
+    lgr,
     rpart,
     ranger,
     survAUC,

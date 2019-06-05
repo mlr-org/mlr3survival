@@ -15,7 +15,7 @@ register_mlr3 = function() {
   x$task_col_roles$surv = c("feature", "target", "label", "order", "groups", "weights")
   x$task_properties$surv = c("weights", "groups")
   x$learner_properties$surv = x$learner_properties$regr
-  x$learner_predict_types$surv = "risk"
+  x$learner_predict_types$surv = list(risk = "risk")
 
   # tasks
   x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")

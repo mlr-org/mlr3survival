@@ -11,6 +11,6 @@ LearnerSurvRpart
 }
 \description{
 A \link{LearnerSurv} for a regression tree implemented in \link[rpart:rpart]{rpart::rpart} in package \CRANpkg{rpart}.
-Parameter \code{xval} has been set to 0 per default.
+Parameter \code{xval} is set to 0 in order to save some computation time.
 }
 \keyword{datasets}

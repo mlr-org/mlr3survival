@@ -63,7 +63,7 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
       newdata = task$data(cols = task$feature_names)
       p = predict(object = self$model, data = newdata)
 
-      list(risk = rowMeans(p$chf))
+      as_prediction_data(task, risk = rowMeans(p$chf))
     },
 
     importance = function() {

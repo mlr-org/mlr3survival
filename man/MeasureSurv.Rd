@@ -7,7 +7,7 @@
 \format{\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3:Measure]{mlr3::Measure}.}
 \description{
 This measure specializes \link[mlr3:Measure]{mlr3::Measure} for classification problems.
-Predefined measures can be found in the \link[mlr3:Dictionary]{mlr3::Dictionary} \link[mlr3:mlr_measures]{mlr3::mlr_measures}.
+Predefined measures can be found in the \link[mlr3misc:Dictionary]{mlr3misc::Dictionary} \link[mlr3:mlr_measures]{mlr3::mlr_measures}.
 
 The \code{task_type} is set to \code{"classif"}.
 }

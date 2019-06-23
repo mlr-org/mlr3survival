@@ -5,7 +5,7 @@
 #'
 #' @description
 #' This measure specializes [mlr3::Measure] for classification problems.
-#' Predefined measures can be found in the [mlr3::Dictionary] [mlr3::mlr_measures].
+#' Predefined measures can be found in the [mlr3misc::Dictionary] [mlr3::mlr_measures].
 #'
 #' The `task_type` is set to `"classif"`.
 #'

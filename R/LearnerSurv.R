@@ -6,7 +6,7 @@
 #' @description
 #' This Learner specializes [mlr3::Learner] for survival problems.
 #' The slot `task_type` is set to `"surv"`.
-#' Predefined learners can be found in the [mlr3::Dictionary] [mlr3::mlr_learners].
+#' Predefined learners can be found in the [mlr3misc::Dictionary] [mlr3::mlr_learners].
 #'
 #' @section Construction:
 #' ```

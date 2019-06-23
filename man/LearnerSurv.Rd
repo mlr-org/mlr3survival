@@ -8,7 +8,7 @@
 \description{
 This Learner specializes \link[mlr3:Learner]{mlr3::Learner} for survival problems.
 The slot \code{task_type} is set to \code{"surv"}.
-Predefined learners can be found in the \link[mlr3:Dictionary]{mlr3::Dictionary} \link[mlr3:mlr_learners]{mlr3::mlr_learners}.
+Predefined learners can be found in the \link[mlr3misc:Dictionary]{mlr3misc::Dictionary} \link[mlr3:mlr_learners]{mlr3::mlr_learners}.
 }
 \section{Construction}{
 \preformatted{l = LearnerSurv$new(id, param_set = ParamSet$new(), param_vals = list(), predict_types = character(),

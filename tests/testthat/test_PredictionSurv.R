@@ -14,14 +14,14 @@ test_that("Internally constructed Prediction", {
   expect_prediction_surv(p)
 })
 
-test_that("rbind", {
+test_that("c", {
   task = mlr_tasks$get("lung")
   lrn = mlr_learners$get("surv.rpart")
   rr = resample(task, lrn, "cv3")
 
   preds = map(rr$experiments(), "prediction")
 
-  pred = do.call(rbind, map(rr$experiments(), "prediction"))
+  pred = do.call(c, map(rr$experiments(), "prediction"))
   expect_prediction_surv(pred)
 
   dt = as.data.table(pred)

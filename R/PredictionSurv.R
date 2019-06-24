@@ -44,45 +44,33 @@
 #' p = e$prediction
 #' head(as.data.table(p))
 PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
-  cloneable = FALSE,
   public = list(
-    risk = NULL,
-    initialize = function(row_ids, truth, risk = NULL) {
-      self$row_ids = assert_atomic_vector(row_ids)
-      self$truth = assert_surv(truth)
-      self$risk = assert_numeric(risk, null.ok = TRUE)
+    initialize = function(row_ids, truth = NULL, risk = NULL) {
+      self$data$row_ids = assert_atomic_vector(row_ids)
+      self$data$truth = assert_surv(truth, null.ok = TRUE)
+      self$data$risk = assert_numeric(risk, null.ok = TRUE)
       self$task_type = "surv"
-      self$predict_types = c("risk")[!is.null(risk)]
     }
+  ),
+
+  active = list(
+    risk = function() self$data$risk
   )
 )
-
-#' @export
-as_prediction_data.TaskSurv = function(task, risk = NULL, ...) {
-  row_ids = task$row_ids
-  n = length(row_ids)
-  assert_numeric(risk, len = n, any.missing = FALSE, null.ok = TRUE)
-
-  pd = discard(list(row_ids = row_ids, risk = risk), is.null)
-  class(pd) = c("PredictionDataSurv", "PredictionData")
-  pd
-}
-
-#' @export
-new_prediction.TaskSurv = function(task, data) {
-  PredictionSurv$new(row_ids = data$row_ids, truth = task$truth(data$row_ids), risk = data$risk)
-}
 
 
 #' @export
 as.data.table.PredictionSurv = function(x, ...) {
-  tab = data.table(row_id = x$row_ids, risk = x$risk)
-  tab[, c("time", "status") := list(x$truth[, 1L], x$truth[, 2L])]
-  setcolorder(tab, c("row_id", "time", "status"))[]
+  tab = data.table(row_id = x$data$row_ids, risk = x$data$risk)
+  if (!is.null(x$data$truth)) {
+    tab[, c("time", "status") := list(x$data$truth[, 1L], x$data$truth[, 2L])]
+    setcolorder(tab, c("row_id", "time", "status"))[]
+  }
+  tab
 }
 
 #' @export
-rbind.PredictionSurv = function(...) {
+c.PredictionSurv = function(...) {
   dots = list(...)
   assert_list(dots, "PredictionSurv")
 

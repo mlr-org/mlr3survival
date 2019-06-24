@@ -37,7 +37,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
     predict = function(task) {
       newdata = task$data(cols = task$feature_names)
       risk = unname(predict(self$model, newdata = newdata, type = "lp"))
-      as_prediction_data(task, risk = risk)
+      self$new_prediction(task, risk = risk)
     },
 
     importance = function() {

@@ -47,7 +47,7 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   public = list(
     initialize = function(row_ids, truth = NULL, risk = NULL) {
       self$data$row_ids = assert_atomic_vector(row_ids)
-      self$data$truth = assert_surv(truth, null.ok = TRUE)
+      self$data$truth = assert_surv(truth)
       self$data$risk = assert_numeric(risk, null.ok = TRUE)
       self$task_type = "surv"
     }

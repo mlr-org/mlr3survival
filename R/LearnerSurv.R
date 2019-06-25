@@ -46,7 +46,7 @@ LearnerSurv = R6Class("LearnerSurv", inherit = Learner,
       n = length(row_ids)
       assert_numeric(risk, len = n, any.missing = FALSE, null.ok = TRUE)
 
-      PredictionSurv$new(row_ids = row_ids, truth = NULL, risk = risk)
+      PredictionSurv$new(row_ids = row_ids, truth = task$truth(), risk = risk)
     }
   )
 )

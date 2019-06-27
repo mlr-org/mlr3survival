@@ -54,7 +54,13 @@ PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   ),
 
   active = list(
-    risk = function() self$data$risk
+    risk = function() self$data$risk,
+    missing = function() {
+      if (is.null(self$data$risk)) {
+        return(self$data_row_ids[0L])
+      }
+      self$data$row_ids[is.na(self$data$risk)]
+    }
   )
 )
 
@@ -70,13 +76,21 @@ as.data.table.PredictionSurv = function(x, ...) {
 }
 
 #' @export
-c.PredictionSurv = function(...) {
+c.PredictionSurv = function(..., keep_duplicates = TRUE) {
   dots = list(...)
   assert_list(dots, "PredictionSurv")
+  assert_flag(keep_duplicates)
 
   x = map_dtr(dots, function(p) {
-    list(row_ids = p$row_ids, risk = p$risk)
+    list(row_ids = p$data$row_ids, risk = p$data$risk)
   }, .fill = FALSE)
+  truth = do.call(c, map(dots, "truth"))
 
-  PredictionSurv$new(row_ids = x$row_ids, truth = do.call(c, map(dots, "truth")), risk = x$risk)
+  if (!keep_duplicates) {
+    keep = !duplicated(x$row_ids, fromLast = TRUE)
+    x = x[keep]
+    truth = truth[keep]
+  }
+
+  PredictionSurv$new(row_ids = x$row_ids, truth = truth, risk = x$risk)
 }

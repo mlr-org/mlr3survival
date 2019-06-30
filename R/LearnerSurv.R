@@ -21,7 +21,12 @@
 #' See [mlr3::Learner].
 #'
 #' @section Methods:
-#' See [mlr3::Learner].
+#' All methods of [Learner], and additionally:
+#'
+#' * `new_prediction(row_ids, truth, risk = NULL)`\cr
+#'   [integer()` | `character()`, [survival::Surv()], `numeric()`] -> [PredictionSurv]\cr
+#'   Creates a new [PredictionSurv] object, after performing some basic type checks and transformations.
+#'   See [PredictionSurv] for a description of the arguments.
 #'
 #' @family Learner
 #' @export
@@ -41,12 +46,13 @@ LearnerSurv = R6Class("LearnerSurv", inherit = Learner,
         predict_types = predict_types, feature_types = feature_types, properties = properties, packages = packages)
     },
 
-    new_prediction = function(task, risk = NULL) {
-      row_ids = task$row_ids
+    new_prediction = function(row_ids, truth, risk = NULL) {
+      row_ids = assert_atomic(row_ids)
       n = length(row_ids)
+      assert_surv(truth, len = n)
       assert_numeric(risk, len = n, any.missing = FALSE, null.ok = TRUE)
 
-      PredictionSurv$new(row_ids = row_ids, truth = task$truth(), risk = risk)
+      PredictionSurv$new(row_ids = row_ids, truth = truth, risk = risk)
     }
   )
 )

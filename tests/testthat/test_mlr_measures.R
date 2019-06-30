@@ -7,10 +7,8 @@ test_that("mlr_measures", {
   for (key in keys) {
     m = mlr_measures$get(key)
     expect_measure(m)
-    task$measures = list(m)
 
-    e = Experiment$new(task, "surv.rpart")
-    e$train()$predict()$score()
-    expect_number(e$performance, na.ok = m$na_score)
+    perf = mlr_learners$get("surv.rpart")$train(task)$predict(task)$score()
+    expect_number(perf, na.ok = m$na_score)
   }
 })

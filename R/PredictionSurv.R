@@ -40,12 +40,11 @@
 #' library(mlr3)
 #' task = mlr_tasks$get("lung")
 #' learner = mlr_learners$get("surv.rpart")
-#' e = Experiment$new(task, learner)$train()$predict()
-#' p = e$prediction
+#' p = learner$train(task)$predict(task)
 #' head(as.data.table(p))
 PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   public = list(
-    initialize = function(row_ids, truth = NULL, risk = NULL) {
+    initialize = function(row_ids, truth, risk = NULL) {
       self$data$row_ids = assert_atomic_vector(row_ids)
       self$data$truth = assert_surv(truth)
       self$data$risk = assert_numeric(risk, null.ok = TRUE)

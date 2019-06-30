@@ -12,7 +12,7 @@ Predefined measures can be found in the \link[mlr3misc:Dictionary]{mlr3misc::Dic
 The \code{task_type} is set to \code{"classif"}.
 }
 \section{Construction}{
-\preformatted{m = MeasureSurv$new(id, range, minimize, predict_type = "response",
+\preformatted{m = MeasureSurv$new(id, range, minimize, predict_type = "risk",
      task_properties = character(0L), na_score = FALSE, packages = character(0L))
 }
 
@@ -31,5 +31,8 @@ See \link{Measure}.
 See \link{Measure}.
 }
 
+\seealso{
+Example survival measure: \code{\link[=mlr_measures_surv.harrells_c]{surv.harrells_c}}.
+}
 \concept{Measure}
 \keyword{datasets}

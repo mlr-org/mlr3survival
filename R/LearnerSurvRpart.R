@@ -32,19 +32,18 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
       )
     },
 
-    train = function(task) {
+    train_internal = function(task) {
       pars = self$params("train")
       if ("weights" %in% task$properties) {
         pars = insert_named(pars, list(weights = task$weights$weight))
       }
-      self$model = invoke(rpart::rpart, formula = task$formula(), data = task$data(), method = "exp", .args = pars)
-      self
+      invoke(rpart::rpart, formula = task$formula(), data = task$data(), method = "exp", .args = pars)
     },
 
-    predict = function(task) {
+    predict_internal = function(task) {
       newdata = task$data(cols = task$feature_names)
       risk = unname(predict(self$model, newdata = newdata, type = "vector"))
-      self$new_prediction(task, risk = risk)
+      list(risk = risk)
     },
 
     importance = function() {

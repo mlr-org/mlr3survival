@@ -21,8 +21,9 @@ MeasureSurvUnosC = R6Class("MeasureSurvUnosC",
       )
     },
 
-    calculate = function(experiment, prediction = experiment$prediction) {
-      surv_train = experiment$task$truth(experiment$train_set)
+    score_internal = function(prediction, ...) {
+      # FIXME: this is not right
+      surv_train = prediction$truth# task$truth(experiment$train_set)
       perf = survAUC::UnoC(surv_train, prediction$truth, prediction$risk)
       if (is.nan(perf))
         perf = NA_real_

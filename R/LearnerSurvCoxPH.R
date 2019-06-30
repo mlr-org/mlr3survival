@@ -25,19 +25,18 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
       )
     },
 
-    train = function(task) {
+    train_internal = function(task) {
       pars = self$params("train")
       if ("weights" %in% task$properties) {
         pars$weights = task$weights$weight
       }
-      self$model = invoke(survival::coxph, formula = task$formula(), data = task$data(), .args = pars)
-      self
+      invoke(survival::coxph, formula = task$formula(), data = task$data(), .args = pars)
     },
 
-    predict = function(task) {
+    predict_internal = function(task) {
       newdata = task$data(cols = task$feature_names)
       risk = unname(predict(self$model, newdata = newdata, type = "lp"))
-      self$new_prediction(task, risk = risk)
+      list(risk = risk)
     },
 
     importance = function() {

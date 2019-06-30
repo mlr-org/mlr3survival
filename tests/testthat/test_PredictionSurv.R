@@ -9,8 +9,7 @@ test_that("Construction", {
 test_that("Internally constructed Prediction", {
   task = mlr_tasks$get("lung")
   lrn = mlr_learners$get("surv.rpart")
-  e = Experiment$new(task, lrn)$train()$predict()
-  p = e$prediction
+  p = lrn$train(task)$predict(task)
   expect_prediction_surv(p)
 })
 
@@ -19,9 +18,9 @@ test_that("c", {
   lrn = mlr_learners$get("surv.rpart")
   rr = resample(task, lrn, "cv3")
 
-  preds = map(rr$experiments(), "prediction")
+  preds = rr$predictions
 
-  pred = do.call(c, map(rr$experiments(), "prediction"))
+  pred = do.call(c, preds)
   expect_prediction_surv(pred)
 
   dt = as.data.table(pred)

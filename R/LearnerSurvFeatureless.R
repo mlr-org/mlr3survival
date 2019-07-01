@@ -20,13 +20,12 @@ LearnerSurvFeatureless = R6Class("LearnerSurvFeatureless", inherit = LearnerSurv
       )
     },
 
-    train = function(task) {
-      self$model = list(features = task$feature_names)
-      self
+    train_internal = function(task) {
+      list(features = task$feature_names)
     },
 
-    predict = function(task) {
-      self$new_prediction(task, risk = runif(task$nrow))
+    predict_internal = function(task) {
+      list(risk = runif(task$nrow))
     },
 
     importance = function() {

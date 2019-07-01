@@ -40,8 +40,7 @@ The field \code{task_type} is set to \code{"surv"}.
 library(mlr3)
 task = mlr_tasks$get("lung")
 learner = mlr_learners$get("surv.rpart")
-e = Experiment$new(task, learner)$train()$predict()
-p = e$prediction
+p = learner$train(task)$predict(task)
 head(as.data.table(p))
 }
 \concept{Prediction}

@@ -19,7 +19,7 @@ MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
       )
     },
 
-    calculate = function(experiment, prediction = experiment$prediction) {
+    score_internal = function(prediction, ...) {
       cindex(prediction$truth, prediction$risk)
     }
   )

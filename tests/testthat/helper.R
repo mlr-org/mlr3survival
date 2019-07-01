@@ -20,10 +20,10 @@ generate_tasks.LearnerSurv = function(learner, N = 20L) {
 }
 registerS3method("generate_tasks", "LearnerSurv", generate_tasks.LearnerSurv)
 
-sanity_check.LearnerSurv = function(e) {
-  e$performance >= 0.6
+sanity_check.PredictionSurv = function(prediction) {
+  prediction$score() >= 0.6
 }
-registerS3method("sanity_check", "LearnerSurv", sanity_check.LearnerSurv)
+registerS3method("sanity_check", "PredictionSurv", sanity_check.PredictionSurv)
 
 expect_prediction_surv = function(p) {
   expect_prediction(p)

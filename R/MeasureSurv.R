@@ -11,7 +11,7 @@
 #'
 #' @section Construction:
 #' ```
-#' m = MeasureSurv$new(id, range, minimize, predict_type = "response",
+#' m = MeasureSurv$new(id, range, minimize, predict_type = "risk",
 #'      task_properties = character(0L), na_score = FALSE, packages = character(0L))
 #' ```
 #' For a description of the arguments, see [mlr3::Measure].
@@ -25,13 +25,13 @@
 #' See [Measure].
 #'
 #' @family Measure
+#' @seealso Example survival measure: [`surv.harrells_c`][mlr_measures_surv.harrells_c].
 #' @export
 MeasureSurv = R6Class("MeasureSurv", inherit = Measure, cloneable = FALSE,
   public = list(
-    initialize = function(id, range, minimize, predict_type = "risk", task_properties = character(0L),
-      na_score = FALSE, packages = character(0L)) {
-      super$initialize(id, task_type = "surv", range = range, minimize = minimize, predict_type = predict_type,
-        task_properties = task_properties, na_score = na_score, packages = packages)
+    initialize = function(id, range, minimize = NA, aggregator = NULL, properties = character(), predict_type = "risk", task_properties = character(0L), na_score = FALSE, packages = character(0L)) {
+      super$initialize(id, task_type = "surv", range = range, minimize = minimize, aggregator = aggregator,
+        properties = properties, predict_type = predict_type, task_properties = task_properties, na_score = na_score, packages = packages)
     }
   )
 )

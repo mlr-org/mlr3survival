@@ -44,7 +44,7 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
     },
 
     train_internal = function(task) {
-      pars = self$params("train")
+      pv = self$param_set$get_values(tags = "train")
       targets = task$target_names
 
       invoke(ranger::ranger,
@@ -53,12 +53,13 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
         status.variable.name = targets[2L],
         data = task$data(),
         case.weights = task$weights$weight,
-        .args = pars
+        .args = pv
       )
     },
 
     predict_internal = function(task) {
-      pars = self$params("predict")
+      # FIXME: pv is not used
+      pv = self$param_set$get_values(tags = "predict")
       newdata = task$data(cols = task$feature_names)
       p = predict(object = self$model, data = newdata)
 

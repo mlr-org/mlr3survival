@@ -5,7 +5,7 @@
 #' @import paradox
 #' @importFrom survival Surv survfit
 #' @importFrom R6 R6Class
-NULL
+"_PACKAGE"
 
 register_mlr3 = function() {
 

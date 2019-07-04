@@ -7,8 +7,8 @@ Authors@R:
              role = c("cre", "aut"),
              email = "michellang@gmail.com",
              comment = c(ORCID = "0000-0001-9754-0393")))
-Description: Provides extensions for surival analyis for mlr3.
-    This includes a specialized task type, models, and measures.
+Description: Provides extensions for survival analysis for 'mlr3'.
+    This includes a specialized task type, models, predictions, and measures.
 License: MIT + file LICENSE
 Depends:
     R (>= 3.1.0)

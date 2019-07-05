@@ -10,7 +10,7 @@ Authors@R:
 Description: Provides extensions for survival analysis for
     'mlr3'.  This includes a specialized task type, models, predictions,
     and measures.
-License: MIT + file LICENSE
+License: LGPL-3
 URL: https://mlr3survival.mlr-org.com
 BugReports: https://github.com/mlr-org/mlsurvival/issues
 Depends:
@@ -34,7 +34,6 @@ Remotes:
     mlr-org/mlr3,
     mlr-org/mlr3misc,
     mlr-org/paradox
-ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: yes

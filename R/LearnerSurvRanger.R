@@ -78,7 +78,7 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
     },
 
     oob_error = function() {
-      mod$prediction.error
+      self$model$prediction.error
     }
   )
 )

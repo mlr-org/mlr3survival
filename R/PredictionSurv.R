@@ -10,24 +10,23 @@
 #'
 #' @section Construction:
 #' ```
-#' p = PredictionSurv$new(task = NULL, risk = NULL,
-#'   row_ids = task$row_ids, truth = task$truth())
+#' p = PredictionSurv$new(task = NULL, row_ids = task$row_ids,
+#'   truth = task$truth(), risk = NULL)
 #' ```
 #'
-#' * `task` :: [TaskClassif]\cr
-#'   Task for which the predictions are made. Used to extract the row ids and the true
-#'   labels. Must be subsetted to test set.
-#'
-#' * `risk` :: `numeric()`\cr
-#'   Vector of risk scores. One element for each observation in the test set.
-#'   The higher the risk, the more likely is an event.
-#'   Used in measures like [mlr_measures_surv.harrells_c].
+#' * `task` :: [TaskSurv]\cr
+#'   Task, used to extract defaults for `row_ids` and `truth`.
 #'
 #' * `row_ids` :: (`integer()` | `character()`)\cr
 #'   Row ids of the task. Per default, these are extracted from the `task`.
 #'
 #' * `truth` :: `survival::Surv()`\cr
 #'   Observed survival times. Per default, these are extracted from the `task`.
+#'
+#' * `risk` :: `numeric()`\cr
+#'   Vector of risk scores. One element for each observation in the test set.
+#'   The higher the risk, the more likely is an event.
+#'   Used in measures like [mlr_measures_surv.harrells_c].
 #'
 #' @section Fields:
 #' See [mlr3::Prediction].
@@ -44,7 +43,7 @@
 #' head(as.data.table(p))
 PredictionSurv = R6Class("PredictionSurv", inherit = Prediction,
   public = list(
-    initialize = function(row_ids, truth, risk = NULL) {
+    initialize = function(task = NULL, row_ids = task$row_ids, truth = task$truth(), risk = NULL) {
       self$data$row_ids = assert_atomic_vector(row_ids)
       self$data$truth = assert_surv(truth)
       self$data$risk = assert_numeric(risk, null.ok = TRUE)

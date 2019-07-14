@@ -43,7 +43,7 @@ LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
     predict_internal = function(task) {
       newdata = task$data(cols = task$feature_names)
       risk = unname(predict(self$model, newdata = newdata, type = "vector"))
-      list(risk = risk)
+      PredictionSurv$new(task = task, risk = risk)
     },
 
     importance = function() {

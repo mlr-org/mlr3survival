@@ -11,21 +11,20 @@ This object stores the predictions returned by a learner of class \link{LearnerS
 The \code{task_type} is set to \code{"surv"}.
 }
 \section{Construction}{
-\preformatted{p = PredictionSurv$new(task = NULL, risk = NULL,
-  row_ids = task$row_ids, truth = task$truth())
+\preformatted{p = PredictionSurv$new(task = NULL, row_ids = task$row_ids,
+  truth = task$truth(), risk = NULL)
 }
 \itemize{
-\item \code{task} :: \link{TaskClassif}\cr
-Task for which the predictions are made. Used to extract the row ids and the true
-labels. Must be subsetted to test set.
-\item \code{risk} :: \code{numeric()}\cr
-Vector of risk scores. One element for each observation in the test set.
-The higher the risk, the more likely is an event.
-Used in measures like \link{mlr_measures_surv.harrells_c}.
+\item \code{task} :: \link{TaskSurv}\cr
+Task, used to extract defaults for \code{row_ids} and \code{truth}.
 \item \code{row_ids} :: (\code{integer()} | \code{character()})\cr
 Row ids of the task. Per default, these are extracted from the \code{task}.
 \item \code{truth} :: \code{survival::Surv()}\cr
 Observed survival times. Per default, these are extracted from the \code{task}.
+\item \code{risk} :: \code{numeric()}\cr
+Vector of risk scores. One element for each observation in the test set.
+The higher the risk, the more likely is an event.
+Used in measures like \link{mlr_measures_surv.harrells_c}.
 }
 }
 

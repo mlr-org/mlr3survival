@@ -58,12 +58,10 @@ LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
     },
 
     predict_internal = function(task) {
-      # FIXME: pv is not used
-      pv = self$param_set$get_values(tags = "predict")
       newdata = task$data(cols = task$feature_names)
       p = predict(object = self$model, data = newdata)
 
-      list(risk = rowMeans(p$chf))
+      PredictionSurv$new(task = task, risk = rowMeans(p$chf))
     },
 
     importance = function() {

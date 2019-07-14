@@ -11,7 +11,7 @@ Description: Provides extensions for survival analysis for
     'mlr3'.  This includes a specialized task type, models, predictions,
     and measures.
 License: LGPL-3
-URL: https://mlr3survival.mlr-org.com
+URL: https://github.com/mlr-org/mlr3survival
 BugReports: https://github.com/mlr-org/mlsurvival/issues
 Depends:
     R (>= 3.1.0)

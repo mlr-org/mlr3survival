@@ -25,6 +25,7 @@ Imports:
     survival
 Suggests:
     evaluate,
+    glmnet,
     lgr,
     ranger,
     rpart,

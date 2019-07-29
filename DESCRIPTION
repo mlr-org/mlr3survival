@@ -29,6 +29,7 @@ Suggests:
     ranger,
     rpart,
     survAUC,
+    simsurv,
     testthat
 Remotes:
     mlr-org/mlr3,
@@ -40,9 +41,11 @@ NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate:
+    'GeneratorSimsurv.R'
     'LearnerSurv.R'
     'LearnerSurvCoxPH.R'
     'LearnerSurvFeatureless.R'
+    'LearnerSurvGlmnet.R'
     'LearnerSurvRanger.R'
     'LearnerSurvRpart.R'
     'MeasureSurv.R'

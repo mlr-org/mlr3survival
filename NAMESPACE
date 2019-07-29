@@ -2,9 +2,11 @@
 
 S3method(as.data.table,PredictionSurv)
 S3method(c,PredictionSurv)
+export(GeneratorSimsurv)
 export(LearnerSurv)
 export(LearnerSurvCoxPH)
 export(LearnerSurvFeatureless)
+export(LearnerSurvGlmnet)
 export(LearnerSurvRanger)
 export(LearnerSurvRpart)
 export(MeasureSurv)

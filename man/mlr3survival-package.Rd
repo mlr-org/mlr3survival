@@ -13,7 +13,7 @@ Provides extensions for survival analysis for
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://mlr3survival.mlr-org.com}
+  \item \url{https://github.com/mlr-org/mlr3survival}
   \item Report bugs at \url{https://github.com/mlr-org/mlsurvival/issues}
 }
 

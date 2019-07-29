@@ -24,9 +24,14 @@ register_mlr3 = function() {
   x$add("lung", load_lung)
   x$add("unemployment", load_unemployment)
 
+  # generators
+  x = utils::getFromNamespace("mlr_generators", ns = "mlr3")
+  x$add("simsurv", GeneratorSimsurv)
+
   # learners
   x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
   x$add("surv.coxph", LearnerSurvCoxPH)
+  x$add("surv.glmnet", LearnerSurvGlmnet)
   x$add("surv.rpart", LearnerSurvRpart)
   x$add("surv.ranger", LearnerSurvRanger)
   x$add("surv.featureless", LearnerSurvFeatureless)

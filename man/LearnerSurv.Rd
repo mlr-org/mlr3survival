@@ -27,13 +27,7 @@ See \link[mlr3:Learner]{mlr3::Learner}.
 
 \section{Methods}{
 
-All methods of \link{Learner}, and additionally:
-\itemize{
-\item \code{new_prediction(row_ids, truth, risk = NULL)}\cr
-[integer()\code{|}character()\code{, [survival::Surv()], }numeric()`] -> \link{PredictionSurv}\cr
-Creates a new \link{PredictionSurv} object, after performing some basic type checks and transformations.
-See \link{PredictionSurv} for a description of the arguments.
-}
+See \link[mlr3:Learner]{mlr3::Learner}.
 }
 
 \examples{

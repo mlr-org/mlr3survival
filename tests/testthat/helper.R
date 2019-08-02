@@ -1,7 +1,18 @@
 lapply(list.files(system.file("testthat", package = "mlr3"), pattern = "^helper.*\\.[rR]", full.names = TRUE), source)
 
-generate_tasks.LearnerSurv = function(learner, N = 20L) {
+expect_task_surv = function(task) {
+  expect_is(task, "TaskSurv")
+  expect_task(task)
+  expect_task_supervised(task)
+  expect_is(task$truth(), "Surv")
 
+  f = task$formula()
+  expect_formula(f)
+  expect_set_equal(extract_vars(f)$lhs, task$target_names)
+  expect_is(task$survfit(), "survfit")
+}
+
+generate_tasks.LearnerSurv = function(learner, N = 20L) {
   real.time = 1 + rexp(N, rate = 5) * 10
   cens.time = 1 + rexp(N, rate = 1) * 10
   status = ifelse(real.time <= cens.time, 1L, 0L)

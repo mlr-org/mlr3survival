@@ -37,24 +37,24 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
       newdata = task$data(cols = task$feature_names)
       risk = unname(predict(self$model, newdata = newdata, type = "lp"))
       PredictionSurv$new(task = task, risk = risk)
-    },
-
-    importance = function() {
-      # TODO: renames factors and logicals, so the returned names are not valid
-      if (is.null(self$model)) {
-        stopf("No model stored")
-      }
-      p = summary(self$model)$coefficients[, 5L]
-      sort(1 - p, decreasing = TRUE)
-    },
-
-    selected_features = function() {
-      # TODO: renames factors and logicals, so the returned names are not valid
-      if (is.null(self$model)) {
-        stopf("No model stored")
-      }
-      beta = coef(self$model)
-      names(beta)[!is.na(beta)]
     }
+
+    # importance = function() {
+    #   # TODO: renames factors and logicals, so the returned names are not valid
+    #   if (is.null(self$model)) {
+    #     stopf("No model stored")
+    #   }
+    #   p = summary(self$model)$coefficients[, 5L]
+    #   sort(1 - p, decreasing = TRUE)
+    # },
+
+    # selected_features = function() {
+    #   # TODO: renames factors and logicals, so the returned names are not valid
+    #   if (is.null(self$model)) {
+    #     stopf("No model stored")
+    #   }
+    #   beta = coef(self$model)
+    #   names(beta)[!is.na(beta)]
+    # }
   )
 )

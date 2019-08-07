@@ -11,10 +11,10 @@ register_mlr3 = function() {
 
   # let mlr3 know about survival
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
-  x$task_types = rbind(x$task_types, rowwise_table(
+  x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
     ~type,  ~package,       ~task,      ~learner,      ~prediction,      ~measure,
     "surv", "mlr3survival", "TaskSurv", "LearnerSurv", "PredictionSurv", "MeasureSurv"
-  ))
+  )), "type")
   x$task_col_roles$surv = c("feature", "target", "label", "order", "groups", "weights")
   x$task_properties$surv = c("weights", "groups")
   x$learner_properties$surv = x$learner_properties$regr

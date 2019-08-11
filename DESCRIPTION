@@ -42,7 +42,6 @@ NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate:
-    'GeneratorSimsurv.R'
     'LearnerSurv.R'
     'LearnerSurvCoxPH.R'
     'LearnerSurvFeatureless.R'
@@ -53,6 +52,7 @@ Collate:
     'MeasureSurvHarrellsC.R'
     'MeasureSurvUnosC.R'
     'PredictionSurv.R'
+    'TaskGeneratorSimsurv.R'
     'TaskSurv.R'
     'TaskSurv_lung.R'
     'TaskSurv_rats.R'

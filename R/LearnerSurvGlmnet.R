@@ -17,7 +17,7 @@
 #' @templateVar learner_name surv.glmnet
 #' @examples
 #' library(mlr3)
-#' task = mlr_generators$get("simsurv")$generate(200)
+#' task = mlr_task_generators$get("simsurv")$generate(200)
 #' learner = mlr_learners$get("surv.glmnet")
 #' resample(task, learner, "cv3")
 LearnerSurvGlmnet = R6Class("LearnerSurvGlmnet", inherit = LearnerSurv,

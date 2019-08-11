@@ -28,8 +28,8 @@ register_mlr3 = function() {
   x$add("unemployment", load_unemployment)
 
   # generators
-  x = utils::getFromNamespace("mlr_generators", ns = "mlr3")
-  x$add("simsurv", GeneratorSimsurv)
+  x = utils::getFromNamespace("mlr_task_generators", ns = "mlr3")
+  x$add("simsurv", TaskGeneratorSimsurv)
 
   # learners
   x = utils::getFromNamespace("mlr_learners", ns = "mlr3")

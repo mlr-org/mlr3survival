@@ -15,7 +15,7 @@ Calls \code{\link[glmnet:cv.glmnet]{glmnet::cv.glmnet()}} from package \CRANpkg{
 }
 \examples{
 library(mlr3)
-task = mlr_generators$get("simsurv")$generate(200)
+task = mlr_task_generators$get("simsurv")$generate(200)
 learner = mlr_learners$get("surv.glmnet")
 resample(task, learner, "cv3")
 }

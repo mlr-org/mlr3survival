@@ -1,10 +1,10 @@
 #' @title Survival Task Generator for Package 'simsurv'
 #'
-#' @aliases mlr_generators_simsurv
-#' @format [R6::R6Class] inheriting from [mlr3::Generator].
+#' @aliases mlr_task_generators_simsurv
+#' @format [R6::R6Class] inheriting from [mlr3::TaskGenerator].
 #'
 #' @description
-#' A [mlr3::Generator] calling [simsurv::simsurv()] from package \CRANpkg{simsurv}.
+#' A [mlr3::TaskGenerator] calling [simsurv::simsurv()] from package \CRANpkg{simsurv}.
 #'
 #' This simulator only exposes a small subset of the flexibility of \CRANpkg{simsurv}, and just creates a small data set with the following numerical covariates:
 #'
@@ -16,12 +16,12 @@
 #'
 #' @export
 #' @examples
-#' generator = mlr3::mlr_generators$get("simsurv")
+#' generator = mlr3::mlr_task_generators$get("simsurv")
 #' task = generator$generate(200)
 #' task$head()
 #' plot(task$survfit())
-GeneratorSimsurv = R6Class("GeneratorSmiley",
-  inherit = Generator,
+TaskGeneratorSimsurv = R6Class("TaskGeneratorSmiley",
+  inherit = TaskGenerator,
   public = list(
     initialize = function(id = "smiley") {
       param_set = ParamSet$new(list(

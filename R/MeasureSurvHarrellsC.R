@@ -27,10 +27,12 @@ MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
 
 #' @useDynLib mlr3survival c_cindex
 cindex = function(S, x) {
+
   assert_surv(S)
   assert_numeric(x)
-  if (anyMissing(S))
+  if (anyMissing(S)) {
     return(NA_real_)
+  }
 
   ord = order(S[, 1L])
   time = as.double(S[, 1L])[ord]

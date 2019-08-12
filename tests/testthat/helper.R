@@ -13,6 +13,7 @@ expect_task_surv = function(task) {
 }
 
 generate_tasks.LearnerSurv = function(learner, N = 20L) {
+
   real.time = 1 + rexp(N, rate = 5) * 10
   cens.time = 1 + rexp(N, rate = 1) * 10
   status = ifelse(real.time <= cens.time, 1L, 0L)

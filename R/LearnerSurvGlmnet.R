@@ -64,7 +64,8 @@ LearnerSurvGlmnet = R6Class("LearnerSurvGlmnet", inherit = LearnerSurv,
     },
 
     train_internal = function(task) {
-      pars = self$param_set$get_values(tags ="train")
+
+      pars = self$param_set$get_values(tags = "train")
       data = as.matrix(task$data(cols = task$feature_names))
       target = task$truth()
       if ("weights" %in% task$properties) {

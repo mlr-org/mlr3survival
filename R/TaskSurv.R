@@ -58,8 +58,9 @@ TaskSurv = R6::R6Class("TaskSurv",
       super$initialize(id = id, task_type = "surv", backend = backend, target = c(time, status))
 
       status = self$data(cols = status)[[1L]]
-      if (!is.logical(status))
+      if (!is.logical(status)) {
         assert_integerish(status, lower = 0, upper = 1)
+      }
     },
 
     truth = function(row_ids = NULL) {

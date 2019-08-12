@@ -75,6 +75,7 @@ as.data.table.PredictionSurv = function(x, ...) {
 
 #' @export
 c.PredictionSurv = function(..., keep_duplicates = TRUE) {
+
   dots = list(...)
   assert_list(dots, "PredictionSurv")
   assert_flag(keep_duplicates)

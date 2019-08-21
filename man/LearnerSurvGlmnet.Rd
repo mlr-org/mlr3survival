@@ -15,9 +15,10 @@ Calls \code{\link[glmnet:cv.glmnet]{glmnet::cv.glmnet()}} from package \CRANpkg{
 }
 \examples{
 library(mlr3)
-task = mlr_task_generators$get("simsurv")$generate(200)
-learner = mlr_learners$get("surv.glmnet")
-resample(task, learner, "cv3")
+task = tgen("simsurv")$generate(200)
+learner = lrn("surv.glmnet")
+resampling = rsmp("cv", folds = 3)
+resample(task, learner, resampling)
 }
 \references{
 Jerome Friedman, Trevor Hastie, Robert Tibshirani (2010).

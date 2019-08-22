@@ -1,17 +1,20 @@
 #' @title Lung Cancer Survival Task
 #'
-#' @usage NULL
 #' @name mlr_tasks_lung
 #' @format [R6::R6Class] inheriting from [TaskSurv].
 #'
-#' @section Usage:
+#' @section Construction:
 #' ```
-#' mlr_tasks$get("lung")
+#' mlr3::mlr_tasks$get("lung")
+#' mlr3::tsk("lung")
 #' ```
 #'
 #' @description
 #' A survival task for the [survival::lung] data set.
 #' Columns have been converted to integer, column "sex" has been converted to a factor.
+#' @template seealso_task
+NULL
+
 load_lung = function() {
   data = load_dataset("lung", "survival")
   data = map_dtc(data, as.integer)

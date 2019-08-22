@@ -1,12 +1,27 @@
 #' @title Uno's C-Index
 #'
+#' @usage NULL
 #' @aliases mlr_measures_surv.unos_c
 #' @format [R6::R6Class()] inheriting from [MeasureSurv].
 #' @include MeasureSurv.R
 #'
+#' @section Construction:
+#' ```
+#' MeasureSurvUnosC$new()
+#' mlr_measures$get("surv.unos_c")
+#' msr("surv.unos_c")
+#' ```
+#'
 #' @description
 #' Calls [survAUC::UnoC()].
 #'
+#' @references
+#' Uno, Hajime, et al. (2011).
+#' On the C‐statistics for evaluating overall adequacy of risk prediction procedures with censored survival data.
+#' Statistics in medicine 30.10 (2011): 1105-1117.
+#' \doi{10.1002/sim.4154}
+#'
+#' @template seealso_measure
 #' @export
 MeasureSurvUnosC = R6Class("MeasureSurvUnosC",
   inherit = MeasureSurv,

@@ -6,13 +6,17 @@
 \alias{mlr_learners_surv.glmnet}
 \title{GLM with Elastic Net Regularization Survival Learner}
 \format{\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{LearnerSurv}.}
-\usage{
-LearnerSurvGlmnet
-}
 \description{
 Generalized linear models with elastic net regularization.
 Calls \code{\link[glmnet:cv.glmnet]{glmnet::cv.glmnet()}} from package \CRANpkg{glmnet}.
 }
+\section{Construction}{
+\preformatted{LearnerSurvGlmnet$new()
+mlr_learners$get("surv.glmnet")
+lrn("surv.glmnet")
+}
+}
+
 \examples{
 library(mlr3)
 task = tgen("simsurv")$generate(200)
@@ -25,5 +29,8 @@ Jerome Friedman, Trevor Hastie, Robert Tibshirani (2010).
 Regularization Paths for Generalized Linear Models via Coordinate Descent.
 Journal of Statistical Software, 33(1), 1-22.
 \doi{10.18637/jss.v033.i01}.
+}
+\seealso{
+\link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:Learner]{Learners}: \link[mlr3:mlr_learners]{mlr3::mlr_learners}
 }
 \keyword{datasets}

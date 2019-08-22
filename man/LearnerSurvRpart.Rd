@@ -6,11 +6,24 @@
 \alias{mlr_learners_surv.rpart}
 \title{Survival Tree Learner}
 \format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{LearnerSurv}.}
-\usage{
-LearnerSurvRpart
-}
 \description{
-A \link{LearnerSurv} for a regression tree implemented in \link[rpart:rpart]{rpart::rpart} in package \CRANpkg{rpart}.
+A \link{LearnerSurv} for a regression tree implemented in \code{\link[rpart:rpart]{rpart::rpart()}} in package \CRANpkg{rpart}.
 Parameter \code{xval} is set to 0 in order to save some computation time.
+}
+\section{Construction}{
+\preformatted{LearnerSurvRpart$new()
+mlr_learners$get("surv.rpart")
+lrn("surv.rpart")
+}
+}
+
+\references{
+Breiman, L. (1984).
+Classification and Regression Trees.
+New York: Routledge.
+\doi{10.1201/9781315139470}.
+}
+\seealso{
+\link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:Learner]{Learners}: \link[mlr3:mlr_learners]{mlr3::mlr_learners}
 }
 \keyword{datasets}

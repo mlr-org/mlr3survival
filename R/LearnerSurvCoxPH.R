@@ -1,18 +1,33 @@
 #' @title Cox Proportional Hazard Learner
 #'
+#' @usage NULL
 #' @aliases mlr_learners_surv.coxph
 #' @format [R6::R6Class] inheriting from [LearnerSurv].
 #' @include LearnerSurv.R
 #'
-#' @description
-#' A [LearnerSurv] for a Cox PH model implemented in [survival::coxph] in package \CRANpkg{survival}.
+#' @section Construction:
+#' ```
+#' LearnerSurvCoxPH$new()
+#' mlr_learners$get("surv.coxph")
+#' lrn("surv.coxph")
+#' ```
 #'
+#' @description
+#' A [LearnerSurv] for a Cox PH model implemented in [survival::coxph()] in package \CRANpkg{survival}.
+#'
+#' @references
+#' Cox, David R. (1972).
+#' Regression models and life‐tables.
+#' Journal of the Royal Statistical Society: Series B (Methodological) 34.2 (1972): 187-202.
+#' \doi{10.1111/j.2517-6161.1972.tb00899.x}.
+#'
+#' @template seealso_learner
 #' @export
 LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH", inherit = LearnerSurv,
   public = list(
-    initialize = function(id = "surv.coxph") {
+    initialize = function() {
       super$initialize(
-        id = id,
+        id = "surv.coxph",
         param_set = ParamSet$new(
           params = list(
             ParamFct$new(id = "ties", default = "efron", levels = c("efron", "breslow", "exact"), tags = "train")

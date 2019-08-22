@@ -1,17 +1,20 @@
 #' @title Rats Survival Task
 #'
-#' @usage NULL
 #' @name mlr_tasks_rats
 #' @format [R6::R6Class] inheriting from [TaskSurv].
 #'
-#' @section Usage:
+#' @section Construction:
 #' ```
-#' mlr_tasks$get("rats")
+#' mlr3::mlr_tasks$get("rats")
+#' mlr3::tsk("rats")
 #' ```
 #'
 #' @description
 #' A survival task for the [survival::rats] data set.
 #' Columns have been converted to integer, column "sex" has been converted to a factor.
+#' @template seealso_task
+NULL
+
 load_rats = function() {
   data = load_dataset("rats", "survival")
   data = map_at(data, c("rx", "time", "status"), as.integer)

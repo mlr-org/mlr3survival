@@ -1,19 +1,29 @@
 #' @title Featureless Survival Learner
 #'
+#' @usage NULL
 #' @aliases mlr_learners_surv.featureless
 #' @format [R6::R6Class] inheriting from [LearnerSurv].
 #' @include LearnerSurv.R
+#'
+#' @section Construction:
+#' ```
+#' LearnerSurvFeatureless$new()
+#' mlr_learners$get("surv.featureless")
+#' lrn("surv.featureless")
+#' ```
 #'
 #' @description
 #' A simple [LearnerSurv] which only considers the survival time, ignoring all features.
 #' Currently, only risk prediction is supported, where the learner just samples random
 #' risk scores.
+#'
+#' @template seealso_learner
 #' @export
 LearnerSurvFeatureless = R6Class("LearnerSurvFeatureless", inherit = LearnerSurv,
   public = list(
-    initialize = function(id = "surv.featureless") {
+    initialize = function() {
       super$initialize(
-        id = id,
+        id = "surv.featureless",
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
         predict_types = "risk",
         properties = c("missings", "importance", "selected_features")

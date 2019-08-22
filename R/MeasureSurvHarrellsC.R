@@ -1,12 +1,21 @@
 #' @title Harrell's C-Index
 #'
+#' @usage NULL
 #' @aliases mlr_measures_surv.harrells_c
 #' @format [R6::R6Class()] inheriting from [MeasureSurv].
 #' @include MeasureSurv.R
 #'
+#' @section Construction:
+#' ```
+#' MeasureSurvHarrellsC$new()
+#' mlr_measures$get("surv.harrells_c")
+#' msr("surv.harrells_c")
+#' ```
+#'
 #' @description
 #' Calculates Harrell's C, equivalent to the Fortran implementation in \CRANpkg{Hmisc}.
 #'
+#' @template seealso_measure
 #' @export
 MeasureSurvHarrellsC = R6Class("MeasureSurvHarrellsC",
   inherit = MeasureSurv,

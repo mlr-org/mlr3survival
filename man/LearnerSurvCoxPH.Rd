@@ -6,10 +6,23 @@
 \alias{mlr_learners_surv.coxph}
 \title{Cox Proportional Hazard Learner}
 \format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{LearnerSurv}.}
-\usage{
-LearnerSurvCoxPH
-}
 \description{
-A \link{LearnerSurv} for a Cox PH model implemented in \link[survival:coxph]{survival::coxph} in package \CRANpkg{survival}.
+A \link{LearnerSurv} for a Cox PH model implemented in \code{\link[survival:coxph]{survival::coxph()}} in package \CRANpkg{survival}.
+}
+\section{Construction}{
+\preformatted{LearnerSurvCoxPH$new()
+mlr_learners$get("surv.coxph")
+lrn("surv.coxph")
+}
+}
+
+\references{
+Cox, David R. (1972).
+Regression models and life‐tables.
+Journal of the Royal Statistical Society: Series B (Methodological) 34.2 (1972): 187-202.
+\doi{10.1111/j.2517-6161.1972.tb00899.x}.
+}
+\seealso{
+\link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:Learner]{Learners}: \link[mlr3:mlr_learners]{mlr3::mlr_learners}
 }
 \keyword{datasets}

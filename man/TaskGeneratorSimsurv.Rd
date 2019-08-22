@@ -6,13 +6,10 @@
 \alias{mlr_task_generators_simsurv}
 \title{Survival Task Generator for Package 'simsurv'}
 \format{\link[R6:R6Class]{R6::R6Class} inheriting from \link[mlr3:TaskGenerator]{mlr3::TaskGenerator}.}
-\usage{
-TaskGeneratorSimsurv
-}
 \description{
 A \link[mlr3:TaskGenerator]{mlr3::TaskGenerator} calling \code{\link[simsurv:simsurv]{simsurv::simsurv()}} from package \CRANpkg{simsurv}.
 
-This simulator only exposes a small subset of the flexibility of \CRANpkg{simsurv}, and just creates a small data set with the following numerical covariates:
+This generator currently only exposes a small subset of the flexibility of \CRANpkg{simsurv}, and just creates a small data set with the following numerical covariates:
 \itemize{
 \item \code{treatment}: Bernoulli distributed with log hazard ratio \code{-0.5}.
 \item \code{height}: Normally distributed with log hazard ratio \code{1}.
@@ -21,10 +18,20 @@ This simulator only exposes a small subset of the flexibility of \CRANpkg{simsur
 
 See \code{\link[simsurv:simsurv]{simsurv::simsurv()}} for an explanation of the hyperparameters.
 }
+\section{Construction}{
+\preformatted{TaskGeneratorSimsurv$new()
+mlr_task_generators$get("simsurv")
+tgen("simsurv")
+}
+}
+
 \examples{
 generator = mlr3::mlr_task_generators$get("simsurv")
 task = generator$generate(200)
 task$head()
 plot(task$survfit())
+}
+\seealso{
+\link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:TaskGenerator]{TaskGenerators}: \link[mlr3:mlr_task_generators]{mlr3::mlr_task_generators}
 }
 \keyword{datasets}

@@ -1,19 +1,34 @@
 #' @title Survival Tree Learner
 #'
+#' @usage NULL
 #' @aliases mlr_learners_surv.rpart
 #' @format [R6::R6Class] inheriting from [LearnerSurv].
 #' @include LearnerSurv.R
 #'
+#' @section Construction:
+#' ```
+#' LearnerSurvRpart$new()
+#' mlr_learners$get("surv.rpart")
+#' lrn("surv.rpart")
+#' ```
+#'
 #' @description
-#' A [LearnerSurv] for a regression tree implemented in [rpart::rpart] in package \CRANpkg{rpart}.
+#' A [LearnerSurv] for a regression tree implemented in [rpart::rpart()] in package \CRANpkg{rpart}.
 #' Parameter `xval` is set to 0 in order to save some computation time.
 #'
+#' @references
+#' Breiman, L. (1984).
+#' Classification and Regression Trees.
+#' New York: Routledge.
+#' \doi{10.1201/9781315139470}.
+#'
+#' @template seealso_learner
 #' @export
 LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
   public = list(
-    initialize = function(id = "surv.rpart") {
+    initialize = function() {
       super$initialize(
-        id = id,
+        id = "surv.rpart",
         param_set = ParamSet$new(
           params = list(
             ParamInt$new(id = "minsplit", default = 20L, lower = 1L, tags = "train"),

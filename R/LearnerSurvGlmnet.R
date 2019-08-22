@@ -1,7 +1,16 @@
 #' @title GLM with Elastic Net Regularization Survival Learner
 #'
+#' @usage NULL
 #' @aliases mlr_learners_surv.glmnet
 #' @format [R6::R6Class()] inheriting from [LearnerSurv].
+#' @include LearnerSurv.R
+#'
+#' @section Construction:
+#' ```
+#' LearnerSurvGlmnet$new()
+#' mlr_learners$get("surv.glmnet")
+#' lrn("surv.glmnet")
+#' ```
 #'
 #' @description
 #' Generalized linear models with elastic net regularization.
@@ -14,7 +23,7 @@
 #' \doi{10.18637/jss.v033.i01}.
 #'
 #' @export
-#' @templateVar learner_name surv.glmnet
+#' @template seealso_learner
 #' @examples
 #' library(mlr3)
 #' task = tgen("simsurv")$generate(200)
@@ -23,9 +32,9 @@
 #' resample(task, learner, resampling)
 LearnerSurvGlmnet = R6Class("LearnerSurvGlmnet", inherit = LearnerSurv,
   public = list(
-    initialize = function(id = "surv.glmnet") {
+    initialize = function() {
       super$initialize(
-        id = id,
+        id = "surv.glmnet",
         param_set = ParamSet$new(
           params = list(
             ParamDbl$new(id = "alpha", default = 1, lower = 0, upper = 1, tags = "train"),

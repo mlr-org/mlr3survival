@@ -1,17 +1,38 @@
 #' @title Survival Ranger Learner
 #'
+#' @usage NULL
 #' @aliases mlr_learners_surv.ranger
 #' @format [R6::R6Class()] inheriting from [LearnerSurv].
+#' @include LearnerSurv.R
+#'
+#' @section Construction:
+#' ```
+#' LearnerSurvRanger$new()
+#' mlr_learners$get("surv.ranger")
+#' lrn("surv.ranger")
+#' ```
 #'
 #' @description
 #' A [LearnerSurv] for a survival random forest implemented in [ranger::ranger()] in package \CRANpkg{ranger}.
 #'
+#' @references
+#' Marvin N. Wright and Andreas Ziegler (2017).
+#' ranger: A Fast Implementation of Random Forests for High Dimensional Data in C++ and R.
+#' Journal of Statistical Software, 77(1), 1-17.
+#' \doi{10.18637/jss.v077.i01}.
+#'
+#' Breiman, L. (2001).
+#' Random Forests.
+#' Machine Learning 45(1).
+#' \doi{10.1023/A:1010933404324}.
+#'
+#' @template seealso_learner
 #' @export
 LearnerSurvRanger = R6Class("LearnerSurvRanger", inherit = LearnerSurv,
   public = list(
-    initialize = function(id = "surv.ranger") {
+    initialize = function() {
       super$initialize(
-        id = id,
+        id = "surv.ranger",
         param_set = ParamSet$new(
           params = list(
             ParamInt$new(id = "num.trees", default = 500L, lower = 1L, tags = c("train", "predict")),

@@ -6,12 +6,19 @@
 \alias{mlr_learners_surv.featureless}
 \title{Featureless Survival Learner}
 \format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{LearnerSurv}.}
-\usage{
-LearnerSurvFeatureless
-}
 \description{
 A simple \link{LearnerSurv} which only considers the survival time, ignoring all features.
 Currently, only risk prediction is supported, where the learner just samples random
 risk scores.
+}
+\section{Construction}{
+\preformatted{LearnerSurvFeatureless$new()
+mlr_learners$get("surv.featureless")
+lrn("surv.featureless")
+}
+}
+
+\seealso{
+\link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:Learner]{Learners}: \link[mlr3:mlr_learners]{mlr3::mlr_learners}
 }
 \keyword{datasets}

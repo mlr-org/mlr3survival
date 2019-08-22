@@ -6,10 +6,17 @@
 \alias{mlr_measures_surv.harrells_c}
 \title{Harrell's C-Index}
 \format{\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{MeasureSurv}.}
-\usage{
-MeasureSurvHarrellsC
-}
 \description{
 Calculates Harrell's C, equivalent to the Fortran implementation in \CRANpkg{Hmisc}.
+}
+\section{Construction}{
+\preformatted{MeasureSurvHarrellsC$new()
+mlr_measures$get("surv.harrells_c")
+msr("surv.harrells_c")
+}
+}
+
+\seealso{
+\link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:Measure]{Measures}: \link[mlr3:mlr_measures]{mlr3::mlr_measures}
 }
 \keyword{datasets}

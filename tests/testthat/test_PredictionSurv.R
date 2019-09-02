@@ -19,7 +19,7 @@ test_that("c", {
   resampling = rsmp("cv", folds = 3)
   rr = resample(task, lrn, resampling)
 
-  preds = rr$predictions
+  preds = rr$predictions()
 
   pred = do.call(c, preds)
   expect_prediction_surv(pred)

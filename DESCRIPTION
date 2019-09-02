@@ -25,7 +25,6 @@ Imports:
     R6,
     survival
 Suggests:
-    evaluate,
     glmnet,
     lgr,
     ranger,

@@ -12,13 +12,13 @@ Predefined measures can be found in the \link[mlr3misc:Dictionary]{mlr3misc::Dic
 The \code{task_type} is set to \code{"classif"}.
 }
 \section{Construction}{
-\preformatted{m = MeasureSurv$new(id, range, minimize, predict_type = "risk",
-     task_properties = character(0L), na_score = FALSE, packages = character(0L))
+\preformatted{m = MeasureSurv$new(id, range, minimize, aggregator = NULL, properties = character(), predict_type = "risk",
+     task_properties = character(), packages = character())
 }
 
 For a description of the arguments, see \link[mlr3:Measure]{mlr3::Measure}.
 The \code{task_type} is set to \code{"surv"}.
-Currently only possible value for \code{predict_types} is "risk".
+The currently only possible value for \code{predict_type} is "risk".
 }
 
 \section{Fields}{

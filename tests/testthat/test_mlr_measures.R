@@ -9,6 +9,6 @@ test_that("mlr_measures", {
     expect_measure(m)
 
     perf = mlr_learners$get("surv.rpart")$train(task)$predict(task)$score()
-    expect_number(perf, na.ok = m$na_score)
+    expect_number(perf, na.ok = "na_score" %in% m$properties)
   }
 })

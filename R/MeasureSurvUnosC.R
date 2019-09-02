@@ -32,8 +32,7 @@ MeasureSurvUnosC = R6Class("MeasureSurvUnosC",
         range = 0:1,
         minimize = FALSE,
         packages = "survAUC",
-        na_score = TRUE,
-        properties = c("requires_task", "requires_train_set")
+        properties = c("na_score", "requires_task", "requires_train_set")
       )
     },
 

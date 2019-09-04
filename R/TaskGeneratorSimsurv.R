@@ -33,13 +33,15 @@ TaskGeneratorSimsurv = R6Class("TaskGeneratorSimsurv",
   inherit = TaskGenerator,
   public = list(
     initialize = function() {
-      param_set = ParamSet$new(list(
+      ps = ParamSet$new(list(
         ParamFct$new("dist", levels = c("weibull", "exponential", "gompertz"), default = "weibull"),
         ParamDbl$new("lambdas", lower = 0, default = 0.1, tags = "required"),
         ParamDbl$new("gammas", lower = 0, default = 1.5, tags = "required"),
         ParamDbl$new("maxt", lower = 0, default = 5, tags = "required")
       ))
-      super$initialize(id = "simsurv", "classif", "mlbench", param_set, param_vals = list(lambdas = 0.1, gammas = 1.5, maxt = 5))
+      ps$values = list(lambdas = 0.1, gammas = 1.5, maxt = 5)
+
+      super$initialize(id = "simsurv", task_type = "classif", packages = "mlbench", param_set = ps)
     }
   ),
 

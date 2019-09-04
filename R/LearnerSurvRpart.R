@@ -27,19 +27,19 @@
 LearnerSurvRpart = R6Class("LearnerSurvRpart", inherit = LearnerSurv,
   public = list(
     initialize = function() {
+      ps = ParamSet$new(list(
+        ParamInt$new("minsplit", default = 20L, lower = 1L, tags = "train"),
+        ParamDbl$new("cp", default = 0.01, lower = 0, upper = 1, tags = "train"),
+        ParamInt$new("maxcompete", default = 4L, lower = 0L, tags = "train"),
+        ParamInt$new("maxsurrogate", default = 5L, lower = 0L, tags = "train"),
+        ParamInt$new("maxdepth", default = 30L, lower = 1L, upper = 30L, tags = "train"),
+        ParamInt$new("xval", default = 10L, lower = 0L, tags = "train")
+      ))
+      ps$values = list(xval = 0L)
+
       super$initialize(
         id = "surv.rpart",
-        param_set = ParamSet$new(
-          params = list(
-            ParamInt$new(id = "minsplit", default = 20L, lower = 1L, tags = "train"),
-            ParamDbl$new(id = "cp", default = 0.01, lower = 0, upper = 1, tags = "train"),
-            ParamInt$new(id = "maxcompete", default = 4L, lower = 0L, tags = "train"),
-            ParamInt$new(id = "maxsurrogate", default = 5L, lower = 0L, tags = "train"),
-            ParamInt$new(id = "maxdepth", default = 30L, lower = 1L, upper = 30L, tags = "train"),
-            ParamInt$new(id = "xval", default = 10L, lower = 0L, tags = "train")
-          )
-        ),
-        param_vals = list(xval = 0L),
+        param_set = ps,
         predict_types = "risk",
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
         properties = c("weights", "missings", "importance", "selected_features"),

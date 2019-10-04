@@ -6,3 +6,5 @@
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 
 Survival analysis for [mlr3](https://mlr3.mlr-org.com).
+
+**Superseded by [mlr3proba](https://github.com/mlr-org/mlr3proba).**

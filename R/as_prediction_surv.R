@@ -7,32 +7,42 @@
 #'
 #' @return [PredictionSurv].
 #' @export
+#' @examples
+#' library(mlr3)
+#' task = tsk("rats")
+#' learner = lrn("surv.coxph")
+#' learner$train(task)
+#' p = learner$predict(task)
+#'
+#' # convert to a data.table
+#' tab = as.data.table(p)
+#'
+#' # convert back to a Prediction
+#' as_prediction_surv(tab)
 as_prediction_surv = function(x, ...) {
   UseMethod("as_prediction_surv")
 }
 
-
 #' @rdname as_prediction_surv
 #' @export
-as_prediction_surv.PredictionSurv = function(x, ...) { # nolint
+as_prediction_surv.PredictionSurv = function(x, ...) {
   x
 }
 
-
 #' @rdname as_prediction_surv
 #' @export
-as_prediction_surv.data.frame = function(x, ...) { # nolint
+as_prediction_surv.data.frame = function(x, ...) {
   mandatory = c("row_ids", "time", "status")
   optional = c("crank", "lp", "distr", "response")
-  assert_names(names(x), must.include = mandatory)
-  assert_names(names(x), subset.of = c(mandatory, optional))
+  assert_names(names(x), must.include = mandatory, subset.of = c(mandatory, optional))
 
-  if ("distr" %in% names(x)) {
-    # FIXME: this is not working
-    #distr = x$distr[[1L]][[1L]]
-  } else {
-    distr = NULL
-  }
+  distr = if ("distr" %in% names(x)) {
+    times = names(x$distr[[1L]][[1L]])
+
+    # Reconstruct the survival matrix from the list of vectors
+    surv_mat = do.call(rbind, lapply(x$distr, function(l) { matrix(l[[1L]], nrow = 1) }))
+    set_col_names(surv_mat, times)
+  } else NULL
 
   if ("crank" %nin% names(x)) {
     if ("lp" %in% names(x)) {

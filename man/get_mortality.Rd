@@ -37,7 +37,7 @@ mat = matrix(runif(n * k, min = 0, max = 1), nrow = n, ncol = k)
 surv_mat = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
 colnames(surv_mat) = 1:k # time points
 
-# get mortality scores (the larger, the more risk)
+# get mortality scores (larger values correspond to higher risk scores)
 mort = get_mortality(surv_mat)
 mort
 

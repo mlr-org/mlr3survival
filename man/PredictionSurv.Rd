@@ -9,7 +9,7 @@ This object stores the predictions returned by a learner of class \link{LearnerS
 The \code{task_type} is set to \code{"surv"}.
 
 For accessing survival and hazard functions, as well as other complex methods
-from a \link{PredictionSurv} object, see public methods on \code{\link[distr6:ExoticStatistics]{distr6::ExoticStatistics()}}
+from a \link{PredictionSurv} object, see public methods of \link[survdistr:survDistr]{survdistr::survDistr}
 and example below.
 }
 \examples{
@@ -19,7 +19,7 @@ learner = lrn("surv.kaplan")
 p = learner$train(task, row_ids = 1:26)$predict(task, row_ids = 27:30)
 head(as.data.table(p))
 
-p$distr # distr6::Matdist class (test obs x time points)
+p$distr # survdistr::survDistr class (test obs x time points)
 
 # survival probabilities of the 4 test rats at two time points
 p$distr$survival(c(20, 100))
@@ -37,8 +37,8 @@ True (observed) outcome.}
 \item{\code{crank}}{(\code{numeric()})\cr
 Access the stored predicted continuous ranking.}
 
-\item{\code{distr}}{(\link[survdistr:survDistr]{survdistr::survDistr}\cr
-Convert the stored survival array or matrix to a survival distribution.}
+\item{\code{distr}}{(\link[survdistr:survDistr]{survdistr::survDistr})\cr
+Convert the stored data to a \link{survDistr} distribution object.}
 
 \item{\code{lp}}{(\code{numeric()})\cr
 Access the stored predicted linear predictor.}
@@ -83,7 +83,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   response = NULL,
   check = TRUE,
   data_type = "surv",
-  interpolation_type = "inter_const_surv"
+  interp_meth = "const_surv"
 )}\if{html}{\out{</div>}}
 }
 
@@ -105,10 +105,8 @@ observation in the test set. For a pair of continuous ranks, a higher rank indic
 the observation is more likely to experience the event.}
 
 \item{\code{distr}}{(\code{matrix()})\cr
-A matrix of predicted survival probabilities.
-If a matrix/array then column names must be given and correspond to survival times.
-Rows of matrix correspond to individual predictions.
-It is advised that the first column should be time \code{0} with all entries \code{1} and the last with all entries \code{0}.}
+A matrix of predicted survival probabilities, where rows = observations
+and columns correspond to time points.}
 
 \item{\code{lp}}{(\code{numeric()})\cr
 Numeric vector of linear predictor scores.
@@ -123,32 +121,16 @@ One element for each observation in the test set.}
 If \code{TRUE}, performs argument checks and predict type conversions.}
 
 \item{\code{data_type}}{(\code{character(1)})\cr
-Type of data stored in \code{distr}.}
+Type of data (e.g. survival or hazard) stored in \code{distr}.}
 
-\item{\code{interpolation_type}}{(\code{character(1)})\cr
-Type of interpolation used to create the \code{distr} object.}
+\item{\code{interp_meth}}{(\code{character(1)})\cr
+Type of interpolation used in subsequent methods of the \code{survDistr} object.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-Upon \strong{initialization}, if the \code{distr} input is a \link[distr6:Distribution]{Distribution},
-we try to coerce it either to a survival matrix or a survival array and store it
-in the \verb{$data$distr} slot for internal use.
-
-If the stored \verb{$data$distr} is a \link[distr6:Distribution]{Distribution} object,
-the active field \verb{$distr} (\strong{external user API}) returns it without modification.
-Otherwise, if \verb{$data$distr} is a survival matrix or array, \verb{$distr}
-constructs a distribution out of the \verb{$data$distr} object, which will be a
-\link[distr6:Matdist]{Matdist} or \link[distr6:Arrdist]{Arrdist} respectively.
-
-Note that if a survival 3d array is stored in \verb{$data$distr}, the \verb{$distr}
-field returns an \link[distr6:Arrdist]{Arrdist} initialized with \code{which.curve = 0.5}
-by default (i.e. the median curve). This means that measures that require
-a \code{distr} prediction like \link{MeasureSurvGraf}, \link{MeasureSurvRCLL}, etc.
-will use the median survival probabilities.
-Note that it is possible to manually change \code{which.curve} after construction
-of the predicted distribution but we advise against this as it may lead to
-inconsistent results.
+The active field \verb{$distr} (using the \link{survDistr} API) returns a survival
+distribution container, for which several methods have been implemented.
 }
 
 }

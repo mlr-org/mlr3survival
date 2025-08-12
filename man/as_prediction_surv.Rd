@@ -25,3 +25,16 @@ Additional arguments.}
 \description{
 Convert object to a \link{PredictionSurv}.
 }
+\examples{
+library(mlr3)
+task = tsk("rats")
+learner = lrn("surv.coxph")
+learner$train(task)
+p = learner$predict(task)
+
+# convert to a data.table
+tab = as.data.table(p)
+
+# convert back to a Prediction
+as_prediction_surv(tab)
+}

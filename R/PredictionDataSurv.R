@@ -1,8 +1,9 @@
+# Here we define some mlr3-mandatory S3 methods of the `PredictionDataSurv` object
+
 #' @export
 as_prediction.PredictionDataSurv = function(x, check = TRUE, ...) { # nolint
   invoke(PredictionSurv$new, check = check, data_type = attr(x$crank, "data_type"), interpolation_type = attr(x$crank, "interpolation_type"), .args = x)
 }
-
 
 #' @export
 check_prediction_data.PredictionDataSurv = function(pdata, ...) { # nolint

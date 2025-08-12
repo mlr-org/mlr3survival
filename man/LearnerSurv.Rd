@@ -4,19 +4,29 @@
 \alias{LearnerSurv}
 \title{Survival Learner}
 \description{
-This Learner specializes \link{Learner} for survival problems:
+This Learner specializes \link[mlr3:Learner]{Learner} for survival problems:
 \itemize{
 \item \code{task_type} is set to \code{"surv"}
-\item Creates \link{Prediction}s of class \link{PredictionSurv}.
+\item Creates \link[mlr3:Prediction]{Prediction}s of class \link{PredictionSurv}.
 \item Possible values for \code{predict_types} are:
 \itemize{
 \item \code{"distr"}: Predicts a probability distribution for each observation in the test set,
-uses \link{distr6}.
+uses \link[distr6]{distr6}.
 \item \code{"lp"}: Predicts a linear predictor for each observation in the test set.
 \item \code{"crank"}: Predicts a continuous ranking for each observation in the test set.
 \item \code{"response"}: Predicts a survival time for each observation in the test set.
 }
 }
+}
+\examples{
+library(mlr3)
+# get all survival learners from mlr_learners:
+lrns = mlr_learners$mget(mlr_learners$keys("^surv"))
+names(lrns)
+
+# get a specific learner from mlr_learners:
+mlr_learners$get("surv.coxph")
+lrn("surv.coxph")
 }
 \concept{Learner}
 \section{Super class}{

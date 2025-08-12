@@ -10,33 +10,31 @@ surv_return(
   crank = NULL,
   lp = NULL,
   response = NULL,
-  which.curve = NULL,
   data_type = "surv",
-  interpolation_type = "inter_const_surv"
+  interp_meth = "const_surv"
 )
 }
 \arguments{
 \item{times}{(\code{numeric()}) \cr Vector of survival times.}
 
-\item{surv}{(\code{matrix()|array()})\cr Matrix or array of predicted survival probabilities, rows (1st dimension) are observations, columns (2nd dimension) are times and in the case of an array there should be one more dimension.
+\item{surv}{(\code{matrix()})\cr Matrix of predicted survival probabilities, rows (1st dimension) are observations, columns (2nd dimension) are time points.
 Number of columns should be equal to length of \code{times}.
 In case a \code{numeric()} vector is provided, it is converted to a single row (one observation) matrix.}
 
 \item{crank}{(\code{numeric()})\cr Relative risk/continuous ranking.
 Higher value is associated with higher risk.
 If \code{NULL} then either set as \code{-response} if available or \code{lp} if available (this assumes that the \code{lp} prediction comes from a PH type model - in case of an AFT model the user should provide \code{-lp}).
-In case neither \code{response} or \code{lp} are provided, then \code{crank} is calculated as the sum of the cumulative hazard function (\strong{expected mortality}) derived from the predicted survival function (\code{surv}), see \link{get_mortality}.
-In case \code{surv} is a 3d array, we use the \code{which.curve} parameter to decide which survival matrix (index in the 3rd dimension) will be chosen for the calculation of \code{crank}.}
+In case neither \code{response} or \code{lp} are provided, then \code{crank} is calculated as the sum of the cumulative hazard function (\strong{expected mortality}) derived from the predicted survival function (\code{surv}), see \link{get_mortality}.}
 
-\item{lp}{(\code{numeric()})\cr Predicted linear predictor, used to impute \code{crank} if \code{NULL}.}
+\item{lp}{(\code{numeric()})\cr Predicted linear predictor, used to impute \code{crank} if the latter is \code{NULL}.}
 
 \item{response}{(\code{numeric()})\cr Predicted survival time, passed through function without
 modification.}
 
-\item{which.curve}{Which curve (3rd dimension) should the \code{crank} be calculated for, in case \code{surv} is an \code{array}?
-If between (0,1) it is taken as the quantile of the curves otherwise if greater than 1 it is taken as the  curve index.
-It can also be 'mean' and the survival probabilities are averaged across the 3rd dimension.
-Default value (\code{NULL}) is the \strong{0.5 quantile} which is the median across the 3rd dimension of the survival array.}
+\item{data_type}{(\code{character(1)})\cr Data type for \code{surv}. Either \code{"surv"} for survival or \code{"haz"} for hazard matrices.}
+
+\item{interp_meth}{(\code{character(1)})\cr
+Interpolation type; one of \code{"const_surv"}, \code{"linear_surv"}, or \code{"const_haz"}.}
 }
 \description{
 Internal helper function to easily return the correct survival predict types.
@@ -52,19 +50,19 @@ mat = matrix(runif(n * k, min = 0, max = 1), nrow = n, ncol = k)
 surv_mat = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
 
 # crank is expected mortality, distr is the survival matrix
-.surv_return(times = 1:k, surv = surv_mat)
+surv_return(times = 1:k, surv = surv_mat)
 
 # if crank is set, it's not overwritten
-.surv_return(times = 1:k, surv = surv_mat, crank = rnorm(n))
+surv_return(times = 1:k, surv = surv_mat, crank = rnorm(n))
 
 # lp = crank
-.surv_return(lp = rnorm(n))
+surv_return(lp = rnorm(n))
 
 # if response is set and no crank, crank = -response
-.surv_return(response = sample(1:100, n))
+surv_return(response = sample(1:100, n))
 
 # if both are set, they are not overwritten
-.surv_return(crank = rnorm(n), response = sample(1:100, n))
+surv_return(crank = rnorm(n), response = sample(1:100, n))
 
 }
 \references{

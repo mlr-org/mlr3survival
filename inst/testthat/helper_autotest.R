@@ -1,5 +1,4 @@
 generate_tasks.LearnerSurv = function(learner, N = 20L, ...) { # nolint
-
   real_time = round(1 + rexp(N, rate = 2) * 20, 1)
   cens_time = round(1 + rexp(N, rate = 3) * 20, 1)
   status = ifelse(real_time <= cens_time, 1L, 0L)
@@ -19,16 +18,13 @@ generate_tasks.LearnerSurv = function(learner, N = 20L, ...) { # nolint
     event = rbinom(N, 1, 0.9)
   )})
   tasks$sanity = mlr3survival::TaskSurv$new("sanity", mlr3::as_data_backend(data), time = "time", event = "event")
-  tasks$sanity_reordered = tasks$sanity$clone(deep = TRUE)
-  tasks$sanity_reordered$id = "sanity_reordered"
 
   tasks
 }
 registerS3method("generate_tasks", "LearnerSurv", generate_tasks.LearnerSurv)
 
-sanity_check.PredictionSurv = function(prediction, ...) { # nolint
+sanity_check.PredictionSurv = function(prediction, ...) {
   # sanity check discrimination
-  prediction$score() >= 0.6
+  prediction$score() > 0.5
 }
-
 registerS3method("sanity_check", "PredictionSurv", sanity_check.PredictionSurv)

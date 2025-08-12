@@ -46,7 +46,7 @@ register_mlr3survival = function() {
   x$default_measures$surv = "surv.cindex"
 
   ## learners
-  x$learner_properties$surv = c(x$learner_properties$reg, "right-censored")
+  x$learner_properties$surv = x$learner_properties$reg # "right-censored"
   x$learner_predict_types$surv = list(
     crank = c("crank", "lp", "distr", "response"),
     distr = c("crank", "lp", "distr", "response"),

@@ -23,10 +23,10 @@ LearnerSurvKaplan = R6Class("LearnerSurvKaplan",
         id = "surv.kaplan",
         predict_types = c("crank", "distr"),
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        properties = c("missings", "right-censored"),
-        packages = c("survival", "distr6"),
+        properties = "missings",
+        packages = "survival",
         label = "Kaplan-Meier Estimator",
-        man = "mlr3proba::mlr_learners_surv.kaplan"
+        man = "mlr3survival::mlr_learners_surv.kaplan"
       )
     }
   ),
@@ -38,7 +38,9 @@ LearnerSurvKaplan = R6Class("LearnerSurvKaplan",
 
     .predict = function(task) {
       times = self$model$time
-      surv = matrix(rep(self$model$surv, task$nrow), ncol = length(times), nrow = task$nrow, byrow = TRUE)
+      surv = matrix(rep(self$model$surv, task$nrow), ncol = length(times),
+                    nrow = task$nrow, byrow = TRUE)
+
       surv_return(times = times, surv = surv)
     }
   )
@@ -46,4 +48,3 @@ LearnerSurvKaplan = R6Class("LearnerSurvKaplan",
 
 #' @include zzz.R
 learners[["surv.kaplan"]] = LearnerSurvKaplan
-

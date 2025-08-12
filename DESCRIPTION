@@ -46,5 +46,5 @@ Collate:
     'as_prediction_surv.R'
     'assertions.R'
     'bibentries.R'
-    'cindex.R'
+    'helper_measures.R'
     'surv_return.R'

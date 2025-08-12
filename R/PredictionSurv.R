@@ -6,11 +6,10 @@
 #' The `task_type` is set to `"surv"`.
 #'
 #' For accessing survival and hazard functions, as well as other complex methods
-#' from a [PredictionSurv] object, see public methods on [distr6::ExoticStatistics()]
+#' from a [PredictionSurv] object, see public methods of [survdistr::survDistr]
 #' and example below.
 #'
 #' @family Prediction
-#' @export
 #' @examples
 #' library(mlr3)
 #' task = tsk("rats")
@@ -18,10 +17,11 @@
 #' p = learner$train(task, row_ids = 1:26)$predict(task, row_ids = 27:30)
 #' head(as.data.table(p))
 #'
-#' p$distr # distr6::Matdist class (test obs x time points)
+#' p$distr # survdistr::survDistr class (test obs x time points)
 #'
 #' # survival probabilities of the 4 test rats at two time points
 #' p$distr$survival(c(20, 100))
+#' @export
 PredictionSurv = R6Class("PredictionSurv",
   inherit = Prediction,
   public = list(
@@ -29,24 +29,9 @@ PredictionSurv = R6Class("PredictionSurv",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @details
-    #' Upon **initialization**, if the `distr` input is a [Distribution][distr6::Distribution],
-    #' we try to coerce it either to a survival matrix or a survival array and store it
-    #' in the `$data$distr` slot for internal use.
     #'
-    #' If the stored `$data$distr` is a [Distribution][distr6::Distribution] object,
-    #' the active field `$distr` (**external user API**) returns it without modification.
-    #' Otherwise, if `$data$distr` is a survival matrix or array, `$distr`
-    #' constructs a distribution out of the `$data$distr` object, which will be a
-    #' [Matdist][distr6::Matdist] or [Arrdist][distr6::Arrdist] respectively.
-    #'
-    #' Note that if a survival 3d array is stored in `$data$distr`, the `$distr`
-    #' field returns an [Arrdist][distr6::Arrdist] initialized with `which.curve = 0.5`
-    #' by default (i.e. the median curve). This means that measures that require
-    #' a `distr` prediction like [MeasureSurvGraf], [MeasureSurvRCLL], etc.
-    #' will use the median survival probabilities.
-    #' Note that it is possible to manually change `which.curve` after construction
-    #' of the predicted distribution but we advise against this as it may lead to
-    #' inconsistent results.
+    #' The active field `$distr` (using the [survDistr] API) returns a survival
+    #' distribution container, for which several methods have been implemented.
     #'
     #' @param task ([TaskSurv])\cr
     #'   Task, used to extract defaults for `row_ids` and `truth`.
@@ -59,10 +44,8 @@ PredictionSurv = R6Class("PredictionSurv",
     #'   observation in the test set. For a pair of continuous ranks, a higher rank indicates that
     #'   the observation is more likely to experience the event.
     #' @param distr (`matrix()`)\cr
-    #'   A matrix of predicted survival probabilities.
-    #'   If a matrix/array then column names must be given and correspond to survival times.
-    #'   Rows of matrix correspond to individual predictions.
-    #'   It is advised that the first column should be time `0` with all entries `1` and the last with all entries `0`.
+    #'   A matrix of predicted survival probabilities, where rows = observations
+    #'   and columns correspond to time points.
     #' @param lp (`numeric()`)\cr
     #'   Numeric vector of linear predictor scores.
     #'   One element for each observation in the test set.
@@ -73,9 +56,9 @@ PredictionSurv = R6Class("PredictionSurv",
     #' @param check (`logical(1)`)\cr
     #'   If `TRUE`, performs argument checks and predict type conversions.
     #' @param data_type (`character(1)`)\cr
-    #'   Type of data stored in `distr`.
-    #' @param interpolation_type (`character(1)`)\cr
-    #'   Type of interpolation used to create the `distr` object.
+    #'   Type of data (e.g. survival or hazard) stored in `distr`.
+    #' @param interp_meth (`character(1)`)\cr
+    #'   Type of interpolation used in subsequent methods of the `survDistr` object.
     initialize = function(
       task = NULL,
       row_ids = task$row_ids,
@@ -86,7 +69,7 @@ PredictionSurv = R6Class("PredictionSurv",
       response = NULL,
       check = TRUE,
       data_type = "surv",
-      interpolation_type = "inter_const_surv"
+      interp_meth = "const_surv"
       ) {
       pdata = list(
         row_ids = row_ids,
@@ -96,9 +79,12 @@ PredictionSurv = R6Class("PredictionSurv",
         lp = lp,
         response = response,
         data_type = data_type,
-        interpolation_type = interpolation_type)
+        interp_meth = interp_meth)
       pdata = discard(pdata, is.null)
       class(pdata) = c("PredictionDataSurv", "PredictionData")
+
+      # TODO : simplify `distr` if it is a survDistr? so that we only keep the
+      # survival matrix on the $data$distr slot?
 
       if (check) {
         pdata = check_prediction_data(pdata)
@@ -124,11 +110,20 @@ PredictionSurv = R6Class("PredictionSurv",
       self$data$crank %??% rep(NA_real_, length(self$data$row_ids))
     },
 
-    #' @field distr ([survdistr::survDistr]\cr
-    #' Convert the stored survival array or matrix to a survival distribution.
+    #' @field distr ([survdistr::survDistr])\cr
+    #' Convert the stored data to a [survDistr] distribution object.
     distr = function() {
-      # convert to survDistr object
-      survdistr::as.survDistr(self$data$distr)
+      distr_data = self$data$distr
+
+      if (is.null(distr_data)) {
+        return(NULL)
+      }
+
+      survDistr$new(
+        distr_data,
+        data_type  = self$data$data_type,
+        interp_meth = self$data$interp_meth
+      )
     },
 
     #' @field lp (`numeric()`)\cr
@@ -145,19 +140,40 @@ PredictionSurv = R6Class("PredictionSurv",
   )
 )
 
-
 #' @export
-as.data.table.PredictionSurv = function(x, ...) { # nolint
+as.data.table.PredictionSurv = function(x, ...) {
+  ## FIXME
   tab = as.data.table(x$data[c("row_ids", "crank", "lp", "response")])
   tab$time = x$data$truth[, 1L]
   tab$status = as.logical(x$data$truth[, 2L])
 
-  # FIXME: this is not working
-  #
-  # if ("distr" %in% x$predict_types) {
-  #   # annoyingly need this many lists to get nice printing
-  #   tab$distr = list(list(list(get_private(x)$.distr())))
-  # }
+  n_obs = length(x$row_ids)
+  if ("distr" %in% x$predict_types && n_obs > 0) {
+    distr = x$data$distr
+    # get survival matrix/array
+    surv = if (inherits(distr, "Distribution"))
+      1 - distr6::gprm(distr, "cdf")
+    else distr
+
+    surv_mat = surv
+
+    # Edge case with 1 observation coming from a `distr6::WeightedDisc`
+    if (is.vector(surv_mat)) {
+      surv_mat = matrix(surv_mat, nrow = 1, dimnames = list(NULL, names(surv_mat)))
+    }
+
+    # split survival matrix to 1 vector (curve) per observation
+    # wrapped in a list for nice printing
+    tab$distr = lapply(1:n_obs, function(i) {
+      list(surv_mat[i, , drop = TRUE])
+    })
+
+    # strange edge issue with 1 row `data.table` => extra list is removed!
+    # so we put them back in:
+    if (nrow(tab) == 1) {
+      tab$distr = list(list(tab$distr))
+    }
+  }
 
   setcolorder(tab, c("row_ids", "time", "status"))[]
 }

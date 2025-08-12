@@ -55,6 +55,18 @@ Grambsch, Patricia, Therneau, Terry (1994).
 \emph{Biometrika}, \bold{81}(3), 515--526.
 \doi{10.1093/biomet/81.3.515}, \url{https://doi.org/10.1093/biomet/81.3.515}.
 }
+\seealso{
+Other Task: 
+\code{\link{mlr_tasks_actg}},
+\code{\link{mlr_tasks_gbcs}},
+\code{\link{mlr_tasks_gbsg}},
+\code{\link{mlr_tasks_grace}},
+\code{\link{mlr_tasks_lung}},
+\code{\link{mlr_tasks_mgus}},
+\code{\link{mlr_tasks_rats}},
+\code{\link{mlr_tasks_veteran}},
+\code{\link{mlr_tasks_whas}}
+}
 \concept{Task}
 \section{Super classes}{
 \code{\link[mlr3:Task]{mlr3::Task}} -> \code{\link[mlr3:TaskSupervised]{mlr3::TaskSupervised}} -> \code{TaskSurv}

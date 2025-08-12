@@ -111,7 +111,7 @@ NumericMatrix c_apply_ipcw_weights(const NumericMatrix& score,
 }
 
 // [[Rcpp::export]]
-float c_concordance(const NumericVector& time,
+double c_concordance(const NumericVector& time,
                     const NumericVector& status,
                     const NumericVector& crank,
                     double t_max,

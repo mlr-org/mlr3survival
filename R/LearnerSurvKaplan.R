@@ -46,5 +46,5 @@ LearnerSurvKaplan = R6Class("LearnerSurvKaplan",
   )
 )
 
-#' @include zzz.R
+#' @include aaa.R
 learners[["surv.kaplan"]] = LearnerSurvKaplan

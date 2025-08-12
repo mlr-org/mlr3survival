@@ -57,4 +57,9 @@ register_mlr3survival = function() {
   register_namespace_callback(pkgname, "mlr3", register_mlr3survival)
 }
 
+.onUnload = function(libpath) {
+  walk(names(learners), function(id) mlr_learners$remove(id))
+  walk(names(measures), function(id) mlr_measures$remove(id))
+}
+
 leanify_package()

@@ -13,10 +13,6 @@ NULL
 #' @importFrom utils getFromNamespace
 "_PACKAGE"
 
-tasks = list()
-learners = list()
-measures = list()
-
 # add tasks, learners and measures to mlr3 dictionaries
 register_mlr3survival = function() {
   x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")

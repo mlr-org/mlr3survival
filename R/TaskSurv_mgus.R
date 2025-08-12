@@ -29,5 +29,5 @@ load_mgus = function() {
   task
 }
 
-#' @include zzz.R
+#' @include aaa.R
 tasks[["mgus"]] =  load_mgus

@@ -19,6 +19,9 @@ measures = list()
 
 # add tasks, learners and measures to mlr3 dictionaries
 register_mlr3survival = function() {
+  x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
+  iwalk(tasks, function(obj, nm) x$add(nm, obj))
+
   x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
   iwalk(learners, function(obj, nm) x$add(nm, obj))
 
@@ -62,4 +65,4 @@ register_mlr3survival = function() {
   walk(names(measures), function(id) mlr_measures$remove(id))
 }
 
-leanify_package()
+# leanify_package()

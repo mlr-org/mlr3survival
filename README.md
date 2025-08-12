@@ -1,0 +1,28 @@
+
+# mlr3 <img src="man/figures/logo.png" align="right" width = "120" />
+
+Package website: [release](https://mlr3survival.mlr-org.com/) \|
+[dev](https://mlr3survival.mlr-org.com/dev/)
+
+Survival analysis with ‘mlr3’.
+
+<!-- badges: start -->
+
+[![r-cmd-check](https://github.com/mlr-org/mlr3survival/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/mlr3survival/actions/workflows/r-cmd-check.yml)
+[![CRAN
+Status](https://www.r-pkg.org/badges/version-ago/mlr3survival)](https://cran.r-project.org/package=mlr3survival)
+[![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
+<!-- badges: end -->
+
+## Resources (for users and developers)
+
+## Installation
+
+Install the development version from GitHub:
+
+``` r
+# install.packages("pak")
+pak::pak("mlr-org/mlr3survival")
+```
+
+## Example

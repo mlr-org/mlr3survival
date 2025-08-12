@@ -1,0 +1,14 @@
+Package: mlr3survival
+Title: Survival Analysis with 'mlr3'
+Version: 0.0.0.9000
+Authors@R:c(
+    person("John", "Zobolas", , "bblodfon@gmail.com", role = c("cre", "aut"),
+           comment = c(ORCID = "0000-0002-3609-8674")),
+    person("Marc", "Becker", , "marcbecker@posteo.de", role = "aut",
+           comment = c(ORCID = "0000-0002-8115-0400"))
+  )
+Description: Survival analysis with 'mlr3'.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

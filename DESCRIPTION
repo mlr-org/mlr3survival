@@ -8,6 +8,19 @@ Authors@R:c(
            comment = c(ORCID = "0000-0002-8115-0400"))
   )
 Description: Survival analysis with 'mlr3'.
+Depends:
+    mlr3 (>= 1.1.0),
+    R (>= 3.6.0)
+Imports:
+    checkmate (>= 2.3.2),
+    data.table (>= 1.17.8),
+    mlr3misc (>= 0.18.0),
+    paradox (>= 1.0.1),
+    R6 (>= 2.6.1),
+    survival
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

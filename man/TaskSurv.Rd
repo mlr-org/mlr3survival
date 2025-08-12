@@ -373,7 +373,7 @@ Only designed for \code{"left"} and \code{"right"} censoring.
 }
 
 \subsection{Returns}{
-\link[mlr3proba:TaskSurv]{mlr3proba::TaskSurv}.
+\link{TaskSurv}.
 }
 }
 \if{html}{\out{<hr>}}

@@ -1,12 +1,30 @@
+#' @importFrom Rcpp sourceCpp
+#' @useDynLib mlr3survival
+NULL
+
 #' @import checkmate
 #' @import data.table
 #' @import mlr3
 #' @import mlr3misc
 #' @import paradox
+#' @import survdistr
 #' @importFrom R6 R6Class
 #' @importFrom survival Surv
 #' @importFrom utils getFromNamespace
 "_PACKAGE"
+
+tasks = list()
+learners = list()
+measures = list()
+
+# add tasks, learners and measures to mlr3 dictionaries
+register_mlr3survival = function() {
+  x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
+  iwalk(learners, function(obj, nm) x$add(nm, obj))
+
+  x = utils::getFromNamespace("mlr_measures", ns = "mlr3")
+  iwalk(measures, function(obj, nm) x$add(nm, obj))
+}
 
 .onLoad = function(libname, pkgname) {
   # logger
@@ -14,6 +32,7 @@
   assign("lg", lg, envir = parent.env(environment()))
 
   # reflections
+  ## tasks
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
 
   x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
@@ -23,10 +42,19 @@
 
   x$task_col_roles$surv = x$task_col_roles$regr
   x$task_properties$surv = x$task_properties$regr
-  x$task_mandatory_properties$surv = c("right-censored", "left-censored", "interval-censored")
+  # x$task_mandatory_properties$surv = "right-censored"
   x$default_measures$surv = "surv.cindex"
+
+  ## learners
+  x$learner_properties$surv = c(x$learner_properties$reg, "right-censored")
+  x$learner_predict_types$surv = list(
+    crank = c("crank", "lp", "distr", "response"),
+    distr = c("crank", "lp", "distr", "response"),
+    lp = c("crank", "lp", "distr", "response"),
+    response = c("crank", "lp", "distr", "response")
+  )
+  # dictionary
+  register_namespace_callback(pkgname, "mlr3", register_mlr3survival)
 }
-
-
 
 leanify_package()

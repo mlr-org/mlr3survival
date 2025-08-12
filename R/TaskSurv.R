@@ -259,7 +259,7 @@ TaskSurv = R6Class("TaskSurv",
     #' Returns the same task with the status variable reversed, i.e., 1 - status.
     #' Only designed for `"left"` and `"right"` censoring.
     #'
-    #' @return [mlr3proba::TaskSurv].
+    #' @return [TaskSurv].
     reverse = function() {
       assert_choice(self$censtype, choices = c("right", "left"))
 

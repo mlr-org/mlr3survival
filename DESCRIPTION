@@ -1,7 +1,7 @@
 Package: mlr3survival
 Title: Survival Analysis with 'mlr3'
 Version: 0.0.0.9000
-Authors@R:c(
+Authors@R: c(
     person("John", "Zobolas", , "bblodfon@gmail.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-3609-8674")),
     person("Marc", "Becker", , "marcbecker@posteo.de", role = "aut",
@@ -17,11 +17,34 @@ Imports:
     mlr3misc (>= 0.18.0),
     paradox (>= 1.0.1),
     R6 (>= 2.6.1),
-    survival
+    Rcpp (>= 1.0.4),
+    survdistr (>= 0.0.0.9000),
+    survival,
 Suggests:
     testthat (>= 3.0.0)
+Remotes:
+    mlr-org/survdistr
+ByteCompile: true
+LinkingTo:
+    Rcpp
 Config/testthat/edition: 3
+NeedsCompilation: no
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Collate:
+    'LearnerSurv.R'
+    'zzz.R'
+    'LearnerSurvKaplan.R'
+    'MeasureSurv.R'
+    'MeasureSurvCindex.R'
+    'PredictionDataSurv.R'
+    'PredictionSurv.R'
+    'RcppExports.R'
+    'TaskSurv.R'
+    'as_prediction_surv.R'
+    'assertions.R'
+    'bibentries.R'
+    'cindex.R'
+    'surv_return.R'

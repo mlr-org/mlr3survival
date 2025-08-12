@@ -47,11 +47,11 @@ NumericMatrix c_weight_survival_score(const NumericMatrix& score,
                                       const NumericVector& unique_times,
                                       const NumericMatrix& cens,
                                       bool proper, double eps) {
-  NumericVector times = truth(_, 0);
-  NumericVector status = truth(_, 1);
+  const NumericVector times = truth(_, 0);
+  const NumericVector status = truth(_, 1);
 
-  NumericVector cens_times = cens(_, 0);
-  NumericVector cens_surv = cens(_, 1);
+  const NumericVector cens_times = cens(_, 0);
+  const NumericVector cens_surv = cens(_, 2);
 
   const int nr = score.nrow();
   const int nc = score.ncol();
@@ -115,7 +115,7 @@ NumericMatrix c_weight_survival_score(const NumericMatrix& score,
 }
 
 // [[Rcpp::export]]
-float c_concordance(const NumericVector& time,
+double c_concordance(const NumericVector& time,
                     const NumericVector& status,
                     const NumericVector& crank,
                     double t_max,

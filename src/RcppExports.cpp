@@ -55,7 +55,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // c_concordance
-float c_concordance(const NumericVector& time, const NumericVector& status, const NumericVector& crank, double t_max, const std::string& weight_meth, const NumericMatrix& cens, const NumericMatrix& surv, float tiex);
+double c_concordance(const NumericVector& time, const NumericVector& status, const NumericVector& crank, double t_max, const std::string& weight_meth, const NumericMatrix& cens, const NumericMatrix& surv, float tiex);
 RcppExport SEXP _mlr3survival_c_concordance(SEXP timeSEXP, SEXP statusSEXP, SEXP crankSEXP, SEXP t_maxSEXP, SEXP weight_methSEXP, SEXP censSEXP, SEXP survSEXP, SEXP tiexSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

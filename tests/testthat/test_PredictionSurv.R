@@ -74,9 +74,9 @@ test_that("data.table roundtrip", {
   expect_class(tab$distr, "list")
   expect_equal(length(tab$distr), task$nrow)
   for (i in 1:task$nrow) {
-    # 1 vector (survival probabilities) per observation, wrapped in a list
+    # 1 numeric vector (survival probabilities) per observation, wrapped in a list
     expect_list(tab$distr[[i]], len = 1)
-    expect_vector(tab$distr[[i]][[1L]], size = ncol(p_cox$data$distr))
+    expect_numeric(tab$distr[[i]][[1L]], len = ncol(p_cox$data$distr), any.missing = FALSE)
   }
 
   p = as_prediction_surv(tab)

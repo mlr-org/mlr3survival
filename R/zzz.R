@@ -11,6 +11,7 @@ NULL
 #' @importFrom R6 R6Class
 #' @importFrom survival Surv
 #' @importFrom utils getFromNamespace
+#' @importFrom stats predict
 "_PACKAGE"
 
 # add tasks, learners and measures to mlr3 dictionaries

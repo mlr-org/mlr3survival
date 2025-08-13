@@ -1,4 +1,5 @@
 #' @title MeasureSurvCindex
+#' @name mlr_measures_surv.cindex
 #'
 #' @description
 #' Calculates weighted concordance statistics, which, depending on the chosen weighting method (`weight_meth`) and tied times parameter (`tiex`),

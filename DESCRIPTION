@@ -23,6 +23,7 @@ Imports:
     survival
 Suggests:
     future,
+    lgr,
     testthat (>= 3.0.0)
 LinkingTo:
     Rcpp

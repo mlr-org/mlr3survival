@@ -1,34 +1,32 @@
 # Here we define some mlr3-mandatory S3 methods of the `PredictionDataSurv` object
 
 #' @export
-as_prediction.PredictionDataSurv = function(x, check = TRUE, ...) { # nolint
-  invoke(PredictionSurv$new, check = check, data_type = attr(x$crank, "data_type"), interpolation_type = attr(x$crank, "interpolation_type"), .args = x)
+as_prediction.PredictionDataSurv = function(x, check = TRUE, ...) {
+  # due to restrictions in mlr3 we pass further arguments as attributes
+  # in crank that is by construction (see `surv_return.R`) not NULL
+  invoke(PredictionSurv$new, check = check, data_type = attr(x$crank, "data_type"),
+         interp_meth = attr(x$crank, "interp_meth"), .args = x)
 }
 
 #' @export
-check_prediction_data.PredictionDataSurv = function(pdata, ...) { # nolint
+check_prediction_data.PredictionDataSurv = function(pdata, ...) {
   n = length(assert_row_ids(pdata$row_ids))
   assert_surv(pdata$truth, "Surv", len = n, any.missing = TRUE, null.ok = TRUE)
   assert_numeric(pdata$crank, len = n, any.missing = FALSE, null.ok = FALSE)
   assert_numeric(pdata$response, len = n, any.missing = FALSE, null.ok = TRUE)
   assert_numeric(pdata$lp, len = n, any.missing = FALSE, null.ok = TRUE)
-  if (inherits(pdata$distr, "VectorDistribution")) {
-    assert(nrow(pdata$distr$modelTable) == n)
-  } else if (inherits(pdata$distr, c("Matdist", "Arrdist"))) {
-    assert(nrow(gprm(pdata$distr, "pdf")) == n)
-  } else if (class(pdata$distr)[1L] == "array") { # from Arrdist
-    assert_array(pdata$distr, d = 3, any.missing = FALSE, null.ok = TRUE)
-  } else {
+  if (inherits(pdata$distr, "matrix")) {
     assert_matrix(pdata$distr, nrows = n, any.missing = FALSE, null.ok = TRUE)
-  }
+  } # TODO: check if survDistr is given? or enforce matrix for now?
 
   assert_character(attr(pdata$crank, "data_type"), len = 1L, any.missing = FALSE, null.ok = TRUE)
+  assert_character(attr(pdata$crank, "interp_meth"), len = 1L, any.missing = FALSE, null.ok = TRUE)
+
   pdata
 }
 
-
 #' @export
-is_missing_prediction_data.PredictionDataSurv = function(pdata, ...) { # nolint
+is_missing_prediction_data.PredictionDataSurv = function(pdata, ...) {
   miss = logical(length(pdata$row_ids))
 
   if (!is.null(pdata$crank)) {
@@ -46,7 +44,6 @@ is_missing_prediction_data.PredictionDataSurv = function(pdata, ...) { # nolint
   pdata$row_ids[miss]
 }
 
-
 #' @export
 c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
   dots = list(...)
@@ -56,13 +53,14 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     return(dots[[1L]])
   }
 
+  # predict types must be the same type across predictions to combine
   predict_types = names(mlr_reflections$learner_predict_types$surv)
   predict_types = map(dots, function(x) intersect(names(x), predict_types))
   if (!every(predict_types[-1L], setequal, y = predict_types[[1L]])) {
-    stopf("Cannot combine predictions: Different predict types")
+    stopf("Cannot combine predictions: Different prediction types")
   }
-
   predict_types = predict_types[[1L]]
+
   row_ids = do.call(c, map(dots, "row_ids"))
   ii = if (keep_duplicates) seq_along(row_ids) else which(!duplicated(row_ids, fromLast = TRUE))
 
@@ -73,47 +71,50 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     result[[elem]] = do.call(c, map(dots, elem))[ii]
   }
 
+  # Merge distr (survival matrices) if present
   if ("distr" %in% predict_types) {
-    distr_list = map(dots, "distr")
-    test_dist = unique(map_lgl(distr_list, testDistribution))
+    distr_list = map(dots, "distr") # list of data matrices
 
-    # Mix of distributions and arrays? Convert arrays to distributions!
-    if (length(test_dist) == 2L) {
-      distr_list = map(distr_list, function(.x) {
-        if (testDistribution(.x)) {
-          .x
-        } else {
-          as.Distribution(1 - .x, fun = "cdf",
-            decorators = c("CoreStatistics", "ExoticStatistics"))
-        }
-      })
-      test_dist = TRUE
+    # check that all matrices are of the same type
+    data_types = map_chr(dots, function(x) x$data_type)
+    if (!every(data_types[-1L], identical, y = data_types[1L])) {
+      stopf("Cannot combine predictions: Different 'data_type'")
     }
+    data_type = data_types[[1L]]
+    # TODO: maybe check/enforce the 'surv' matrix data_type here?
+    # e.g. what if it is a hazard matrix (or something else)?
 
-    # All distributions? Concatenate!
-    if (test_dist) {
-      result$distr = do.call(c, c(distr_list,
-        list(decorators = c("CoreStatistics", "ExoticStatistics"))))
-    } else {
-      dims = map_int(distr_list, function(.x) length(dim(.x)))
-      # If mix of arrays and matrices, convert arrays to median survival matrices
-      if (length(unique(dims)) > 1L) {
-        distr_list = lapply(distr_list, function(.x) {
-          if (length(dim(.x)) == 3L) {
-            .ext_surv_mat(.x, which.curve = 0.5)
-          } else {
-            .x
-          }
-        })
-      }
-      # All objects are now either 3d arrays or 2d matrices
-      # row-bind arrays and ensure all have same column names
-      # by automatically converting to pdf then back to surv
-      merge_cols = getFromNamespace(".merge_cols", ns = "distr6")
-      merged_array = merge_cols(distr_list, "surv")
-      # abind works with matrices as well
-      result$distr = abind::abind(merged_array, along = 1, force.array = FALSE)
+    # check that interpolation methods are of the same type
+    interp_meths = map_chr(dots, function(x) x$interp_meth)
+    if (!every(interp_meths[-1L], identical, y = interp_meths[1L])) {
+      stopf("Cannot combine predictions: Different 'interp_meth'")
     }
+    interp_meth = interp_meths[[1L]]
+
+    # Get all common time points across all matrices
+    times_list = map(distr_list, function(d) as.numeric(colnames(d)))
+    common_times = sort(unique(unlist(times_list)))
+
+    # Interpolate each matrix to the common time grid
+    interp_mats = mapply(function(mat, times) {
+      survdistr:::rcpp_mat_interp(
+        x         = mat,
+        times     = times,
+        new_times = common_times,
+        constant  = ifelse(interp_meth == "const_surv", TRUE, FALSE)
+      )
+    }, distr_list, times_list, SIMPLIFY = FALSE)
+
+    # Combine row-wise and set colnames
+    merged_mat = do.call(rbind, interp_mats)
+    colnames(merged_mat) = common_times
+
+    result$distr = merged_mat
+    setattr(result$crank, "data_type", data_type)
+    setattr(result$crank, "interp_meth", interp_meth)
+    # Can't do the following?
+    # result$data_type = data_type
+    # result$interp_meth = interp_meth
   }
 
   set_class(result, "PredictionDataSurv")
@@ -133,24 +134,14 @@ filter_prediction_data.PredictionDataSurv = function(pdata, row_ids, ...) {
     pdata$lp = pdata$lp[keep]
   }
 
+  if (!is.null(pdata$response)) {
+    pdata$response = pdata$response[keep]
+  }
+
   if (!is.null(pdata$distr)) {
     distr = pdata$distr
-
-    if (testDistribution(distr)) { # distribution
-      ok = inherits(distr, c("VectorDistribution", "Matdist", "Arrdist")) &&
-        length(keep) > 1L # e.g.: Arrdist(1xYxZ) and keep = FALSE
-      if (ok) {
-        pdata$distr = distr[keep] # we can subset row/samples like this
-      } else {
-        pdata$distr = base::switch(keep, distr) # one distribution only
-      }
-    } else {
-      if (length(dim(distr)) == 2L) { # 2d matrix
-        pdata$distr = distr[keep, , drop = FALSE]
-      } else { # 3d array
-        pdata$distr = distr[keep, , , drop = FALSE]
-      }
-    }
+    # TODO: is it a 2d matrix always here?
+    pdata$distr = distr[keep, , drop = FALSE]
   }
 
   pdata

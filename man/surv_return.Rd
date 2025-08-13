@@ -38,6 +38,8 @@ Interpolation type; one of \code{"const_surv"}, \code{"linear_surv"}, or \code{"
 }
 \description{
 Internal helper function to easily return the correct survival predict types.
+This should be used by all survival mlr3 learners, to ensure that the \code{crank}
+prediction type is always included.
 }
 \examples{
 n = 10 # number of observations

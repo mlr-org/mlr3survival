@@ -9,7 +9,7 @@ This object stores the predictions returned by a learner of class \link{LearnerS
 The \code{task_type} is set to \code{"surv"}.
 
 For accessing survival and hazard functions, as well as other complex methods
-from a \link{PredictionSurv} object, see public methods of \link[survdistr:survDistr]{survdistr::survDistr}
+from a \link{PredictionSurv} object, see public methods of \link[survdistr:survDistr]{survDistr}
 and example below.
 }
 \examples{
@@ -38,7 +38,11 @@ True (observed) outcome.}
 Access the stored predicted continuous ranking.}
 
 \item{\code{distr}}{(\link[survdistr:survDistr]{survdistr::survDistr})\cr
-Convert the stored data to a \link{survDistr} distribution object.}
+Returns the stored survival predictions as a
+\link[survdistr:survDistr]{survDistr} distribution object.
+The \code{survDistr} API provides methods to transform survival data
+into other quantities such as cumulative hazard, hazard,
+probability density, and cumulative distribution functions.}
 
 \item{\code{lp}}{(\code{numeric()})\cr
 Access the stored predicted linear predictor.}
@@ -128,11 +132,6 @@ Type of interpolation used in subsequent methods of the \code{survDistr} object.
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-The active field \verb{$distr} (using the \link{survDistr} API) returns a survival
-distribution container, for which several methods have been implemented.
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PredictionSurv-clone"></a>}}

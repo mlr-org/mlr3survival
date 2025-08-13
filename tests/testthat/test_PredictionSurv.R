@@ -1,5 +1,7 @@
-set.seed(1L)
-task = tsk("rats")$filter(sample(300, 20L))
+task = tsk("lung")
+suppressWarnings({
+  p_cox = lrn("surv.coxph")$train(task)$predict(task)
+})
 
 test_that("Construction", {
   p = PredictionSurv$new(row_ids = task$row_ids, truth = task$truth(), crank = runif(task$nrow))
@@ -7,16 +9,13 @@ test_that("Construction", {
 })
 
 test_that("Construction from predict()", {
-  learner = lrn("surv.kaplan")
-  p = learner$train(task)$predict(task)
-  expect_prediction_surv(p)
+  expect_prediction_surv(p_cox)
 })
 
 test_that("combining predictions", {
-  lrn = lrn("surv.kaplan")
-  set.seed(1L)
+  learner = lrn("surv.kaplan")
   resampling = rsmp("cv", folds = 2L)
-  rr = resample(task, lrn, resampling)
+  rr = resample(task, learner, resampling)
   expect_resample_result(rr)
 
   preds = rr$predictions()
@@ -43,7 +42,7 @@ test_that("combining predictions", {
   preds2 = rr$predictions()
   preds2[[2L]]$data$distr = cbind(
     distr2,
-    matrix(data = rep(0.3, 10), ncol = 1L, dimnames = list(NULL, 108))
+    matrix(data = rep(0.3, task$nrow / 2), ncol = 1L, dimnames = list(NULL, 108))
   )
   distr1 = preds2[[1L]]$data$distr
   distr2 = preds2[[2L]]$data$distr
@@ -62,105 +61,64 @@ test_that("combining predictions", {
   # combining predictions with exactly the same time points
   p1 = lrn("surv.kaplan")$train(task)$predict(task)
   p2 = p1$clone()
-  expect_length(c(p1, p2, keep_duplicates = TRUE)$row_ids, 40L)
-  expect_length(c(p1, p2, keep_duplicates = FALSE)$row_ids, 20L)
+  expect_length(c(p1, p2, keep_duplicates = TRUE)$row_ids, task$nrow * 2)
+  expect_length(c(p1, p2, keep_duplicates = FALSE)$row_ids, task$nrow)
   preds = list(p1, p2)
   p12 = do.call(c, preds)
   expect_matrix(p12$data$distr) # combination is a matrix
   expect_equal(colnames(p12$data$distr), colnames(p1$data$distr)) # same time points
 })
 
-skip("implement surv.coxph first")
-test_that("data.frame roundtrip", {
-  p1 = suppressWarnings(lrn("surv.coxph")$train(task)$predict(task))
-
-  tab = as.data.table(p1)
+test_that("data.table roundtrip", {
+  tab = as.data.table(p_cox)
   expect_class(tab$distr, "list")
-  expect_equal(length(tab$distr), 20)
-  for (i in 1:20) {
+  expect_equal(length(tab$distr), task$nrow)
+  for (i in 1:task$nrow) {
     # 1 vector (survival probabilities) per observation, wrapped in a list
     expect_list(tab$distr[[i]], len = 1)
-    expect_vector(tab$distr[[i]][[1L]], size = ncol(p1$data$distr))
+    expect_vector(tab$distr[[i]][[1L]], size = ncol(p_cox$data$distr))
   }
 
-  p2 = as_prediction_surv(tab)
-  expect_prediction_surv(p2)
-
-  expect_equal(
-    suppressWarnings(as.data.table(p1$distr$parameters())$value),
-    suppressWarnings(as.data.table(p2$distr$parameters())$value)
-  )
-
-  expect_equal(as.data.table(p1)[, -6L], as.data.table(p2)[, -6L])
-})
-
-test_that("as_prediction_surv", {
-  p = suppressWarnings(lrn("surv.coxph")$train(task))$predict(task)
-  expect_prediction_surv(as_prediction_surv(as.data.table(p)))
+  p = as_prediction_surv(tab)
+  expect_prediction_surv(p)
+  expect_equal(p_cox$distr$data, p$distr$data)
+  expect_equal(as.data.table(p_cox)[, -6L], as.data.table(p)[, -6L])
 })
 
 test_that("filtering", {
-  p = suppressWarnings(lrn("surv.coxph")$train(task)$predict(task)) # survival matrix
-  p2 = reshape_distr_to_3d(p) # survival array
-  p3 = p$clone()
-  p4 = p2$clone()
-  p3$data$distr = p3$distr # Matdist
-  p4$data$distr = p4$distr # Arrdist
+  p = p_cox$clone()
+  ids = sample(task$row_ids, 3)
 
-  p$filter(c(20, 37, 42))
-  p2$filter(c(20, 37, 42))
-  p3$filter(c(20, 37, 42))
-  p4$filter(c(20, 37, 42))
-  expect_prediction_surv(p)
-  expect_prediction_surv(p2)
-  expect_prediction_surv(p3)
-  expect_prediction_surv(p4)
-
-  expect_setequal(p$data$row_ids, c(20, 37, 42))
-  expect_setequal(p2$data$row_ids, c(20, 37, 42))
-  expect_setequal(p3$data$row_ids, c(20, 37, 42))
-  expect_setequal(p4$data$row_ids, c(20, 37, 42))
-  expect_numeric(p$data$crank, any.missing = FALSE, len = 3L)
-  expect_numeric(p2$data$crank, any.missing = FALSE, len = 3L)
-  expect_numeric(p3$data$crank, any.missing = FALSE, len = 3L)
-  expect_numeric(p4$data$crank, any.missing = FALSE, len = 3L)
-  expect_numeric(p$data$lp, any.missing = FALSE, len = 3L)
-  expect_numeric(p2$data$lp, any.missing = FALSE, len = 3L)
-  expect_numeric(p3$data$lp, any.missing = FALSE, len = 3L)
-  expect_numeric(p4$data$lp, any.missing = FALSE, len = 3L)
-  expect_matrix(p$data$distr, nrows = 3L)
-  expect_array(p2$data$distr, d = 3)
-  expect_identical(nrow(p2$data$distr), 3L)
-  expect_r6(p3$data$distr, "Matdist")
-  expect_r6(p4$data$distr, "Arrdist")
+  # filter to 3 random observations
+  p_cox$filter(ids)
+  expect_prediction_surv(p_cox)
+  expect_setequal(p_cox$data$row_ids, ids)
+  assert_surv(p_cox$data$truth, len = 3, any.missing = FALSE)
+  expect_numeric(p_cox$data$crank, any.missing = FALSE, len = 3L)
+  expect_numeric(p_cox$data$lp, any.missing = FALSE, len = 3L)
+  expect_matrix(p_cox$data$distr, nrows = 3L)
+  expect_equal(p_cox$data$data_type, "surv")
+  expect_equal(p_cox$data$interp_meth, "const_surv")
 
   # edge case: filter to 1 observation
-  p$filter(20)
-  p2$filter(20)
-  p3$filter(20)
-  p4$filter(20)
+  p$filter(ids[2])
   expect_prediction_surv(p)
-  expect_prediction_surv(p2)
-  expect_prediction_surv(p3)
-  expect_prediction_surv(p4)
+  expect_setequal(p$data$row_ids, ids[2])
+  assert_surv(p$data$truth, len = 1, any.missing = FALSE)
+  expect_numeric(p$data$crank, any.missing = FALSE, len = 1L)
+  expect_numeric(p$data$lp, any.missing = FALSE, len = 1L)
   expect_matrix(p$data$distr, nrows = 1L)
-  expect_array(p2$data$distr, d = 3)
-  expect_identical(nrow(p2$data$distr), 1L)
-  expect_r6(p3$data$distr, "WeightedDiscrete") # from Matdist!
-  expect_r6(p4$data$distr, "Arrdist") # remains an Arrdist!
+  expect_equal(p$data$data_type, "surv")
+  expect_equal(p$data$interp_meth, "const_surv")
 
-  # filter to 0 observations using non-existent (positive) id
-  p$filter(42)
-  p2$filter(42)
-  p3$filter(42)
-  p4$filter(42)
-
+  # filter to 0 observations using non-existent id
+  p$filter(-42)
   expect_prediction_surv(p)
-  expect_prediction_surv(p2)
-  expect_prediction_surv(p3)
-  expect_prediction_surv(p4)
-  expect_null(p$distr)
-  expect_null(p2$distr)
-  expect_null(p3$distr)
-  expect_null(p4$distr)
+  expect_length(p$data$row_ids, 0)
+  assert_surv(p$data$truth, len = 0)
+  expect_numeric(p$data$crank, len = 0)
+  expect_numeric(p$data$lp, len = 0)
+  expect_matrix(p$data$distr, nrows = 0, ncols = 0)
+  expect_equal(p$data$data_type, "surv")
+  expect_equal(p$data$interp_meth, "const_surv")
 })

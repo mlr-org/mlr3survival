@@ -33,7 +33,7 @@ register_mlr3survival = function() {
   # reflections
   ## tasks
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
-
+  x$task_types = x$task_types[!"surv"] # to ensure we don't have multiple row entries of 'surv'
   x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
     ~type,        ~package,       ~task,      ~learner,      ~prediction,       ~prediction_data,     ~measure,
     "surv",       "mlr3survival", "TaskSurv", "LearnerSurv", "PredictionSurv",  "PredictionDataSurv", "MeasureSurv"
@@ -41,17 +41,21 @@ register_mlr3survival = function() {
 
   x$task_col_roles$surv = x$task_col_roles$regr
   x$task_properties$surv = x$task_properties$regr
-  # x$task_mandatory_properties$surv = "right-censored"
+  # x$task_mandatory_properties$surv = "right-censored" # if we need to differentiate
+
+  ## measures
+  x$measure_properties$surv = x$measure_properties$regr
   x$default_measures$surv = "surv.cindex"
 
   ## learners
-  x$learner_properties$surv = x$learner_properties$reg # "right-censored"
+  x$learner_properties$surv = x$learner_properties$reg
   x$learner_predict_types$surv = list(
     crank = c("crank", "lp", "distr", "response"),
     distr = c("crank", "lp", "distr", "response"),
     lp = c("crank", "lp", "distr", "response"),
     response = c("crank", "lp", "distr", "response")
   )
+
   # dictionary
   register_namespace_callback(pkgname, "mlr3", register_mlr3survival)
 }
@@ -61,4 +65,4 @@ register_mlr3survival = function() {
   walk(names(measures), function(id) mlr_measures$remove(id))
 }
 
-# leanify_package()
+leanify_package()

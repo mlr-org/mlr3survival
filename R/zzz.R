@@ -70,6 +70,7 @@ register_mlr3survival = function() {
   x$task_types = x$task_types[type != "surv"]
   x$task_col_roles$surv = NULL
   x$task_properties$surv = NULL
+  x$measure_properties$surv = NULL
   x$default_measures$surv = NULL
   x$learner_properties$surv = NULL
   x$learner_predict_types$surv = NULL

@@ -76,7 +76,7 @@ interp_pdf = function(surv_data, eval_times) {
   indx = match(eval_times, utimes)
 
   # Linearly interpolate survival function (to avoid pdf = 0 problems)
-  surv = .interp_surv(surv_data, utimes, method = "linear")
+  surv = interp_surv(surv_data, utimes, method = "linear")
 
   # CDF = 1 - S
   cdf = 1 - surv
@@ -227,7 +227,7 @@ integrated_score = function(score, integrated) {
 
   if (!integrated) {
     # Return the mean score at each time point
-    return(.col_sums(score))
+    return(col_sums(score))
   }
 
   times = as.numeric(colnames(score))

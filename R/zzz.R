@@ -67,6 +67,7 @@ register_mlr3survival = function() {
 
   # reflections
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
+  type = NULL # silence data.table note
   x$task_types = x$task_types[type != "surv"]
   x$task_col_roles$surv = NULL
   x$task_properties$surv = NULL

@@ -38,6 +38,7 @@ RoxygenNote: 7.3.2
 Collate:
     'LearnerSurv.R'
     'aaa.R'
+    'LearnerSurvCoxPH.R'
     'LearnerSurvKaplan.R'
     'MeasureSurv.R'
     'MeasureSurvCindex.R'

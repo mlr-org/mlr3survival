@@ -38,6 +38,10 @@ Kaplan EL, Meier P (1958).
 \emph{Journal of the American Statistical Association}, \bold{53}(282), 457--481.
 \doi{10.1080/01621459.1958.10501452}.
 }
+\seealso{
+Other survival learners: 
+\code{\link{mlr_learners_surv.coxph}}
+}
 \concept{survival learners}
 \section{Super classes}{
 \code{\link[mlr3:Learner]{mlr3::Learner}} -> \code{\link[mlr3survival:LearnerSurv]{mlr3survival::LearnerSurv}} -> \code{LearnerSurvKaplan}

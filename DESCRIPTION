@@ -49,6 +49,7 @@ Collate:
     'TaskSurv_rats.R'
     'TaskSurv_veteran.R'
     'as_prediction_surv.R'
+    'as_task_surv.R'
     'assertions.R'
     'bibentries.R'
     'helper_measures.R'

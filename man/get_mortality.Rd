@@ -9,7 +9,7 @@ get_mortality(x)
 \arguments{
 \item{x}{(\code{matrix()}) \cr A survival matrix where rows are the
 (predicted) observations and columns the time-points.
-For more details, see \link{assert_surv_matrix}.}
+For more details, see \link[survdistr:assert_surv_matrix]{survdistr::assert_surv_matrix}.}
 }
 \value{
 a \code{numeric} vector of the mortality risk scores, one per row of the

@@ -101,7 +101,9 @@ surv_return = function(
     lp = lp,
     response = response
   )
-  # we set these here, as crank is the only prediction type that will not be null
+
+  # due to restrictions in mlr3 we pass further arguments as attributes
+  # in crank that is the only predict type that will not be NULL
   setattr(pred$crank, "data_type", data_type)
   setattr(pred$crank, "interp_meth", interp_meth)
 

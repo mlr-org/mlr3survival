@@ -6,7 +6,7 @@
 #' The `task_type` is set to `"surv"`.
 #'
 #' For accessing survival and hazard functions, as well as other complex methods
-#' from a [PredictionSurv] object, see public methods of [survdistr::survDistr]
+#' from a [PredictionSurv] object, see public methods of [survDistr][survdistr::survDistr]
 #' and example below.
 #'
 #' @family Prediction
@@ -27,11 +27,6 @@ PredictionSurv = R6Class("PredictionSurv",
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @details
-    #'
-    #' The active field `$distr` (using the [survDistr] API) returns a survival
-    #' distribution container, for which several methods have been implemented.
     #'
     #' @param task ([TaskSurv])\cr
     #'   Task, used to extract defaults for `row_ids` and `truth`.
@@ -71,6 +66,9 @@ PredictionSurv = R6Class("PredictionSurv",
       data_type = "surv",
       interp_meth = "const_surv"
       ) {
+      # remove 'data_type' and 'interp_meth' if they are attached to crank
+      attributes(crank) = NULL
+
       pdata = list(
         row_ids = row_ids,
         truth = truth,
@@ -111,7 +109,11 @@ PredictionSurv = R6Class("PredictionSurv",
     },
 
     #' @field distr ([survdistr::survDistr])\cr
-    #' Convert the stored data to a [survDistr] distribution object.
+    #' Returns the stored survival predictions as a
+    #' [survDistr][survdistr::survDistr] distribution object.
+    #' The `survDistr` API provides methods to transform survival data
+    #' into other quantities such as cumulative hazard, hazard,
+    #' probability density, and cumulative distribution functions.
     distr = function() {
       distr_data = self$data$distr
 
@@ -142,34 +144,22 @@ PredictionSurv = R6Class("PredictionSurv",
 
 #' @export
 as.data.table.PredictionSurv = function(x, ...) {
-  ## FIXME
   tab = as.data.table(x$data[c("row_ids", "crank", "lp", "response")])
   tab$time = x$data$truth[, 1L]
   tab$status = as.logical(x$data$truth[, 2L])
 
   n_obs = length(x$row_ids)
   if ("distr" %in% x$predict_types && n_obs > 0) {
-    distr = x$data$distr
-    # get survival matrix/array
-    surv = if (inherits(distr, "Distribution"))
-      1 - distr6::gprm(distr, "cdf")
-    else distr
-
-    surv_mat = surv
-
-    # Edge case with 1 observation coming from a `distr6::WeightedDisc`
-    if (is.vector(surv_mat)) {
-      surv_mat = matrix(surv_mat, nrow = 1, dimnames = list(NULL, names(surv_mat)))
-    }
+    distr = x$data$distr # (survival) matrix
 
     # split survival matrix to 1 vector (curve) per observation
     # wrapped in a list for nice printing
     tab$distr = lapply(1:n_obs, function(i) {
-      list(surv_mat[i, , drop = TRUE])
+      list(distr[i, , drop = TRUE])
     })
 
     # strange edge issue with 1 row `data.table` => extra list is removed!
-    # so we put them back in:
+    # so we put it back in:
     if (nrow(tab) == 1) {
       tab$distr = list(list(tab$distr))
     }

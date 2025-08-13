@@ -49,6 +49,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH",
     },
 
     .predict = function(task) {
+      # TODO: move ordered_features from proba/extralearners or put in mlr3misc?
       # newdata = ordered_features(task, self)
       newdata = task$data(cols = task$feature_names)
       pv = self$param_set$get_values(tags = "predict")
@@ -58,7 +59,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH",
                    se.fit = FALSE, .args = pv)
 
       # Get linear predictors
-      lp = invoke(predict, self$model, type = "lp", newdata = newdata)
+      lp = as.numeric(invoke(predict, self$model, type = "lp", newdata = newdata))
 
       surv_return(times = fit$time, surv = t(fit$surv), lp = lp)
     }

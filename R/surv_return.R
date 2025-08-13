@@ -1,6 +1,9 @@
 #' @title Get Survival Predict Types
 #'
-#' @description Internal helper function to easily return the correct survival predict types.
+#' @description
+#' Internal helper function to easily return the correct survival predict types.
+#' This should be used by all survival mlr3 learners, to ensure that the `crank`
+#' prediction type is always included.
 #'
 #' @param times (`numeric()`) \cr Vector of survival times.
 #' @param surv (`matrix()`)\cr Matrix of predicted survival probabilities, rows (1st dimension) are observations, columns (2nd dimension) are time points.
@@ -78,6 +81,7 @@ surv_return = function(
     colnames(surv) = times
   }
 
+  # set crank (mandatory)
   if (is.null(crank)) {
     if (!is.null(response)) {
       # low survival time = high risk
@@ -97,8 +101,9 @@ surv_return = function(
     lp = lp,
     response = response
   )
-  setattr(pred$distr, "data_type", data_type)
-  setattr(pred$distr, "interp_meth", interp_meth)
+  # we set these here, as crank is the only prediction type that will not be null
+  setattr(pred$crank, "data_type", data_type)
+  setattr(pred$crank, "interp_meth", interp_meth)
 
   pred
 }

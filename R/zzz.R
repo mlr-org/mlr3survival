@@ -63,6 +63,16 @@ register_mlr3survival = function() {
 .onUnload = function(libpath) {
   walk(names(learners), function(id) mlr_learners$remove(id))
   walk(names(measures), function(id) mlr_measures$remove(id))
+  walk(names(tasks), function(id) mlr_tasks$remove(id))
+
+  # reflections
+  x = getFromNamespace("mlr_reflections", ns = "mlr3")
+  x$task_types = x$task_types[type != "surv"]
+  x$task_col_roles$surv = NULL
+  x$task_properties$surv = NULL
+  x$default_measures$surv = NULL
+  x$learner_properties$surv = NULL
+  x$learner_predict_types$surv = NULL
 }
 
 leanify_package()

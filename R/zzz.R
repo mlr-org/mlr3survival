@@ -27,7 +27,7 @@ register_mlr3survival = function() {
 
 .onLoad = function(libname, pkgname) {
   # logger
-  lg = lgr::get_logger("mlr3/mlr3")
+  lg = lgr::get_logger("mlr3/core")
   assign("lg", lg, envir = parent.env(environment()))
 
   # reflections

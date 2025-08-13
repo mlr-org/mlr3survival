@@ -58,6 +58,8 @@ surv_return = function(
   data_type = "surv",
   interp_meth = "const_surv"
   ) {
+  assert_choice(data_type, c("surv", "haz")) # TODO: support haz???
+  assert_choice(interp_meth, c("const_surv", "linear_surv", "const_haz"))
 
   if (!is.null(surv)) {
     # FIXME: allow surv to be a more generic data (surv or haz) denoted by the data_type
@@ -124,7 +126,7 @@ surv_return = function(
 #'
 #' @param x (`matrix()`) \cr A survival matrix where rows are the
 #' (predicted) observations and columns the time-points.
-#' For more details, see [assert_surv_matrix].
+#' For more details, see [survdistr::assert_surv_matrix].
 #'
 #' @return a `numeric` vector of the mortality risk scores, one per row of the
 #' input survival matrix.

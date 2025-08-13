@@ -14,15 +14,16 @@ and example below.
 }
 \examples{
 library(mlr3)
-task = tsk("rats")
+task = tsk("lung")
 learner = lrn("surv.kaplan")
-p = learner$train(task, row_ids = 1:26)$predict(task, row_ids = 27:30)
+part = partition(task)
+p = learner$train(task, part$train)$predict(task, part$test)
 head(as.data.table(p))
 
-p$distr # survdistr::survDistr class (test obs x time points)
+p$distr # survDistr
 
-# survival probabilities of the 4 test rats at two time points
-p$distr$survival(c(20, 100))
+# survival probabilities of the 4 test observations at two time points
+p$distr$survival(times = c(80, 100))[1:4, ]
 }
 \concept{Prediction}
 \section{Super class}{

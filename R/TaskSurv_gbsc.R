@@ -16,13 +16,13 @@
 NULL
 
 load_gbcs = function() {
-  data = load_dataset("gbcs", "mlr3proba")
+  data = load_dataset("gbcs", "mlr3survival")
   data[, c("id", "diagdate", "recdate", "deathdate", "rectime", "censrec")] = NULL
   colnames(data)[9:10] = c("time", "status")
 
   b = as_data_backend(data)
   task = TaskSurv$new("gbcs", b, time = "time", event = "status", label = "German Breast Cancer")
-  b$hash = task$man = "mlr3proba::mlr_tasks_gbcs"
+  b$hash = task$man = "mlr3survival::mlr_tasks_gbcs"
 
   task
 }

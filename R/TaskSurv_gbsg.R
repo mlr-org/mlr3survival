@@ -32,7 +32,7 @@ load_gbsg = function() {
   b = as_data_backend(data)
   task = TaskSurv$new("gbsg", b, time = "time", event = "status",
                       label = "German Breast Cancer")
-  b$hash = task$man = "mlr3proba::mlr_tasks_gbsc"
+  b$hash = task$man = "mlr3survival::mlr_tasks_gbsc"
 
   task
 }

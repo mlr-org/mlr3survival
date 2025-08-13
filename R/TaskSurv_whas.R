@@ -17,7 +17,7 @@
 NULL
 
 load_whas = function() {
-  data = load_dataset("whas", "mlr3proba")
+  data = load_dataset("whas", "mlr3survival")
   data[, c("id", "yrgrp", "dstat")] = NULL
   colnames(data)[2L] = "sexF"
   colnames(data)[10:11] = c("time", "status")
@@ -25,7 +25,7 @@ load_whas = function() {
   b = as_data_backend(data)
   task = TaskSurv$new("whas", b, time = "time", event = "status",
                       label = "Worcester Heart Attack")
-  b$hash = task$man = "mlr3proba::mlr_tasks_whas"
+  b$hash = task$man = "mlr3survival::mlr_tasks_whas"
 
   task
 }

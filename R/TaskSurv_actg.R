@@ -16,14 +16,14 @@
 NULL
 
 load_actg = function() {
-  data = load_dataset("actg", "mlr3proba")
+  data = load_dataset("actg", "mlr3survival")
   data[, c("id", "time_d", "censor_d")] = NULL
   colnames(data)[6L] = "sexF"
   colnames(data)[2L] = "status"
 
   b = as_data_backend(data)
   task = TaskSurv$new("actg", b, time = "time", event = "status", label = "ACTG 320")
-  b$hash = task$man = "mlr3proba::mlr_tasks_actg"
+  b$hash = task$man = "mlr3survival::mlr_tasks_actg"
 
   task
 }

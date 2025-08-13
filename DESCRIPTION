@@ -8,6 +8,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-8115-0400"))
   )
 Description: Survival analysis with 'mlr3'.
+License: MIT + file LICENSE
 Depends:
     mlr3 (>= 1.1.0),
     R (>= 3.6.0)
@@ -19,18 +20,18 @@ Imports:
     R6 (>= 2.6.1),
     Rcpp (>= 1.0.4),
     survdistr (>= 0.0.0.9000),
-    survival,
+    survival
 Suggests:
+    future,
     testthat (>= 3.0.0)
+LinkingTo:
+    Rcpp
 Remotes:
     mlr-org/survdistr
 ByteCompile: true
-LinkingTo:
-    Rcpp
 Config/testthat/edition: 3
-NeedsCompilation: no
-License: MIT + file LICENSE
 Encoding: UTF-8
+NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Collate:

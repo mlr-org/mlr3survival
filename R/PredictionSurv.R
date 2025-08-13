@@ -117,7 +117,11 @@ PredictionSurv = R6Class("PredictionSurv",
     distr = function() {
       distr_data = self$data$distr
 
-      if (is.null(distr_data)) {
+      # Return NULL if missing or empty matrix
+      if (is.null(distr_data) ||
+          length(distr_data) == 0 ||
+          nrow(distr_data) == 0 ||
+          ncol(distr_data) == 0) {
         return(NULL)
       }
 

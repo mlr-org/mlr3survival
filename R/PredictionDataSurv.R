@@ -112,7 +112,7 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     result$distr = merged_mat
     setattr(result$crank, "data_type", data_type)
     setattr(result$crank, "interp_meth", interp_meth)
-    # Can't do the following?
+    # TODO: Can't do the following? refine how we pass these arguments?
     # result$data_type = data_type
     # result$interp_meth = interp_meth
   }
@@ -123,6 +123,7 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
 #' @export
 filter_prediction_data.PredictionDataSurv = function(pdata, row_ids, ...) {
   keep = pdata$row_ids %in% row_ids
+
   pdata$row_ids = pdata$row_ids[keep]
   pdata$truth = pdata$truth[keep]
 
@@ -139,9 +140,14 @@ filter_prediction_data.PredictionDataSurv = function(pdata, row_ids, ...) {
   }
 
   if (!is.null(pdata$distr)) {
-    distr = pdata$distr
     # TODO: is it a 2d matrix always here?
-    pdata$distr = distr[keep, , drop = FALSE]
+    filtered = pdata$distr[keep, , drop = FALSE]
+    pdata$distr = if (nrow(filtered) > 0) {
+      filtered
+    } else {
+      # edge case: keep an empty matrix
+      matrix(numeric(0), nrow = 0, ncol = 0)
+    }
   }
 
   pdata

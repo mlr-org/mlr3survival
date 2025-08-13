@@ -53,13 +53,9 @@ replaced with \code{no} and \code{yes} respectively.
 
 Other Task: 
 \code{\link{TaskSurv}},
-\code{\link{mlr_tasks_actg}},
-\code{\link{mlr_tasks_gbcs}},
-\code{\link{mlr_tasks_grace}},
 \code{\link{mlr_tasks_lung}},
 \code{\link{mlr_tasks_mgus}},
 \code{\link{mlr_tasks_rats}},
-\code{\link{mlr_tasks_veteran}},
-\code{\link{mlr_tasks_whas}}
+\code{\link{mlr_tasks_veteran}}
 }
 \concept{Task}

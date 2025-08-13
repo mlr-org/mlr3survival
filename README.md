@@ -1,5 +1,5 @@
 
-# mlr3 <img src="man/figures/logo.png" align="right" width = "120" />
+# mlr3survival <img src="man/figures/logo.png" align="right" width = "120" />
 
 Package website: [release](https://mlr3survival.mlr-org.com/) \|
 [dev](https://mlr3survival.mlr-org.com/dev/)

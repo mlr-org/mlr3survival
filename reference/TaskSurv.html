@@ -6,14 +6,26 @@
     }
   };
 </script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Survival Task — TaskSurv"><meta name="description" content='This task specializes mlr3::Task and mlr3::TaskSupervised for
-possibly-censored survival problems.
-The target is comprised of survival times and an event indicator.
+single-event survival problems.
+The target is comprised of survival times and an event indicator (\(0\)
+represents censored observations, \(1\) represents observations that had the
+event).
+Every row corresponds to one subject/observation.
 Predefined tasks are stored in mlr3::mlr_tasks.
-The task_type is set to "surv".'><meta property="og:description" content='This task specializes mlr3::Task and mlr3::TaskSupervised for
-possibly-censored survival problems.
-The target is comprised of survival times and an event indicator.
+The task_type is set to "surv".
+Note: Currently only right-censoring is supported, though it possible to
+create tasks with left and interval censoring using the Surv
+interface.'><meta property="og:description" content='This task specializes mlr3::Task and mlr3::TaskSupervised for
+single-event survival problems.
+The target is comprised of survival times and an event indicator (\(0\)
+represents censored observations, \(1\) represents observations that had the
+event).
+Every row corresponds to one subject/observation.
 Predefined tasks are stored in mlr3::mlr_tasks.
-The task_type is set to "surv".'><meta property="og:image" content="https://mlr3survival.mlr-org.com/logo.png"></head><body>
+The task_type is set to "surv".
+Note: Currently only right-censoring is supported, though it possible to
+create tasks with left and interval censoring using the Surv
+interface.'><meta property="og:image" content="https://mlr3survival.mlr-org.com/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -57,10 +69,16 @@ The task_type is set to "surv".'><meta property="og:image" content="https://mlr3
 
     <div class="ref-description section level2">
     <p>This task specializes <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a> and <a href="https://mlr3.mlr-org.com/reference/TaskSupervised.html" class="external-link">mlr3::TaskSupervised</a> for
-possibly-censored survival problems.
-The target is comprised of survival times and an event indicator.
-Predefined tasks are stored in <a href="https://mlr3.mlr-org.com/reference/mlr_tasks.html" class="external-link">mlr3::mlr_tasks</a>.</p>
+<strong>single-event survival</strong> problems.
+The target is comprised of survival times and an event indicator (\(0\)
+represents censored observations, \(1\) represents observations that had the
+event).
+Every row corresponds to one subject/observation.</p>
+<p>Predefined tasks are stored in <a href="https://mlr3.mlr-org.com/reference/mlr_tasks.html" class="external-link">mlr3::mlr_tasks</a>.</p>
 <p>The <code>task_type</code> is set to <code>"surv"</code>.</p>
+<p><strong>Note:</strong> Currently only right-censoring is supported, though it possible to
+create tasks with left and interval censoring using the <a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a>
+interface.</p>
     </div>
 
 
@@ -73,17 +91,25 @@ Predefined tasks are stored in <a href="https://mlr3.mlr-org.com/reference/mlr_t
 , <a href="https://doi.org/10.1093/biomet/81.3.515" class="external-link">https://doi.org/10.1093/biomet/81.3.515</a>.</p>
     </div>
     <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other Task:
+<code><a href="mlr_tasks_gbsg.html">mlr_tasks_gbsg</a></code>,
+<code><a href="mlr_tasks_lung.html">mlr_tasks_lung</a></code>,
+<code><a href="mlr_tasks_mgus.html">mlr_tasks_mgus</a></code>,
+<code><a href="mlr_tasks_rats.html">mlr_tasks_rats</a></code>,
+<code><a href="mlr_tasks_veteran.html">mlr_tasks_veteran</a></code></p></div>
+    </div>
+    <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
     <p><code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a></code> -&gt; <code><a href="https://mlr3.mlr-org.com/reference/TaskSupervised.html" class="external-link">mlr3::TaskSupervised</a></code> -&gt; <code>TaskSurv</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
-    <p></p><div class="r6-active-bindings"><dl><dt><code>censtype</code></dt>
+    <p></p><div class="r6-active-bindings"><dl><dt><code>cens_type</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
-Returns the type of censoring, one of <code>"right"</code>, <code>"left"</code>, <code>"counting"</code>,
-<code>"interval"</code>, <code>"interval2"</code> or <code>"mstate"</code>.
-Currently, only the <code>"right"</code>-censoring type is fully supported, the rest
-are experimental and the API will change in the future.</p></dd>
+Returns the type of censoring, one of <code>"right"</code>, <code>"left"</code> or <code>"interval"</code>.</p>
+<p>Currently, only the <code>"right"</code> censoring type is fully supported, the rest
+are experimental and the API might change in the future.</p></dd>
 
 
 </dl><p></p></div>
@@ -101,7 +127,6 @@ are experimental and the API will change in the future.</p></dd>
 <li><p><a href="#method-TaskSurv-status"><code>TaskSurv$status()</code></a></p></li>
 <li><p><a href="#method-TaskSurv-unique_times"><code>TaskSurv$unique_times()</code></a></p></li>
 <li><p><a href="#method-TaskSurv-unique_event_times"><code>TaskSurv$unique_event_times()</code></a></p></li>
-<li><p><a href="#method-TaskSurv-risk_set"><code>TaskSurv$risk_set()</code></a></p></li>
 <li><p><a href="#method-TaskSurv-kaplan"><code>TaskSurv$kaplan()</code></a></p></li>
 <li><p><a href="#method-TaskSurv-reverse"><code>TaskSurv$reverse()</code></a></p></li>
 <li><p><a href="#method-TaskSurv-cens_prop"><code>TaskSurv$cens_prop()</code></a></p></li>
@@ -119,7 +144,6 @@ are experimental and the API will change in the future.</p></dd>
 <li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="head"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-head"><code>mlr3::Task$head()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="help"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-help"><code>mlr3::Task$help()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="levels"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-levels"><code>mlr3::Task$levels()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="materialize_view"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-materialize_view"><code>mlr3::Task$materialize_view()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="missings"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-missings"><code>mlr3::Task$missings()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="print"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-print"><code>mlr3::Task$print()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rbind"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-rbind"><code>mlr3::Task$rbind()</code></a></span></li>
@@ -137,8 +161,8 @@ are experimental and the API will change in the future.</p></dd>
 <span>  <span class="va">backend</span>,</span>
 <span>  time <span class="op">=</span> <span class="st">"time"</span>,</span>
 <span>  event <span class="op">=</span> <span class="st">"event"</span>,</span>
-<span>  <span class="va">time2</span>,</span>
-<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"left"</span>, <span class="st">"interval"</span>, <span class="st">"counting"</span>, <span class="st">"interval2"</span>, <span class="st">"mstate"</span><span class="op">)</span>,</span>
+<span>  time2 <span class="op">=</span> <span class="st">"time2"</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"right"</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NA_character_</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -151,7 +175,7 @@ Identifier for the new instance.</p></dd>
 
 
 <dt><code>backend</code></dt>
-<dd><p>(<a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">DataBackend</a>)<br>
+<dd><p>(<a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">mlr3::DataBackend</a>)<br>
 Either a <a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">DataBackend</a>, or any object which is convertible to a <a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">DataBackend</a> with <code><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend()</a></code>.
 E.g., a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> will be converted to a <a href="https://mlr3.mlr-org.com/reference/DataBackendDataTable.html" class="external-link">DataBackendDataTable</a>.</p></dd>
 
@@ -165,10 +189,9 @@ interval censored.</p></dd>
 <dt><code>event</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 Name of the column giving the event indicator.
-If data is right censored then "0"/<code>FALSE</code> means alive (no event), "1"/<code>TRUE</code> means dead
-(event). If <code>type</code> is <code>"interval"</code> then "0" means right censored, "1" means dead (event),
-"2" means left censored, and "3" means interval censored. If <code>type</code> is <code>"interval2"</code> then
-<code>event</code> is ignored.</p></dd>
+If data is right censored then <code>"0"</code> means alive (no event), <code>"1"</code> means dead (event).
+If <code>type</code> is <code>"interval"</code> then "0" means right censored, "1" means dead (event),
+"2" means left censored, and "3" means interval censored.</p></dd>
 
 
 <dt><code>time2</code></dt>
@@ -179,7 +202,8 @@ counting process data, otherwise ignored.</p></dd>
 
 <dt><code>type</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
-Name of the column giving the type of censoring. Default is 'right' censoring.</p></dd>
+Name of the column giving the type of censoring.
+Available options are <code>"right"</code> (default), <code>"left"</code> and <code>"interval"</code>.</p></dd>
 
 
 <dt><code>label</code></dt>
@@ -193,10 +217,9 @@ Label for the new instance.</p></dd>
 <h4 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h4>
 <p>Depending on the censoring type (<code>"type"</code>), the output of a survival
 task's <code>"$target_names"</code> is a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector with values the names
-of the columns given by the above initialization arguments.
-Specifically, the output is as follows (and in the specified order):</p><ul><li><p>For <code>type</code> = <code>"right"</code>, <code>"left"</code> or <code>"mstate"</code>: (<code>"time"</code>, <code>"event"</code>)</p></li>
-<li><p>For <code>type</code> = <code>"interval"</code> or <code>"counting"</code>: (<code>"time"</code>, <code>"time2"</code>, <code>"event"</code>)</p></li>
-<li><p>For <code>type</code> = <code>"interval2"</code>: (<code>"time"</code>, <code>"time2</code>)</p></li>
+of the target columns.
+Specifically, the output is as follows (and in the specified order):</p><ul><li><p>For <code>type</code> = <code>"right"</code> or <code>"left"</code>: (<code>"time"</code>, <code>"event"</code>)</p></li>
+<li><p>For <code>type</code> = <code>"interval"</code>: (<code>"time"</code>, <code>"time2"</code>)</p></li>
 </ul></div>
 
 
@@ -204,7 +227,10 @@ Specifically, the output is as follows (and in the specified order):</p><ul><li>
 <h3 id="method-truth-">Method <code>truth()</code><a class="anchor" aria-label="anchor" href="#method-truth-"></a></h3>
 <p>True response for specified <code>row_ids</code>. This is the survival outcome
 using the <a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a> format and depends on the censoring
-type. Defaults to all rows with role <code>"use"</code>.</p><div class="section">
+type. Defaults to all rows with role <code>"use"</code>.</p>
+<p>For censoring type:</p><ul><li><p><code>"right|left"</code>: <code>Surv(time, event, type = "right|left")</code></p></li>
+<li><p><code>"interval"</code>: <code>Surv(time, time2, type = "interval2")</code></p></li>
+</ul><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">truth</span><span class="op">(</span>rows <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -238,7 +264,8 @@ Row indices.</p></dd>
 
 
 <dt><code>reverse</code></dt>
-<dd><p>If <code>TRUE</code> then formula calculated with 1 - status.</p></dd>
+<dd><p>If <code>TRUE</code> then formula calculated with 1 - status. Only applicable to <code>"right"</code>
+or <code>"left"</code> censoring.</p></dd>
 
 
 </dl><p></p></div>
@@ -271,12 +298,11 @@ Row indices.</p></dd>
 
 </div><p></p><hr><a id="method-TaskSurv-status"></a><div class="section">
 <h3 id="method-status-">Method <code>status()</code><a class="anchor" aria-label="anchor" href="#method-status-"></a></h3>
-<p>Returns the event indicator (aka censoring/survival indicator).
-If <code>censtype</code> is <code>"right"</code> or <code>"left"</code> then <code>1</code> is event and <code>0</code> is censored.
-If <code>censtype</code> is <code>"mstate"</code> then <code>0</code> is censored and all other values are different events.
-If <code>censtype</code> is <code>"interval"</code> then <code>0</code> is right-censored, <code>1</code> is event, <code>2</code> is left-censored,
-<code>3</code> is interval-censored.
-See <code><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">survival::Surv()</a></code>.</p><div class="section">
+<p>Returns the event indicator (i.e. status indicator).
+If censoring type is <code>"right"</code> or <code>"left"</code> then <code>1</code> is event and <code>0</code> is censored.
+If censoring type is <code>"interval"</code> then <code>0</code> means right-censored, <code>1</code> is
+event, <code>2</code> is left-censored and <code>3</code> is interval-censored.</p>
+<p>See <code><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">survival::Surv()</a></code>.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">status</span><span class="op">(</span>rows <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -297,8 +323,7 @@ Row indices.</p></dd>
 
 </div><p></p><hr><a id="method-TaskSurv-unique_times"></a><div class="section">
 <h3 id="method-unique-times-">Method <code>unique_times()</code><a class="anchor" aria-label="anchor" href="#method-unique-times-"></a></h3>
-<p>Returns the sorted unique outcome times for <code>"right"</code>, <code>"left"</code> and
-<code>"mstate"</code> types of censoring.</p><div class="section">
+<p>Returns the sorted unique outcome times.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">unique_times</span><span class="op">(</span>rows <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -319,8 +344,7 @@ Row indices.</p></dd>
 
 </div><p></p><hr><a id="method-TaskSurv-unique_event_times"></a><div class="section">
 <h3 id="method-unique-event-times-">Method <code>unique_event_times()</code><a class="anchor" aria-label="anchor" href="#method-unique-event-times-"></a></h3>
-<p>Returns the sorted unique event (or failure) outcome times for <code>"right"</code>,
-<code>"left"</code> and <code>"mstate"</code> types of censoring.</p><div class="section">
+<p>Returns the sorted unique event (or failure) outcome times.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">unique_event_times</span><span class="op">(</span>rows <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -339,38 +363,15 @@ Row indices.</p></dd>
 <p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code></p>
 </div>
 
-</div><p></p><hr><a id="method-TaskSurv-risk_set"></a><div class="section">
-<h3 id="method-risk-set-">Method <code>risk_set()</code><a class="anchor" aria-label="anchor" href="#method-risk-set-"></a></h3>
-<p>Returns the <code>row_ids</code> of the observations <strong>at risk</strong> (not dead or censored
-or had other events in case of multi-state tasks) at the specified <code>time</code>.</p>
-<p>Only designed for <code>"right"</code>, <code>"left"</code> and <code>"mstate"</code> types of censoring.</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">risk_set</span><span class="op">(</span>time <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>time</code></dt>
-<dd><p>(<code>numeric(1)</code>) <br> Time to return risk set for, if <code>NULL</code>
-returns all <code>row_ids</code>.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-<div class="section">
-<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
-<p><code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code></p>
-</div>
-
 </div><p></p><hr><a id="method-TaskSurv-kaplan"></a><div class="section">
 <h3 id="method-kaplan-">Method <code>kaplan()</code><a class="anchor" aria-label="anchor" href="#method-kaplan-"></a></h3>
 <p>Calls <code><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survival::survfit()</a></code> to calculate the Kaplan-Meier estimator.</p><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">kaplan</span><span class="op">(</span>strata <span class="op">=</span> <span class="cn">NULL</span>, rows <span class="op">=</span> <span class="cn">NULL</span>, reverse <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>strata</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Stratification variables to use.</p></dd>
@@ -394,35 +395,36 @@ Additional arguments passed down to <code><a href="https://rdrr.io/pkg/survival/
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
 <p><a href="https://rdrr.io/pkg/survival/man/survfit.object.html" class="external-link">survival::survfit.object</a>.</p>
 </div>
 
 </div><p></p><hr><a id="method-TaskSurv-reverse"></a><div class="section">
 <h3 id="method-reverse-">Method <code>reverse()</code><a class="anchor" aria-label="anchor" href="#method-reverse-"></a></h3>
-<p>Returns the same task with the status variable reversed, i.e., 1 - status.
-Only designed for <code>"left"</code> and <code>"right"</code> censoring.</p><div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<p>Returns the same task with the status variable reversed, i.e., 1 - status.</p><div class="section">
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">reverse</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
-<p>mlr3proba::TaskSurv.</p>
+<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<p>TaskSurv.</p>
 </div>
 
 </div><p></p><hr><a id="method-TaskSurv-cens_prop"></a><div class="section">
 <h3 id="method-cens-prop-">Method <code>cens_prop()</code><a class="anchor" aria-label="anchor" href="#method-cens-prop-"></a></h3>
 <p>Returns the <strong>proportion of censoring</strong> for this survival task.
-By default, this is returned for all observations, otherwise only the
-specified ones (<code>rows</code>).</p>
-<p>Only designed for <code>"right"</code> and <code>"left"</code> censoring.</p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+This the proportion of censored observations in case of <code>"right"</code> or
+<code>"left"</code> censoring, otherwise the proportion of left (2), right (0) and
+interval censored (3) observations when censoring type is <code>"interval"</code>.</p>
+<p>By default, this is returned for all observations, otherwise only the
+specified ones (<code>rows</code>).</p><div class="section">
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">cens_prop</span><span class="op">(</span>rows <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>rows</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Row indices.</p></dd>
@@ -431,24 +433,24 @@ Row indices.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
 <p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code></p>
 </div>
 
 </div><p></p><hr><a id="method-TaskSurv-admin_cens_prop"></a><div class="section">
 <h3 id="method-admin-cens-prop-">Method <code>admin_cens_prop()</code><a class="anchor" aria-label="anchor" href="#method-admin-cens-prop-"></a></h3>
-<p>Returns an estimated proportion of <strong>administratively censored
-observations</strong> (i.e. censored at or after a user-specified time point).
+<p>Returns an estimated proportion of <strong>administratively censored observations</strong>
+(i.e. censored at or after a user-specified time point).
 Our main assumption here is that in an administratively censored dataset,
 the maximum censoring time is likely close to the maximum event time and
 so we expect higher proportion of censored subjects near the study end date.</p>
-<p>Only designed for <code>"right"</code> and <code>"left"</code> censoring.</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<p>Only designed for <code>"right"</code> censoring.</p><div class="section">
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">admin_cens_prop</span><span class="op">(</span>rows <span class="op">=</span> <span class="cn">NULL</span>, admin_time <span class="op">=</span> <span class="cn">NULL</span>, quantile_prob <span class="op">=</span> <span class="fl">0.99</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
+<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>rows</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Row indices.</p></dd>
@@ -472,7 +474,7 @@ A lower value will result in an earlier time point and therefore in a more
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
 <p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code></p>
 </div>
 
@@ -488,13 +490,13 @@ it suggests that censoring may be <em>informative</em> (dependent) rather than
 This methodology is more suitable for <strong>low-dimensional datasets</strong> where
 the number of features is relatively small compared to the number of
 observations.</p>
-<p>Only designed for <code>"right"</code> and <code>"left"</code> censoring.</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<p>Only designed for <code>"right"</code> censoring.</p><div class="section">
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">dep_cens_prop</span><span class="op">(</span>rows <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="st">"holm"</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
+<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>rows</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Row indices.</p></dd>
@@ -515,7 +517,7 @@ regression model. Default is \(0.05\).</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code></p>
 </div>
 
@@ -527,13 +529,13 @@ Uses <a href="https://rdrr.io/pkg/survival/man/cox.zph.html" class="external-lin
 This method should be used only for <strong>low-dimensional datasets</strong> where
 the number of features is relatively small compared to the number of
 observations.</p>
-<p>Only designed for <code>"right"</code> and <code>"left"</code> censoring.</p><div class="section">
-<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<p>Only designed for <code>"right"</code> censoring.</p><div class="section">
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">prop_haz</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
 <p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code> <br>
 If no errors, the p-value of the global chi-square test.
 A p-value \(&lt; 0.05\) is an indication of possible PH violation.</p>
@@ -542,12 +544,12 @@ A p-value \(&lt; 0.05\) is an indication of possible PH violation.</p>
 </div><p></p><hr><a id="method-TaskSurv-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskSurv</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
+<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -563,50 +565,99 @@ A p-value \(&lt; 0.05\) is an indication of possible PH violation.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"lung"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dictionary_retrieve_item(self, key, .dicts_suggest):</span> Element with key 'lung' not found in DictionaryTask!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># meta data</span></span></span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="va">target_names</span> <span class="co"># target is always (time, status) for right-censoring tasks</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "time"   "status"</span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="va">feature_names</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "age"       "meal.cal"  "pat.karno" "ph.ecog"   "ph.karno"  "sex"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "wt.loss"  </span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">formula</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Surv(time, status, type = "right") ~ .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:survival&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># survival data</span></span></span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">truth</span><span class="op">(</span><span class="op">)</span> <span class="co"># survival::Surv() object</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]  455   210  1022+  310   361   218   166   170   567   613   707    61 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [13]  301    81   371   520   574   118   390    12   473    26   107    53 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25]  814   965+   93   731   460   153   433   583    95   303   519   643 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37]  765    53   246   689     5   687   345   444   223    60   163    65 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  821+  428   230   840+  305    11   226   426   705   363   176   791 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]   95   196+  167   806+  284   641   147   740+  163   655    88   245 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73]   30   477   559+  450   156   529+  429   351    15   181   283    13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85]  212   524   288   363   199   550    54   558   207    92    60   551+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  293   353   267   511+  457   337   201   404+  222    62   458+  353 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [109]  163    31   229   156   329   291   179   376+  384+  268   292+  142 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121]  413+  266+  320   181   285   301+  348   197   382+  303+  296+  180 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [133]  145   269+  300+  284+  292+  332+  285   259+  110   286   270   225+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [145]  269   225+  243+  276+  135    79    59   240+  202+  235+  239   252+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [157]  221+  185+  222+  183   211+  175+  197+  203+  191+  105+  174+  177+</span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">times</span><span class="op">(</span><span class="op">)</span> <span class="co"># (unsorted) times</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]  455  210 1022  310  361  218  166  170  567  613  707   61  301   81  371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [16]  520  574  118  390   12  473   26  107   53  814  965   93  731  460  153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [31]  433  583   95  303  519  643  765   53  246  689    5  687  345  444  223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [46]   60  163   65  821  428  230  840  305   11  226  426  705  363  176  791</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]   95  196  167  806  284  641  147  740  163  655   88  245   30  477  559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [76]  450  156  529  429  351   15  181  283   13  212  524  288  363  199  550</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91]   54  558  207   92   60  551  293  353  267  511  457  337  201  404  222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [106]   62  458  353  163   31  229  156  329  291  179  376  384  268  292  142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121]  413  266  320  181  285  301  348  197  382  303  296  180  145  269  300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [136]  284  292  332  285  259  110  286  270  225  269  225  243  276  135   79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [151]   59  240  202  235  239  252  221  185  222  183  211  175  197  203  191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [166]  105  174  177</span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">status</span><span class="op">(</span><span class="op">)</span> <span class="co"># event indicators (1 = death, 0 = censored)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 1 1 1 1 1 1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 0 1 1 1 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1 1 1 0 1 1 0 1 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [112] 1 1 1 1 0 0 1 0 1 0 0 1 1 1 0 1 1 0 0 0 1 1 0 0 0 0 0 1 0 1 1 1 0 1 0 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [149] 1 1 1 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0</span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">unique_times</span><span class="op">(</span><span class="op">)</span> <span class="co"># sorted unique times</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]    5   11   12   13   15   26   30   31   53   54   59   60   61   62   65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [16]   79   81   88   92   93   95  105  107  110  118  135  142  145  147  153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [31]  156  163  166  167  170  174  175  176  177  179  180  181  183  185  191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [46]  196  197  199  201  202  203  207  210  211  212  218  221  222  223  225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]  226  229  230  235  239  240  243  245  246  252  259  266  267  268  269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [76]  270  276  283  284  285  286  288  291  292  293  296  300  301  303  305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91]  310  320  329  332  337  345  348  351  353  361  363  371  376  382  384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [106]  390  404  413  426  428  429  433  444  450  455  457  458  460  473  477</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121]  511  519  520  524  529  550  551  558  559  567  574  583  613  641  643</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [136]  655  687  689  705  707  731  740  765  791  806  814  821  840  965 1022</span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">unique_event_times</span><span class="op">(</span><span class="op">)</span> <span class="co"># sorted unique event times</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
-<span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">risk_set</span><span class="op">(</span>time <span class="op">=</span> <span class="fl">700</span><span class="op">)</span> <span class="co"># observation ids that are not censored or dead at t = 700</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]   5  11  12  13  15  26  30  31  53  54  59  60  61  62  65  79  81  88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [19]  92  93  95 107 110 118 135 142 145 147 153 156 163 166 167 170 176 179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 180 181 183 197 199 201 207 210 212 218 222 223 226 229 230 239 245 246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [55] 267 268 269 270 283 284 285 286 288 291 293 301 303 305 310 320 329 337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] 345 348 351 353 361 363 371 390 426 428 429 433 444 450 455 457 460 473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 477 519 520 524 550 558 567 574 583 613 641 643 655 687 689 705 707 731</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [109] 765 791 814</span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">kaplan</span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span> <span class="co"># stratified Kaplan-Meier</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call: survfit(formula = f, data = data)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         n events median 0.95LCL 0.95UCL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sex=f  64     38    426     345     641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sex=m 104     83    284     229     353</span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">kaplan</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Kaplan-Meier of the censoring distribution</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call: survfit(formula = f, data = data)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        n events median 0.95LCL 0.95UCL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 168     47    740     511      NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># proportion of censored observations across all dataset</span></span></span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">cens_prop</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2797619</span>
 <span class="r-in"><span><span class="co"># proportion of censored observations at or after the 95% time quantile</span></span></span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">admin_cens_prop</span><span class="op">(</span>quantile_prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1276596</span>
 <span class="r-in"><span><span class="co"># proportion of variables that are significantly associated with the</span></span></span>
 <span class="r-in"><span><span class="co"># censoring status via a logistic regression model</span></span></span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">dep_cens_prop</span><span class="op">(</span><span class="op">)</span> <span class="co"># 0 indicates independent censoring</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-in"><span><span class="co"># data barely satisfies proportional hazards assumption (p &gt; 0.05)</span></span></span>
 <span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">prop_haz</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'task' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0608371</span>
 <span class="r-in"><span><span class="co"># veteran data is definitely non-PH (p &lt;&lt; 0.05)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"veteran"</span><span class="op">)</span><span class="op">$</span><span class="fu">prop_haz</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dictionary_retrieve_item(self, key, .dicts_suggest):</span> Element with key 'veteran' not found in DictionaryTask!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.225193e-05</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

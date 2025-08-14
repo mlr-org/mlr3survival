@@ -5,8 +5,24 @@
 <url><loc>https://mlr3survival.mlr-org.com/authors.html</loc></url>
 <url><loc>https://mlr3survival.mlr-org.com/index.html</loc></url>
 <url><loc>https://mlr3survival.mlr-org.com/news/index.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/LearnerSurv.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/MeasureSurv.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/PredictionSurv.html</loc></url>
 <url><loc>https://mlr3survival.mlr-org.com/reference/TaskSurv.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/as_prediction_surv.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/as_task_surv.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/assert_surv.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/get_mortality.html</loc></url>
 <url><loc>https://mlr3survival.mlr-org.com/reference/index.html</loc></url>
 <url><loc>https://mlr3survival.mlr-org.com/reference/mlr3survival-package.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_surv.coxph.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_learners_surv.kaplan.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_measures_surv.cindex.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_tasks_gbsg.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_tasks_lung.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_tasks_mgus.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_tasks_rats.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/mlr_tasks_veteran.html</loc></url>
+<url><loc>https://mlr3survival.mlr-org.com/reference/surv_return.html</loc></url>
 </urlset>
 

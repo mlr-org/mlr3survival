@@ -17,9 +17,13 @@ toc:
 navbar:
   structure:
     left:  [reference, news, book]
-    right: [search, github, mattermost, stackoverflow, rss, lightswitch]
+    right: [search, github, mattermost, stackoverflow, website, lightswitch]
   components:
     home: ~
+    book:
+      text: mlr3book
+      icon: fa fa-book
+      href: https://mlr3book.mlr-org.com
     reference:
       icon: fa fa-file-alt
       text: Reference
@@ -27,13 +31,43 @@ navbar:
     mattermost:
       icon: fa fa-comments
       href: https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/
-    book:
-      text: mlr3book
-      icon: fa fa-link
-      href: https://mlr3book.mlr-org.com
+      aria-label: Mattermost
     stackoverflow:
       icon: fab fa-stack-overflow
       href: https://stackoverflow.com/questions/tagged/mlr3
-    rss:
-      icon: fa-rss
+      aria-label: Stack Overflow
+    website:
+      icon: fa-link
       href: https://mlr-org.com/
+      aria-label: mlr3 website
+
+reference:
+  - title: Package
+    contents:
+      - mlr3survival-package
+   - title: Building Blocks
+    contents:
+      - TaskSurv
+      - LearnerSurv
+      - PredictionSurv
+      - MeasureSurv
+  - title: Survival Tasks
+    contents:
+      - mlr_tasks_gbsg
+      - mlr_tasks_mgus
+      - mlr_tasks_veteran
+      - mlr_tasks_lung
+      - mlr_tasks_rats
+  - title: Survival Learners
+    contents:
+      - starts_with("mlr_learners_surv")
+  - title: Survival Measures
+    contents:
+      - starts_with("mlr_measures_surv")
+  - title: Converters
+    contents:
+      - starts_with("as_")
+  - title: Internal Objects and Functions
+    contents:
+      - surv_return
+      - get_mortality

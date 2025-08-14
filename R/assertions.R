@@ -14,7 +14,7 @@
 #' @param .var.name (`character(1)`)\cr
 #' Optional variable name to return if assertion fails.
 #'
-#' @export
+#' @noRd
 assert_surv = function(x, len = NULL, any.missing = TRUE, null.ok = FALSE, .var.name = vname(x)) { # nolint
   assert_class(x, "Surv", null.ok = null.ok, .var.name = .var.name)
   assert_matrix(x, any.missing = any.missing, nrows = len, null.ok = null.ok, .var.name = .var.name)

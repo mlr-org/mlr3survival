@@ -45,7 +45,7 @@ reference:
   - title: Package
     contents:
       - mlr3survival-package
-   - title: Building Blocks
+  - title: Building Blocks
     contents:
       - TaskSurv
       - LearnerSurv

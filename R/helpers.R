@@ -1,6 +1,3 @@
-# helper functions specific for survival measures
-
-# SURVIVAL ----
 # S(t)/f(t) ESTIMATION/INTERPOLATION FUNCTIONS
 
 #' @description
@@ -247,4 +244,12 @@ col_sums = function(mat) {
     x = x[is.finite(x)]
     mean(x, na.rm = TRUE)
   })
+}
+
+# from `mlr3extralearners`
+ordered_features = function(task, learner) {
+  # the data_prototype is not present when calling the workhorse function,
+  # as it can blow up memory usage
+  cols = names(learner$state$data_prototype) %??% learner$state$feature_names
+  task$data(cols = intersect(cols, task$feature_names))
 }

@@ -49,9 +49,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH",
     },
 
     .predict = function(task) {
-      # TODO: move ordered_features from proba/extralearners or put in mlr3misc?
-      # newdata = ordered_features(task, self)
-      newdata = task$data(cols = task$feature_names)
+      newdata = ordered_features(task, self)
       pv = self$param_set$get_values(tags = "predict")
 
       # Get survival predictions via `survfit`

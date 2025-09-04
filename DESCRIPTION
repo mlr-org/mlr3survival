@@ -57,6 +57,7 @@ Collate:
     'as_task_surv.R'
     'assertions.R'
     'bibentries.R'
+    'default_fallback.R'
     'helpers.R'
     'surv_return.R'
     'zzz.R'

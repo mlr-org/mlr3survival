@@ -22,7 +22,6 @@ Imports:
     survdistr (>= 0.0.0.9000),
     survival
 Suggests:
-    future,
     lgr,
     mirai,
     testthat (>= 3.0.0)

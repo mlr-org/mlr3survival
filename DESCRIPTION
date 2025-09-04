@@ -24,12 +24,13 @@ Imports:
 Suggests:
     future,
     lgr,
+    mirai,
     testthat (>= 3.0.0)
 LinkingTo:
     Rcpp
 Remotes:
-    mlr-org/survdistr,
-    mlr-org/mlr3
+    mlr-org/mlr3,
+    mlr-org/survdistr
 ByteCompile: true
 Config/testthat/edition: 3
 Encoding: UTF-8

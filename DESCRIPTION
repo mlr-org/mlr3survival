@@ -8,7 +8,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-8115-0400"))
   )
 Description: Survival analysis with 'mlr3'.
-License: MIT + file LICENSE
+License: MIT
 Depends:
     mlr3 (>= 1.1.0),
     R (>= 3.6.0)

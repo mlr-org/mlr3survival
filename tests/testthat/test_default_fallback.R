@@ -1,0 +1,18 @@
+test_that("fallback = default_fallback() works", {
+  # survival learners
+  learner = lrn("surv.kaplan")
+  fallback = default_fallback(learner)
+  expect_class(fallback, "LearnerSurvKaplan")
+  expect_equal(fallback$predict_type, "crank")
+
+  # TODO: when rpart learner is added
+  # learner = lrn("surv.rpart")
+  # fallback = default_fallback(learner)
+  # expect_class(fallback, "LearnerSurvKaplan")
+  # expect_equal(fallback$predict_type, "crank")
+
+  learner = lrn("surv.coxph")
+  fallback = default_fallback(learner)
+  expect_class(fallback, "LearnerSurvKaplan")
+  expect_equal(fallback$predict_type, "crank")
+})

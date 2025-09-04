@@ -1,5 +1,7 @@
-#' @title MeasureSurvCindex
+#' @title Concordance Index
 #' @name mlr_measures_surv.cindex
+#' @templateVar id surv.cindex
+#' @template measure
 #'
 #' @description
 #' Calculates weighted concordance statistics, which, depending on the chosen weighting method (`weight_meth`) and tied times parameter (`tiex`),
@@ -7,14 +9,14 @@
 #' By default, no weighting is applied and this is equivalent to Harrell's C-index.
 #'
 #' @details
-#' For the Kaplan-Meier estimate of the **training survival** distribution (\eqn{S}),
-#' and the Kaplan-Meier estimate of the **training censoring** distribution (\eqn{G}),
+#' For the Kaplan-Meier estimate of the **training survival** distribution (\eqn{S(t)}),
+#' and the Kaplan-Meier estimate of the **training censoring** distribution (\eqn{G(t)}),
 #' we have the following options for time-independent concordance statistics
 #' (C-indexes) given the weighted method:
 #'
 #' `weight_meth`:
 #'
-#' - `"I"` = No weighting. (Harrell)
+#' - `"I"` = No weighting. (Harrell's C-index)
 #' - `"GH"` = Gonen and Heller's Concordance Index
 #' - `"G"` = Weights concordance by \eqn{1/G}.
 #' - `"G2"` = Weights concordance by \eqn{1/G^2}. (Uno et al.)

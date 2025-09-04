@@ -3,21 +3,21 @@
 \name{mlr_measures_surv.cindex}
 \alias{mlr_measures_surv.cindex}
 \alias{MeasureSurvCindex}
-\title{MeasureSurvCindex}
+\title{Concordance Index}
 \description{
 Calculates weighted concordance statistics, which, depending on the chosen weighting method (\code{weight_meth}) and tied times parameter (\code{tiex}),
 are equivalent to several proposed methods.
 By default, no weighting is applied and this is equivalent to Harrell's C-index.
 }
 \details{
-For the Kaplan-Meier estimate of the \strong{training survival} distribution (\eqn{S}),
-and the Kaplan-Meier estimate of the \strong{training censoring} distribution (\eqn{G}),
+For the Kaplan-Meier estimate of the \strong{training survival} distribution (\eqn{S(t)}),
+and the Kaplan-Meier estimate of the \strong{training censoring} distribution (\eqn{G(t)}),
 we have the following options for time-independent concordance statistics
 (C-indexes) given the weighted method:
 
 \code{weight_meth}:
 \itemize{
-\item \code{"I"} = No weighting. (Harrell)
+\item \code{"I"} = No weighting. (Harrell's C-index)
 \item \code{"GH"} = Gonen and Heller's Concordance Index
 \item \code{"G"} = Weights concordance by \eqn{1/G}.
 \item \code{"G2"} = Weights concordance by \eqn{1/G^2}. (Uno et al.)
@@ -32,6 +32,38 @@ Firstly this implementation is faster, and secondly the weights are computed
 on the training dataset whereas in \link[survival:concordance]{survival::concordance} the weights are
 computed on the same testing data.
 }
+\section{Dictionary}{
+
+This \link[mlr3:Measure]{Measure} can be instantiated via the \link[mlr3misc:Dictionary]{dictionary} \link[mlr3:mlr_measures]{mlr_measures} or with the associated sugar function \link[mlr3:mlr_sugar]{msr()}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_measures$get("surv.cindex")
+msr("surv.cindex")
+}\if{html}{\out{</div>}}
+}
+
+\section{Meta Information}{
+
+\itemize{
+\item Task type: \dQuote{surv}
+\item Range: \eqn{[0, 1]}{[0, 1]}
+\item Minimize: FALSE
+\item Average: macro
+\item Required Prediction: \dQuote{crank}
+\item Required Packages: \CRANpkg{mlr3}, \CRANpkg{mlr3survival}
+}
+}
+
+\section{Parameters}{
+\tabular{lllll}{
+   Id \tab Type \tab Default \tab Levels \tab Range \cr
+   t_max \tab numeric \tab - \tab  \tab \eqn{[0, \infty)}{[0, Inf)} \cr
+   p_max \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
+   weight_meth \tab character \tab I \tab I, G, G2, SG, S, GH \tab - \cr
+   tiex \tab numeric \tab 0.5 \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
+   eps \tab numeric \tab 0.001 \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
+}
+}
+
 \section{Parameter details}{
 
 \itemize{

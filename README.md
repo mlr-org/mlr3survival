@@ -1,6 +1,9 @@
 
 # mlr3survival <img src="man/figures/logo.png" align="right" width = "120" />
 
+<img src="man/figures/warning.png" width = "42" /> This package is
+**under development**
+
 Package website: [release](https://mlr3survival.mlr-org.com/) \|
 [dev](https://mlr3survival.mlr-org.com/dev/)
 

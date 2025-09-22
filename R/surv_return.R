@@ -66,12 +66,6 @@ surv_return = function(
     # would it make sense for it to be only surv matrix or survDistr (so that
     # get_mortality => crank calculation can work)
 
-    # given data_type
-    if (class(surv)[1L] == "numeric") {
-      # in case of a vector (one observation) convert to matrix
-      surv = matrix(surv, nrow = 1L, dimnames = list(NULL, names(surv)))
-    }
-
     if (!inherits(surv, "matrix")) {
       stop("'surv' must be a 2D matrix: rows = observations, columns = time points")
     }

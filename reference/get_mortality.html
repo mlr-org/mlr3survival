@@ -84,7 +84,7 @@ model or survival distribution assumptions.</p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix()</a></code>) <br> A survival matrix where rows are the
 (predicted) observations and columns the time-points.
-For more details, see <a href="https://rdrr.io/pkg/survdistr/man/assert_surv_matrix.html" class="external-link">survdistr::assert_surv_matrix</a>.</p></dd>
+For more details, see survdistr::assert_surv_matrix.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -118,9 +118,9 @@ ISSN 1367-4803, <a href="https://doi.org/10.1093/BIOINFORMATICS/BTAC451" class="
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get mortality scores (larger values correspond to higher risk scores)</span></span></span>
 <span class="r-in"><span><span class="va">mort</span> <span class="op">=</span> <span class="fu">get_mortality</span><span class="op">(</span><span class="va">surv_mat</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in assert_surv_matrix(x):</span> could not find function "assert_surv_matrix"</span>
 <span class="r-in"><span><span class="va">mort</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 42.97823 54.82505 45.70337 43.87888 60.06472 51.07290 40.24465 58.56290</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 47.22765 54.87452</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'mort' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

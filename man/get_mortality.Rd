@@ -4,12 +4,24 @@
 \alias{get_mortality}
 \title{Calculate the expected mortality risks from a survival matrix}
 \usage{
-get_mortality(x)
+get_mortality(x, times = NULL, eps = 1e-06, check = TRUE)
 }
 \arguments{
-\item{x}{(\code{matrix()}) \cr A survival matrix where rows are the
-(predicted) observations and columns the time-points.
-For more details, see \link[survdistr:assert_surv_matrix]{survdistr::assert_surv_matrix}.}
+\item{x}{(\code{matrix()}) \cr
+A survival matrix.
+Rows correspond to observations and columns correspond to time points.}
+
+\item{times}{(\code{numeric()}|\code{NULL})\cr
+Optional numeric vector of time points corresponding to the columns of \code{x}.}
+
+\item{eps}{(\code{numeric(1)})\cr
+Small positive constant used to bound survival probabilities away from zero
+and prevent infinite cumulative hazards, as \code{H(t) = -log(S(t))}.}
+
+\item{check}{(\code{logical(1)})\cr
+If \code{TRUE} (default), uses \link[survdistr:assert_prob_matrix]{assert_prob_matrix}
+to perform several checks on the survival matrix.
+Set to \code{FALSE} to skip checks (NOT recommended for external use).}
 }
 \value{
 a \code{numeric} vector of the mortality risk scores, one per row of the
@@ -34,11 +46,11 @@ k = 50 # time points
 mat = matrix(runif(n * k, min = 0, max = 1), nrow = n, ncol = k)
 
 # transform it to a survival matrix
-surv_mat = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
-colnames(surv_mat) = 1:k # time points
+x = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
+colnames(x) = 1:k # time points
 
 # get mortality scores (larger values correspond to higher risk scores)
-mort = get_mortality(surv_mat)
+mort = get_mortality(x)
 mort
 
 }

@@ -8,13 +8,18 @@ This Learner specializes \link[mlr3:Learner]{Learner} for survival problems:
 \itemize{
 \item \code{task_type} is set to \code{"surv"}
 \item Creates \link[mlr3:Prediction]{Prediction}s of class \link{PredictionSurv}.
-\item Possible values for \code{predict_types} are:
+\item Supported \code{predict_types} are:
 \itemize{
-\item \code{"distr"}: Predicts a probability distribution for each observation in the test set,
-uses \link[survdistr:survDistr]{survDistr}.
-\item \code{"lp"}: Predicts a linear predictor for each observation in the test set.
-\item \code{"crank"}: Predicts a continuous ranking for each observation in the test set.
-\item \code{"response"}: Predicts a survival time for each observation in the test set.
+\item \code{"distr"}: A survival probability matrix, with rows corresponding to observations
+and columns to time points. Internally wrapped as a
+\link[survdistr:survDistr]{survDistr} object for interpolation and
+transformation.
+\item \code{"lp"}: A numeric vector of predicted linear predictors (typically from
+proportional hazards models).
+\item \code{"crank"}: A numeric vector providing a continuous ranking of risk,
+where higher values correspond to higher risk.
+\item \code{"response"}: A numeric vector of predicted survival times, passed
+without modification.
 }
 }
 }

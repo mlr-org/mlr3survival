@@ -15,26 +15,38 @@ surv_return(
 )
 }
 \arguments{
-\item{times}{(\code{numeric()}) \cr Vector of survival times.}
+\item{times}{(\code{numeric()}|\code{NULL}) \cr
+Vector of survival times.
+If times is \code{NULL}, it will be inferred from \code{colnames(surv)}.}
 
-\item{surv}{(\code{matrix()})\cr Matrix of predicted survival probabilities, rows (1st dimension) are observations, columns (2nd dimension) are time points.
+\item{surv}{(\code{matrix()})\cr
+Matrix of predicted survival probabilities, rows (1st dimension) are
+observations, columns (2nd dimension) are time points.
 Number of columns should be equal to length of \code{times}.
-In case a \code{numeric()} vector is provided, it is converted to a single row (one observation) matrix.}
+Several checks are performed with \link[survdistr:assert_prob_matrix]{assert_prob_matrix}.}
 
-\item{crank}{(\code{numeric()})\cr Relative risk/continuous ranking.
+\item{crank}{(\code{numeric()})\cr
+Relative risk/continuous ranking.
 Higher value is associated with higher risk.
-If \code{NULL} then either set as \code{-response} if available or \code{lp} if available (this assumes that the \code{lp} prediction comes from a PH type model - in case of an AFT model the user should provide \code{-lp}).
-In case neither \code{response} or \code{lp} are provided, then \code{crank} is calculated as the sum of the cumulative hazard function (\strong{expected mortality}) derived from the predicted survival function (\code{surv}), see \link{get_mortality}.}
+If \code{NULL} then either set as \code{-response} if available or \code{lp} if available
+(this assumes that the \code{lp} prediction comes from a PH type model - in case
+of an AFT model the user should provide \code{-lp}).
+In case neither \code{response} or \code{lp} are provided, then \code{crank} is calculated
+as the sum of the cumulative hazard function (\strong{expected mortality})
+derived from the predicted survival function (\code{surv}), see \link{get_mortality}.}
 
-\item{lp}{(\code{numeric()})\cr Predicted linear predictor, used to impute \code{crank} if the latter is \code{NULL}.}
+\item{lp}{(\code{numeric()})\cr
+Predicted linear predictor, used to impute \code{crank} if the latter is \code{NULL}.}
 
-\item{response}{(\code{numeric()})\cr Predicted survival time, passed through function without
-modification.}
+\item{response}{(\code{numeric()})\cr
+Predicted survival time, passed through function without modification.}
 
-\item{data_type}{(\code{character(1)})\cr Data type for \code{surv}. Either \code{"surv"} for survival or \code{"haz"} for hazard matrices.}
+\item{data_type}{(\code{character(1)})\cr
+Data type for \code{surv}. Either \code{"surv"} for survival or \code{"haz"} for hazard matrices.}
 
 \item{interp_meth}{(\code{character(1)})\cr
-Interpolation type; one of \code{"const_surv"}, \code{"linear_surv"}, or \code{"const_haz"}.}
+Interpolation type; one of \code{"const_surv"}, \code{"linear_surv"}, or \code{"const_haz"}.
+This is needed for conversion to a \link[survdistr:survDistr]{survDistr} object.}
 }
 \description{
 Internal helper function to easily return the correct survival predict types.

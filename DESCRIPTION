@@ -19,7 +19,7 @@ Imports:
     paradox (>= 1.0.1),
     R6 (>= 2.6.1),
     Rcpp (>= 1.0.4),
-    survdistr (>= 0.0.0.9000),
+    survdistr (>= 0.0.1),
     survival
 Suggests:
     lgr,
@@ -27,8 +27,6 @@ Suggests:
     testthat (>= 3.0.0)
 LinkingTo:
     Rcpp
-Remotes:
-    mlr-org/survdistr@improve_interp_funs
 ByteCompile: true
 Config/testthat/edition: 3
 Encoding: UTF-8

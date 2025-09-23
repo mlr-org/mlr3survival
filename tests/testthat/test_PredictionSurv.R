@@ -97,8 +97,8 @@ test_that("filtering", {
   expect_numeric(p_cox$data$crank, any.missing = FALSE, len = 3L)
   expect_numeric(p_cox$data$lp, any.missing = FALSE, len = 3L)
   expect_matrix(p_cox$data$distr, nrows = 3L)
-  expect_equal(p_cox$data$data_type, "surv")
-  expect_equal(p_cox$data$interp_meth, "const_surv")
+  expect_equal(attr(p_cox$data, "data_type"), "surv")
+  expect_equal(attr(p_cox$data, "interp_meth"), "const_surv")
 
   # edge case: filter to 1 observation
   p$filter(ids[2])
@@ -108,8 +108,8 @@ test_that("filtering", {
   expect_numeric(p$data$crank, any.missing = FALSE, len = 1L)
   expect_numeric(p$data$lp, any.missing = FALSE, len = 1L)
   expect_matrix(p$data$distr, nrows = 1L)
-  expect_equal(p$data$data_type, "surv")
-  expect_equal(p$data$interp_meth, "const_surv")
+  expect_equal(attr(p$data, "data_type"), "surv")
+  expect_equal(attr(p$data, "interp_meth"), "const_surv")
 
   # filter to 0 observations using non-existent id
   p$filter(-42)
@@ -119,6 +119,6 @@ test_that("filtering", {
   expect_numeric(p$data$crank, len = 0)
   expect_numeric(p$data$lp, len = 0)
   expect_matrix(p$data$distr, nrows = 0, ncols = 0)
-  expect_equal(p$data$data_type, "surv")
-  expect_equal(p$data$interp_meth, "const_surv")
+  expect_equal(attr(p$data, "data_type"), "surv")
+  expect_equal(attr(p$data, "interp_meth"), "const_surv")
 })

@@ -2,25 +2,35 @@
 
 #' @export
 as_prediction.PredictionDataSurv = function(x, check = TRUE, ...) {
-  # due to restrictions in mlr3 we pass further arguments as attributes
-  # in crank that is by construction (see `surv_return.R`) not NULL
-  invoke(PredictionSurv$new, check = check, data_type = attr(x$crank, "data_type"),
-         interp_meth = attr(x$crank, "interp_meth"), .args = x)
+  invoke(PredictionSurv$new,
+         check = check,
+         data_type = attr(x, "data_type"), # this is needed
+         interp_meth = attr(x, "interp_meth"),
+         .args = x)
 }
 
 #' @export
 check_prediction_data.PredictionDataSurv = function(pdata, ...) {
+  # check number of observations
   n = length(assert_row_ids(pdata$row_ids))
+
+  # check Surv output
   assert_surv(pdata$truth, "Surv", len = n, any.missing = TRUE, null.ok = TRUE)
+
+  # check vector prediction types
   assert_numeric(pdata$crank, len = n, any.missing = FALSE, null.ok = FALSE)
   assert_numeric(pdata$response, len = n, any.missing = FALSE, null.ok = TRUE)
   assert_numeric(pdata$lp, len = n, any.missing = FALSE, null.ok = TRUE)
-  if (inherits(pdata$distr, "matrix")) {
-    assert_matrix(pdata$distr, nrows = n, any.missing = FALSE, null.ok = TRUE)
-  } # TODO: check if survDistr is given? or enforce matrix for now?
 
-  assert_character(attr(pdata$crank, "data_type"), len = 1L, any.missing = FALSE, null.ok = TRUE)
-  assert_character(attr(pdata$crank, "interp_meth"), len = 1L, any.missing = FALSE, null.ok = TRUE)
+  # simple check of the (survival) matrix
+  if (inherits(pdata$distr, "matrix")) {
+    assert_matrix(pdata$distr, nrows = n, any.missing = FALSE, null.ok = TRUE,
+                  col.names = "named") # names of columns = time points
+  }
+
+  # check survDistr parameters
+  assert_character(attr(pdata, "data_type"), len = 1L, any.missing = FALSE, null.ok = TRUE)
+  assert_character(attr(pdata, "interp_meth"), len = 1L, any.missing = FALSE, null.ok = TRUE)
 
   pdata
 }
@@ -76,17 +86,17 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     distr_list = map(dots, "distr") # list of data matrices
 
     # check that all matrices are of the same type
-    data_types = map_chr(dots, function(x) x$data_type)
-    if (!every(data_types[-1L], identical, y = data_types[1L])) {
-      stopf("Cannot combine predictions: Different 'data_type'")
+    data_types = vapply(dots, attr, character(1), "data_type")
+    if (!all(data_types[-1L] == data_types[1L])) {
+      stop("Cannot combine predictions: Different 'data_type'")
     }
     data_type = data_types[[1L]]
     # TODO: maybe check/enforce the 'surv' matrix data_type here?
     # e.g. what if it is a hazard matrix (or something else)?
 
     # check that interpolation methods are of the same type
-    interp_meths = map_chr(dots, function(x) x$interp_meth)
-    if (!every(interp_meths[-1L], identical, y = interp_meths[1L])) {
+    interp_meths = vapply(dots, attr, character(1), "interp_meth")
+    if (!all(interp_meths[-1L] == interp_meths[1L])) {
       stopf("Cannot combine predictions: Different 'interp_meth'")
     }
     interp_meth = interp_meths[[1L]]
@@ -110,11 +120,8 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     colnames(merged_mat) = common_times
 
     result$distr = merged_mat
-    setattr(result$crank, "data_type", data_type)
-    setattr(result$crank, "interp_meth", interp_meth)
-    # TODO: Can't do the following? refine how we pass these arguments?
-    # result$data_type = data_type
-    # result$interp_meth = interp_meth
+    setattr(result, "data_type", data_type)
+    setattr(result, "interp_meth", interp_meth)
   }
 
   set_class(result, "PredictionDataSurv")

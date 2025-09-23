@@ -67,23 +67,20 @@ PredictionSurv = R6Class("PredictionSurv",
       data_type = "surv",
       interp_meth = "const_surv"
       ) {
-      # remove 'data_type' and 'interp_meth' if they are attached to crank
-      attributes(crank) = NULL
-
       pdata = list(
         row_ids = row_ids,
         truth = truth,
         crank = crank,
         distr = distr,
         lp = lp,
-        response = response,
-        data_type = data_type,
-        interp_meth = interp_meth)
-      pdata = discard(pdata, is.null)
+        response = response
+      )
+      setattr(pdata, "data_type", data_type)
+      setattr(pdata, "interp_meth", interp_meth)
       class(pdata) = c("PredictionDataSurv", "PredictionData")
 
-      # TODO : simplify `distr` if it is a survDistr? so that we only keep the
-      # survival matrix on the $data$distr slot?
+      # TODO (maybe): simplify `distr` if it is a survDistr? so that we only
+      # keep the survival matrix on the $data$distr slot?
 
       if (check) {
         pdata = check_prediction_data(pdata)

@@ -116,17 +116,21 @@ PredictionSurv = R6Class("PredictionSurv",
       distr_data = self$data$distr
 
       # Return NULL if missing or empty matrix
-      if (is.null(distr_data) ||
-          length(distr_data) == 0 ||
-          nrow(distr_data) == 0 ||
-          ncol(distr_data) == 0) {
+      if (is.null(distr_data) || !is.matrix(distr_data) || any(dim(distr_data) == 0)) {
         return(NULL)
       }
 
-      survDistr$new(
-        distr_data,
-        data_type  = self$data$data_type,
-        interp_meth = self$data$interp_meth
+      # Attempt to construct survDistr safely
+      tryCatch(
+        survDistr$new(
+          x = distr_data,
+          data_type = attr(self$data, "data_type"),
+          interp_meth = attr(self$data, "interp_meth")
+        ),
+        error = function(e) {
+          warning("Failed to construct survDistr: ", conditionMessage(e))
+          NULL
+        }
       )
     },
 

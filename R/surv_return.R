@@ -5,20 +5,32 @@
 #' This should be used by all survival mlr3 learners, to ensure that the `crank`
 #' prediction type is always included.
 #'
-#' @param times (`numeric()`) \cr Vector of survival times.
-#' @param surv (`matrix()`)\cr Matrix of predicted survival probabilities, rows (1st dimension) are observations, columns (2nd dimension) are time points.
-#' Number of columns should be equal to length of `times`.
-#' In case a `numeric()` vector is provided, it is converted to a single row (one observation) matrix.
-#' @param crank (`numeric()`)\cr Relative risk/continuous ranking.
-#' Higher value is associated with higher risk.
-#' If `NULL` then either set as `-response` if available or `lp` if available (this assumes that the `lp` prediction comes from a PH type model - in case of an AFT model the user should provide `-lp`).
-#' In case neither `response` or `lp` are provided, then `crank` is calculated as the sum of the cumulative hazard function (**expected mortality**) derived from the predicted survival function (`surv`), see [get_mortality].
-#' @param lp (`numeric()`)\cr Predicted linear predictor, used to impute `crank` if the latter is `NULL`.
-#' @param response (`numeric()`)\cr Predicted survival time, passed through function without
-#' modification.
-#' @param data_type (`character(1)`)\cr Data type for `surv`. Either `"surv"` for survival or `"haz"` for hazard matrices.
+#' @param times (`numeric()`|`NULL`) \cr
+#'  Vector of survival times.
+#'  If times is `NULL`, it will be inferred from `colnames(surv)`.
+#' @param surv (`matrix()`)\cr
+#'  Matrix of predicted survival probabilities, rows (1st dimension) are
+#'  observations, columns (2nd dimension) are time points.
+#'  Number of columns should be equal to length of `times`.
+#'  Several checks are performed with [assert_prob_matrix][survdistr::assert_prob_matrix()].
+#' @param crank (`numeric()`)\cr
+#'  Relative risk/continuous ranking.
+#'  Higher value is associated with higher risk.
+#'  If `NULL` then either set as `-response` if available or `lp` if available
+#'  (this assumes that the `lp` prediction comes from a PH type model - in case
+#'  of an AFT model the user should provide `-lp`).
+#'  In case neither `response` or `lp` are provided, then `crank` is calculated
+#'  as the sum of the cumulative hazard function (**expected mortality**)
+#'  derived from the predicted survival function (`surv`), see [get_mortality].
+#' @param lp (`numeric()`)\cr
+#'  Predicted linear predictor, used to impute `crank` if the latter is `NULL`.
+#' @param response (`numeric()`)\cr
+#'  Predicted survival time, passed through function without modification.
+#' @param data_type (`character(1)`)\cr
+#'  Data type for `surv`. Either `"surv"` for survival or `"haz"` for hazard matrices.
 #' @param interp_meth (`character(1)`)\cr
-#' Interpolation type; one of `"const_surv"`, `"linear_surv"`, or `"const_haz"`.
+#'  Interpolation type; one of `"const_surv"`, `"linear_surv"`, or `"const_haz"`.
+#'  This is needed for conversion to a [survDistr][survdistr::survDistr] object.
 #'
 #' @references
 #' `r format_bib("sonabend_2022")`
@@ -58,22 +70,19 @@ surv_return = function(
   data_type = "surv",
   interp_meth = "const_surv"
   ) {
-  assert_choice(data_type, c("surv", "haz")) # TODO: support haz???
+  assert_choice(data_type, c("surv", "haz"))
+  # TODO: support hazard matrix - get_mortality will need update as well
+  if (data_type == "haz") {
+    stop("Hazard matrices as input is not yet implemented.")
+  }
+
   assert_choice(interp_meth, c("const_surv", "linear_surv", "const_haz"))
 
   if (!is.null(surv)) {
-    # FIXME: allow surv to be a more generic data (surv or haz) denoted by the data_type
-    # would it make sense for it to be only surv matrix or survDistr (so that
-    # get_mortality => crank calculation can work)
-
-    if (!inherits(surv, "matrix")) {
-      stop("'surv' must be a 2D matrix: rows = observations, columns = time points")
-    }
-
-    times = times %??% colnames(surv)
-    if (length(times) != ncol(surv)) {
-      stop("'times' must equal the number of columns of 'surv'")
-    }
+    # survival matrix checks (it's better to do always here, and avoid troubles later)
+    times = assert_prob_matrix(x = surv, times = times, type = "surv")
+    # can't pass `times` separately in mlr3's Prediction object, so
+    # better to keep them in the matrix
     colnames(surv) = times
   }
 
@@ -87,7 +96,8 @@ surv_return = function(
       # assumes PH-type lp where high value = high risk
       crank = lp
     } else if (!is.null(surv)) {
-      crank = get_mortality(surv)
+      # `surv` already validated above, no need to check again
+      crank = get_mortality(x = surv, check = FALSE)
     }
   }
 
@@ -99,9 +109,8 @@ surv_return = function(
   )
 
   # due to restrictions in mlr3 we pass further arguments as attributes
-  # in crank that is the only predict type that will not be NULL
-  setattr(pred$crank, "data_type", data_type)
-  setattr(pred$crank, "interp_meth", interp_meth)
+  setattr(pred, "data_type", data_type)
+  setattr(pred, "interp_meth", interp_meth)
 
   pred
 }

@@ -107,11 +107,14 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
 
     # Interpolate each matrix to the common time grid
     interp_mats = mapply(function(mat, times) {
-      survdistr:::rcpp_mat_interp(
-        x         = mat,
-        times     = times,
-        new_times = common_times,
-        constant  = ifelse(interp_meth == "const_surv", TRUE, FALSE)
+      survdistr::mat_interp(
+        x          = mat,
+        times      = times,
+        eval_times = common_times,
+        constant   = ifelse(interp_meth == "const_surv", TRUE, FALSE),
+        type       = data_type, # "surv" for now ALWAYS
+        add_times  = FALSE, # will add later - `common_times` for all matrices
+        check      = FALSE  # has been checked in `surv_return()` by default
       )
     }, distr_list, times_list, SIMPLIFY = FALSE)
 

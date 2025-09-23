@@ -45,7 +45,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH",
       pv$weights = private$.get_weights(task)
 
       invoke(survival::coxph, formula = task$formula(), data = task$data(),
-             .args = pv, model = TRUE)
+             model = TRUE, .args = pv)
     },
 
     .predict = function(task) {
@@ -59,7 +59,9 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH",
       # Get linear predictors
       lp = as.numeric(invoke(predict, self$model, type = "lp", newdata = newdata))
 
-      surv_return(times = fit$time, surv = t(fit$surv), lp = lp)
+      surv_mat = t(fit$surv)
+      rownames(surv_mat) = NULL # remove row names (observation ids), not needed
+      surv_return(times = fit$time, surv = surv_mat, lp = lp)
     }
   )
 )

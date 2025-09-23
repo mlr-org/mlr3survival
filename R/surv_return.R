@@ -118,9 +118,18 @@ surv_return = function(
 #' patients with similar characteristics, see Ishwaran et al. (2008) and has no
 #' model or survival distribution assumptions.
 #'
-#' @param x (`matrix()`) \cr A survival matrix where rows are the
-#' (predicted) observations and columns the time-points.
-#' For more details, see [survdistr::assert_surv_matrix].
+#' @param x (`matrix()`) \cr
+#'  A survival matrix.
+#'  Rows correspond to observations and columns correspond to time points.
+#' @param times (`numeric()`|`NULL`)\cr
+#'  Optional numeric vector of time points corresponding to the columns of `x`.
+#' @param eps (`numeric(1)`)\cr
+#'  Small positive constant used to bound survival probabilities away from zero
+#'  and prevent infinite cumulative hazards, as \code{H(t) = -log(S(t))}.
+#' @param check (`logical(1)`)\cr
+#'  If `TRUE` (default), uses [assert_prob_matrix][survdistr::assert_prob_matrix()]
+#'  to perform several checks on the survival matrix.
+#'  Set to `FALSE` to skip checks (NOT recommended for external use).
 #'
 #' @return a `numeric` vector of the mortality risk scores, one per row of the
 #' input survival matrix.
@@ -136,22 +145,20 @@ surv_return = function(
 #' mat = matrix(runif(n * k, min = 0, max = 1), nrow = n, ncol = k)
 #'
 #' # transform it to a survival matrix
-#' surv_mat = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
-#' colnames(surv_mat) = 1:k # time points
+#' x = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
+#' colnames(x) = 1:k # time points
 #'
 #' # get mortality scores (larger values correspond to higher risk scores)
-#' mort = get_mortality(surv_mat)
+#' mort = get_mortality(x)
 #' mort
 #'
 #' @export
-get_mortality = function(x) {
-  assert_surv_matrix(x)
+get_mortality = function(x, times = NULL, eps = 1e-6, check = TRUE) {
+  assert_flag(check)
+  if (check) assert_prob_matrix(x, times, type = "surv")
 
-  # H(t) = -log(S(t))
-  cumhaz = -log(x)
-
-  # Ignore S(t) = 0 => -log(S(t)) = Inf
-  cumhaz[is.infinite(cumhaz)] = 0
+  # H(t) = -log(S(t)), floored at eps to avoid -log(0) = Inf
+  cumhaz = -log(pmax(x, eps))
 
   rowSums(cumhaz)
 }

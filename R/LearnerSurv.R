@@ -5,12 +5,17 @@
 #'
 #' * `task_type` is set to `"surv"`
 #' * Creates [Prediction][mlr3::Prediction]s of class [PredictionSurv].
-#' * Possible values for `predict_types` are:
-#'   - `"distr"`: Predicts a probability distribution for each observation in the test set,
-#'                uses [survDistr][survdistr::survDistr].
-#'   - `"lp"`: Predicts a linear predictor for each observation in the test set.
-#'   - `"crank"`: Predicts a continuous ranking for each observation in the test set.
-#'   - `"response"`: Predicts a survival time for each observation in the test set.
+#' * Supported `predict_types` are:
+#'   - `"distr"`: A survival probability matrix, with rows corresponding to observations
+#'                and columns to time points. Internally wrapped as a
+#'                [survDistr][survdistr::survDistr] object for interpolation and
+#'                transformation.
+#'   - `"lp"`: A numeric vector of predicted linear predictors (typically from
+#'             proportional hazards models).
+#'   - `"crank"`: A numeric vector providing a continuous ranking of risk,
+#'                where higher values correspond to higher risk.
+#'   - `"response"`: A numeric vector of predicted survival times, passed
+#'                   without modification.
 #'
 #' @template param_id
 #' @template param_param_set

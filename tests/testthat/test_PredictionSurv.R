@@ -42,7 +42,7 @@ test_that("combining predictions", {
   preds2 = rr$predictions()
   preds2[[2L]]$data$distr = cbind(
     distr2,
-    matrix(data = rep(0.3, task$nrow / 2), ncol = 1L, dimnames = list(NULL, 108))
+    matrix(data = rep(0.01, task$nrow / 2), ncol = 1L, dimnames = list(NULL, 1100))
   )
   distr1 = preds2[[1L]]$data$distr
   distr2 = preds2[[2L]]$data$distr
@@ -55,7 +55,7 @@ test_that("combining predictions", {
   expect_matrix(surv_mat2)
   # check that time points are properly combined and extra time point has been added
   times = as.numeric(colnames(surv_mat2))
-  expect_in(108, times)
+  expect_in(1100, times)
   expect_true(all(times == sort(union(times1, times2))))
 
   # combining predictions with exactly the same time points
@@ -69,7 +69,7 @@ test_that("combining predictions", {
   expect_equal(colnames(p12$data$distr), colnames(p1$data$distr)) # same time points
 })
 
-test_that("data.table roundtrip", {
+test_that("data.table/frame roundtrip", {
   tab = as.data.table(p_cox)
   expect_class(tab$distr, "list")
   expect_equal(length(tab$distr), task$nrow)
@@ -83,6 +83,19 @@ test_that("data.table roundtrip", {
   expect_prediction_surv(p)
   expect_equal(p_cox$distr$data, p$distr$data)
   expect_equal(as.data.table(p_cox)[, -6L], as.data.table(p)[, -6L])
+
+  # Repeat the same tests on a plain data.frame
+  tab_df = as.data.frame(tab)
+  expect_class(tab_df$distr, "list")
+  expect_equal(length(tab_df$distr), task$nrow)
+  for (i in 1:task$nrow) {
+    expect_list(tab_df$distr[[i]], len = 1)
+    expect_numeric(tab_df$distr[[i]][[1L]], len = ncol(p_cox$data$distr), any.missing = FALSE)
+  }
+  p_df = as_prediction_surv(tab_df)
+  expect_prediction_surv(p_df)
+  expect_equal(p_cox$distr$data, p_df$distr$data)
+  expect_equal(as.data.table(p_cox)[, -6L], as.data.table(p_df)[, -6L])
 })
 
 test_that("filtering", {

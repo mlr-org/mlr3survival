@@ -54,11 +54,14 @@ as_prediction_surv.data.frame = function(x, ...) {
     }
   }
 
+  setDT(x) # if just a `data.frame`, with = FALSE below will not work!
+  x_subset = x[, setdiff(names(x), c("time", "status", "distr")), with = FALSE]
+
   invoke(PredictionSurv$new,
     truth = Surv(x$time, x$status),
     distr = distr,
     data_type = attr(x, "data_type") %||% "surv",
     interp_meth = attr(x, "interp_meth") %||% "const_surv",
-    .args = x[, -intersect(c("time", "status", "distr"), names(x)), with = FALSE],
+    .args = x_subset
   )
 }

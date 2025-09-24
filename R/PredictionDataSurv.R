@@ -122,7 +122,7 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     merged_mat = do.call(rbind, interp_mats)
     colnames(merged_mat) = common_times
 
-    result$distr = merged_mat
+    result$distr = merged_mat[ii, , drop = FALSE]
     setattr(result, "data_type", data_type)
     setattr(result, "interp_meth", interp_meth)
   }

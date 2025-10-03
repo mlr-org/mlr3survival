@@ -29,3 +29,10 @@ pak::pak("mlr-org/mlr3survival")
 ```
 
 ## Example
+
+## Code of Conduct
+
+Please note that the mlr3survival project is released with a
+[Contributor Code of
+Conduct](https://mlr3survival.mlr-org.com/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.

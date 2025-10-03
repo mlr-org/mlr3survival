@@ -4,8 +4,7 @@
 <img src="man/figures/warning.png" width = "42" /> This package is
 **under development**
 
-Package website: [release](https://mlr3survival.mlr-org.com/) \|
-[dev](https://mlr3survival.mlr-org.com/dev/)
+Package website: [release](https://mlr3survival.mlr-org.com/)
 
 Survival analysis with ‘mlr3’.
 

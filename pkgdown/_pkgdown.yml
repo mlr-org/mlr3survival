@@ -40,6 +40,10 @@ navbar:
       icon: fa-link
       href: https://mlr-org.com/
       aria-label: mlr3 website
+    github:
+      icon: fab fa-github
+      href: https://github.com/mlr-org/mlr3cmprsk
+      aria-label: GitHub
 
 reference:
   - title: Package

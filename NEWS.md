@@ -1,3 +1,3 @@
 # mlr3survival (development version)
 
-* Initial CRAN submission.
+* Initial porting of mlr3prova code.

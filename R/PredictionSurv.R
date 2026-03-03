@@ -51,8 +51,6 @@ PredictionSurv = R6Class("PredictionSurv",
     #'   One element for each observation in the test set.
     #' @param check (`logical(1)`)\cr
     #'   If `TRUE`, performs argument checks and predict type conversions.
-    #' @param data_type (`character(1)`)\cr
-    #'   Type of data (e.g. survival or hazard) stored in `distr`.
     #' @param interp_meth (`character(1)`)\cr
     #'   Type of interpolation used in subsequent methods of the `survDistr` object.
     initialize = function(
@@ -64,7 +62,6 @@ PredictionSurv = R6Class("PredictionSurv",
       lp = NULL,
       response = NULL,
       check = TRUE,
-      data_type = "surv",
       interp_meth = "const_surv"
       ) {
       pdata = list(
@@ -75,7 +72,6 @@ PredictionSurv = R6Class("PredictionSurv",
         lp = lp,
         response = response
       )
-      setattr(pdata, "data_type", data_type)
       setattr(pdata, "interp_meth", interp_meth)
       class(pdata) = c("PredictionDataSurv", "PredictionData")
 
@@ -124,7 +120,6 @@ PredictionSurv = R6Class("PredictionSurv",
       tryCatch(
         survDistr$new(
           x = distr_data,
-          data_type = attr(self$data, "data_type"),
           interp_meth = attr(self$data, "interp_meth")
         ),
         error = function(e) {

@@ -28,7 +28,7 @@ Suggests:
 LinkingTo:
     Rcpp
 Remotes:
-    mlr-org/survdistr
+    mlr-org/survdistr@Updates
 ByteCompile: true
 Config/testthat/edition: 3
 Encoding: UTF-8

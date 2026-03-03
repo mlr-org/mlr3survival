@@ -10,7 +10,6 @@ surv_return(
   crank = NULL,
   lp = NULL,
   response = NULL,
-  data_type = "surv",
   interp_meth = "const_surv"
 )
 }
@@ -40,9 +39,6 @@ Predicted linear predictor, used to impute \code{crank} if the latter is \code{N
 
 \item{response}{(\code{numeric()})\cr
 Predicted survival time, passed through function without modification.}
-
-\item{data_type}{(\code{character(1)})\cr
-Data type for \code{surv}. Either \code{"surv"} for survival or \code{"haz"} for hazard matrices.}
 
 \item{interp_meth}{(\code{character(1)})\cr
 Interpolation type; one of \code{"const_surv"}, \code{"linear_surv"}, or \code{"const_haz"}.

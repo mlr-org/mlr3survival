@@ -4,7 +4,6 @@
 as_prediction.PredictionDataSurv = function(x, check = TRUE, ...) {
   invoke(PredictionSurv$new,
          check = check,
-         data_type = attr(x, "data_type"), # this is needed
          interp_meth = attr(x, "interp_meth"),
          .args = x)
 }
@@ -28,8 +27,7 @@ check_prediction_data.PredictionDataSurv = function(pdata, ...) {
                   col.names = "named") # names of columns = time points
   }
 
-  # check survDistr parameters
-  assert_character(attr(pdata, "data_type"), len = 1L, any.missing = FALSE, null.ok = TRUE)
+  # check survDistr init parameter
   assert_character(attr(pdata, "interp_meth"), len = 1L, any.missing = FALSE, null.ok = TRUE)
 
   pdata
@@ -85,15 +83,6 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
   if ("distr" %in% predict_types) {
     distr_list = map(dots, "distr") # list of data matrices
 
-    # check that all matrices are of the same type
-    data_types = vapply(dots, attr, character(1), "data_type")
-    if (!all(data_types[-1L] == data_types[1L])) {
-      stop("Cannot combine predictions: Different 'data_type'")
-    }
-    data_type = data_types[[1L]]
-    # TODO: maybe check/enforce the 'surv' matrix data_type here?
-    # e.g. what if it is a hazard matrix (or something else)?
-
     # check that interpolation methods are of the same type
     interp_meths = vapply(dots, attr, character(1), "interp_meth")
     if (!all(interp_meths[-1L] == interp_meths[1L])) {
@@ -107,12 +96,12 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
 
     # Interpolate each matrix to the common time grid
     interp_mats = mapply(function(mat, times) {
-      survdistr::mat_interp(
+      survdistr::interp(
         x          = mat,
         times      = times,
         eval_times = common_times,
-        constant   = ifelse(interp_meth == "const_surv", TRUE, FALSE),
-        type       = data_type, # "surv" for now ALWAYS
+        method     = interp_meth,
+        output     = "surv",
         add_times  = FALSE, # will add later - `common_times` for all matrices
         check      = FALSE  # has been checked in `surv_return()` by default
       )
@@ -123,7 +112,6 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     colnames(merged_mat) = common_times
 
     result$distr = merged_mat[ii, , drop = FALSE]
-    setattr(result, "data_type", data_type)
     setattr(result, "interp_meth", interp_meth)
   }
 

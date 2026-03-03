@@ -26,8 +26,6 @@
 #'  Predicted linear predictor, used to impute `crank` if the latter is `NULL`.
 #' @param response (`numeric()`)\cr
 #'  Predicted survival time, passed through function without modification.
-#' @param data_type (`character(1)`)\cr
-#'  Data type for `surv`. Either `"surv"` for survival or `"haz"` for hazard matrices.
 #' @param interp_meth (`character(1)`)\cr
 #'  Interpolation type; one of `"const_surv"`, `"linear_surv"`, or `"const_haz"`.
 #'  This is needed for conversion to a [survDistr][survdistr::survDistr] object.
@@ -67,22 +65,15 @@ surv_return = function(
   crank = NULL,
   lp = NULL,
   response = NULL,
-  data_type = "surv",
   interp_meth = "const_surv"
   ) {
-  assert_choice(data_type, c("surv", "haz"))
-  # TODO: support hazard matrix - get_mortality will need update as well
-  if (data_type == "haz") {
-    stop("Hazard matrices as input is not yet implemented.")
-  }
-
   assert_choice(interp_meth, c("const_surv", "linear_surv", "const_haz"))
 
   if (!is.null(surv)) {
     # survival matrix checks (it's better to do always here, and avoid troubles later)
     times = assert_prob_matrix(x = surv, times = times, type = "surv")
-    # can't pass `times` separately in mlr3's Prediction object, so
-    # better to keep them in the matrix
+    # TODO: think if we really need to pass `times` also separately in mlr3's Prediction object, 
+    # as attributes(list(pred)), but good to keep here as colnames as well.
     colnames(surv) = times
   }
 
@@ -109,7 +100,6 @@ surv_return = function(
   )
 
   # due to restrictions in mlr3 we pass further arguments as attributes
-  setattr(pred, "data_type", data_type)
   setattr(pred, "interp_meth", interp_meth)
 
   pred

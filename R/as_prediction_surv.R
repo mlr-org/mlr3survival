@@ -60,7 +60,6 @@ as_prediction_surv.data.frame = function(x, ...) {
   invoke(PredictionSurv$new,
     truth = Surv(x$time, x$status),
     distr = distr,
-    data_type = attr(x, "data_type") %||% "surv",
     interp_meth = attr(x, "interp_meth") %||% "const_surv",
     .args = x_subset
   )

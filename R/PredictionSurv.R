@@ -51,7 +51,7 @@ PredictionSurv = R6Class("PredictionSurv",
     #'   One element for each observation in the test set.
     #' @param check (`logical(1)`)\cr
     #'   If `TRUE`, performs argument checks and predict type conversions.
-    #' @param interp_meth (`character(1)`)\cr
+    #' @param interp_method (`character(1)`)\cr
     #'   Type of interpolation used in subsequent methods of the `survDistr` object.
     initialize = function(
       task = NULL,
@@ -62,7 +62,7 @@ PredictionSurv = R6Class("PredictionSurv",
       lp = NULL,
       response = NULL,
       check = TRUE,
-      interp_meth = "const_surv"
+      interp_method = "const_surv"
       ) {
       pdata = list(
         row_ids = row_ids,
@@ -72,7 +72,7 @@ PredictionSurv = R6Class("PredictionSurv",
         lp = lp,
         response = response
       )
-      setattr(pdata, "interp_meth", interp_meth)
+      setattr(pdata, "interp_method", interp_method)
       class(pdata) = c("PredictionDataSurv", "PredictionData")
 
       # TODO (maybe): simplify `distr` if it is a survDistr? so that we only
@@ -120,7 +120,7 @@ PredictionSurv = R6Class("PredictionSurv",
       tryCatch(
         survDistr$new(
           x = distr_data,
-          interp_meth = attr(self$data, "interp_meth")
+          method = attr(self$data, "interp_method")
         ),
         error = function(e) {
           warning("Failed to construct survDistr: ", conditionMessage(e))

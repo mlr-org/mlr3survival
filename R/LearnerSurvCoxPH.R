@@ -53,6 +53,7 @@ LearnerSurvCoxPH = R6Class("LearnerSurvCoxPH",
       pv = self$param_set$get_values(tags = "predict")
 
       # Get survival predictions via `survfit`
+      # TODO: use times argument to predict at the event train time points only!
       fit = invoke(survival::survfit, formula = self$model, newdata = newdata,
                    se.fit = FALSE, .args = pv)
 

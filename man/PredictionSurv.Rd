@@ -87,7 +87,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   lp = NULL,
   response = NULL,
   check = TRUE,
-  interp_meth = "const_surv"
+  interp_method = "const_surv"
 )}\if{html}{\out{</div>}}
 }
 
@@ -124,7 +124,7 @@ One element for each observation in the test set.}
 \item{\code{check}}{(\code{logical(1)})\cr
 If \code{TRUE}, performs argument checks and predict type conversions.}
 
-\item{\code{interp_meth}}{(\code{character(1)})\cr
+\item{\code{interp_method}}{(\code{character(1)})\cr
 Type of interpolation used in subsequent methods of the \code{survDistr} object.}
 }
 \if{html}{\out{</div>}}

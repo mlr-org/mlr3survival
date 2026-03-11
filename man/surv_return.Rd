@@ -5,24 +5,23 @@
 \title{Get Survival Predict Types}
 \usage{
 surv_return(
-  times = NULL,
   surv = NULL,
+  times = NULL,
   crank = NULL,
   lp = NULL,
   response = NULL,
-  interp_meth = "const_surv"
+  interp_method = "const_surv"
 )
 }
 \arguments{
+\item{surv}{(\code{matrix()})\cr
+Matrix of predicted survival probabilities (rows = observations, columns = time points).
+Number of columns should be equal to length of \code{times}, if provided.
+Several checks are performed with \link[survdistr:assert_prob]{assert_prob}.}
+
 \item{times}{(\code{numeric()}|\code{NULL}) \cr
 Vector of survival times.
-If times is \code{NULL}, it will be inferred from \code{colnames(surv)}.}
-
-\item{surv}{(\code{matrix()})\cr
-Matrix of predicted survival probabilities, rows (1st dimension) are
-observations, columns (2nd dimension) are time points.
-Number of columns should be equal to length of \code{times}.
-Several checks are performed with \link[survdistr:assert_prob_matrix]{assert_prob_matrix}.}
+If \code{NULL}, extracted from \code{colnames(surv)}.}
 
 \item{crank}{(\code{numeric()})\cr
 Relative risk/continuous ranking.
@@ -40,12 +39,14 @@ Predicted linear predictor, used to impute \code{crank} if the latter is \code{N
 \item{response}{(\code{numeric()})\cr
 Predicted survival time, passed through function without modification.}
 
-\item{interp_meth}{(\code{character(1)})\cr
-Interpolation type; one of \code{"const_surv"}, \code{"linear_surv"}, or \code{"const_haz"}.
-This is needed for conversion to a \link[survdistr:survDistr]{survDistr} object.}
+\item{interp_method}{(\code{character(1)})\cr
+Interpolation method; one of \code{"const_surv"} (default), \code{"const_dens"} (alias: \code{"linear_surv"})
+and \code{"const_haz"} (alias: \code{"exp_surv"}).
+This is needed for conversion to a \link[survdistr:survDistr]{survDistr} object
+in \link{PredictionSurv}.}
 }
 \description{
-Internal helper function to easily return the correct survival predict types.
+Helper function to more easily return the correct survival predict types.
 This should be used by all survival mlr3 learners, to ensure that the \code{crank}
 prediction type is always included.
 }
@@ -60,10 +61,10 @@ mat = matrix(runif(n * k, min = 0, max = 1), nrow = n, ncol = k)
 surv_mat = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
 
 # crank is expected mortality, distr is the survival matrix
-surv_return(times = 1:k, surv = surv_mat)
+surv_return(surv = surv_mat, times = 1:k)
 
 # if crank is set, it's not overwritten
-surv_return(times = 1:k, surv = surv_mat, crank = rnorm(n))
+surv_return(surv = surv_mat, times = 1:k, crank = rnorm(n))
 
 # lp = crank
 surv_return(lp = rnorm(n))

@@ -4,7 +4,7 @@
 as_prediction.PredictionDataSurv = function(x, check = TRUE, ...) {
   invoke(PredictionSurv$new,
          check = check,
-         interp_meth = attr(x, "interp_meth"),
+         interp_method = attr(x, "interp_method"),
          .args = x)
 }
 
@@ -28,7 +28,7 @@ check_prediction_data.PredictionDataSurv = function(pdata, ...) {
   }
 
   # check survDistr init parameter
-  assert_character(attr(pdata, "interp_meth"), len = 1L, any.missing = FALSE, null.ok = TRUE)
+  assert_character(attr(pdata, "interp_method"), len = 1L, any.missing = FALSE, null.ok = TRUE)
 
   pdata
 }
@@ -84,11 +84,11 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     distr_list = map(dots, "distr") # list of data matrices
 
     # check that interpolation methods are of the same type
-    interp_meths = vapply(dots, attr, character(1), "interp_meth")
-    if (!all(interp_meths[-1L] == interp_meths[1L])) {
-      stopf("Cannot combine predictions: Different 'interp_meth'")
+    interp_methods = vapply(dots, attr, character(1), "interp_method")
+    if (!all(interp_methods[-1L] == interp_methods[1L])) {
+      stopf("Cannot combine predictions: Different 'interp_method' attributes in 'distr' predictions")
     }
-    interp_meth = interp_meths[[1L]]
+    interp_method = interp_methods[[1L]]
 
     # Get all common time points across all matrices
     times_list = map(distr_list, function(d) as.numeric(colnames(d)))
@@ -100,7 +100,7 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
         x          = mat,
         times      = times,
         eval_times = common_times,
-        method     = interp_meth,
+        method     = interp_method,
         output     = "surv",
         add_times  = FALSE, # will add later - `common_times` for all matrices
         check      = FALSE  # has been checked in `surv_return()` by default
@@ -112,7 +112,7 @@ c.PredictionDataSurv = function(..., keep_duplicates = TRUE) {
     colnames(merged_mat) = common_times
 
     result$distr = merged_mat[ii, , drop = FALSE]
-    setattr(result, "interp_meth", interp_meth)
+    setattr(result, "interp_method", interp_method)
   }
 
   set_class(result, "PredictionDataSurv")

@@ -125,7 +125,9 @@ One element for each observation in the test set.}
 If \code{TRUE}, performs argument checks and predict type conversions.}
 
 \item{\code{interp_method}}{(\code{character(1)})\cr
-Type of interpolation used in subsequent methods of the \code{survDistr} object.}
+Interpolation method; one of \code{"const_surv"} (default), \code{"const_dens"}
+(alias: \code{"linear_surv"}) and \code{"const_haz"} (alias: \code{"exp_surv"}).
+For more details and available options, see \code{\link[survdistr:interp]{survdistr::interp()}}}
 }
 \if{html}{\out{</div>}}
 }

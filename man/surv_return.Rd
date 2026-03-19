@@ -40,10 +40,9 @@ Predicted linear predictor, used to impute \code{crank} if the latter is \code{N
 Predicted survival time, passed through function without modification.}
 
 \item{interp_method}{(\code{character(1)})\cr
-Interpolation method; one of \code{"const_surv"} (default), \code{"const_dens"} (alias: \code{"linear_surv"})
-and \code{"const_haz"} (alias: \code{"exp_surv"}).
-This is needed for conversion to a \link[survdistr:survDistr]{survDistr} object
-in \link{PredictionSurv}.}
+Interpolation method; one of \code{"const_surv"} (default), \code{"const_dens"}
+(alias: \code{"linear_surv"}) and \code{"const_haz"} (alias: \code{"exp_surv"}).
+For more details and available options, see \code{\link[survdistr:interp]{survdistr::interp()}}}
 }
 \description{
 Helper function to more easily return the correct survival predict types.

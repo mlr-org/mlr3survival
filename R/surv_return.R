@@ -25,11 +25,7 @@
 #'  Predicted linear predictor, used to impute `crank` if the latter is `NULL`.
 #' @param response (`numeric()`)\cr
 #'  Predicted survival time, passed through function without modification.
-#' @param interp_method (`character(1)`)\cr
-#'  Interpolation method; one of `"const_surv"` (default), `"const_dens"` (alias: `"linear_surv"`)
-#'  and `"const_haz"` (alias: `"exp_surv"`).
-#'  This is needed for conversion to a [survDistr][survdistr::survDistr] object
-#'  in [PredictionSurv].
+#' @template param_interp_method
 #'
 #' @references
 #' `r format_bib("sonabend_2022")`

@@ -51,8 +51,7 @@ PredictionSurv = R6Class("PredictionSurv",
     #'   One element for each observation in the test set.
     #' @param check (`logical(1)`)\cr
     #'   If `TRUE`, performs argument checks and predict type conversions.
-    #' @param interp_method (`character(1)`)\cr
-    #'   Type of interpolation used in subsequent methods of the `survDistr` object.
+    #' @template param_interp_method
     initialize = function(
       task = NULL,
       row_ids = task$row_ids,

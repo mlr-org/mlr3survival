@@ -51,10 +51,7 @@ PredictionSurv = R6Class("PredictionSurv",
     #'   One element for each observation in the test set.
     #' @param check (`logical(1)`)\cr
     #'   If `TRUE`, performs argument checks and predict type conversions.
-    #' @param data_type (`character(1)`)\cr
-    #'   Type of data (e.g. survival or hazard) stored in `distr`.
-    #' @param interp_meth (`character(1)`)\cr
-    #'   Type of interpolation used in subsequent methods of the `survDistr` object.
+    #' @template param_interp_method
     initialize = function(
       task = NULL,
       row_ids = task$row_ids,
@@ -64,8 +61,7 @@ PredictionSurv = R6Class("PredictionSurv",
       lp = NULL,
       response = NULL,
       check = TRUE,
-      data_type = "surv",
-      interp_meth = "const_surv"
+      interp_method = "const_surv"
       ) {
       pdata = list(
         row_ids = row_ids,
@@ -75,8 +71,7 @@ PredictionSurv = R6Class("PredictionSurv",
         lp = lp,
         response = response
       )
-      setattr(pdata, "data_type", data_type)
-      setattr(pdata, "interp_meth", interp_meth)
+      setattr(pdata, "interp_method", interp_method)
       class(pdata) = c("PredictionDataSurv", "PredictionData")
 
       # TODO (maybe): simplify `distr` if it is a survDistr? so that we only
@@ -124,8 +119,7 @@ PredictionSurv = R6Class("PredictionSurv",
       tryCatch(
         survDistr$new(
           x = distr_data,
-          data_type = attr(self$data, "data_type"),
-          interp_meth = attr(self$data, "interp_meth")
+          method = attr(self$data, "interp_method")
         ),
         error = function(e) {
           warning("Failed to construct survDistr: ", conditionMessage(e))

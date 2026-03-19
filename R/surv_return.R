@@ -1,18 +1,17 @@
 #' @title Get Survival Predict Types
 #'
 #' @description
-#' Internal helper function to easily return the correct survival predict types.
+#' Helper function to more easily return the correct survival predict types.
 #' This should be used by all survival mlr3 learners, to ensure that the `crank`
 #' prediction type is always included.
 #'
+#' @param surv (`matrix()`)\cr
+#'  Matrix of predicted survival probabilities (rows = observations, columns = time points).
+#'  Number of columns should be equal to length of `times`, if provided.
+#'  Several checks are performed with [assert_prob][survdistr::assert_prob()].
 #' @param times (`numeric()`|`NULL`) \cr
 #'  Vector of survival times.
-#'  If times is `NULL`, it will be inferred from `colnames(surv)`.
-#' @param surv (`matrix()`)\cr
-#'  Matrix of predicted survival probabilities, rows (1st dimension) are
-#'  observations, columns (2nd dimension) are time points.
-#'  Number of columns should be equal to length of `times`.
-#'  Several checks are performed with [assert_prob_matrix][survdistr::assert_prob_matrix()].
+#'  If `NULL`, extracted from `colnames(surv)`.
 #' @param crank (`numeric()`)\cr
 #'  Relative risk/continuous ranking.
 #'  Higher value is associated with higher risk.
@@ -26,11 +25,7 @@
 #'  Predicted linear predictor, used to impute `crank` if the latter is `NULL`.
 #' @param response (`numeric()`)\cr
 #'  Predicted survival time, passed through function without modification.
-#' @param data_type (`character(1)`)\cr
-#'  Data type for `surv`. Either `"surv"` for survival or `"haz"` for hazard matrices.
-#' @param interp_meth (`character(1)`)\cr
-#'  Interpolation type; one of `"const_surv"`, `"linear_surv"`, or `"const_haz"`.
-#'  This is needed for conversion to a [survDistr][survdistr::survDistr] object.
+#' @template param_interp_method
 #'
 #' @references
 #' `r format_bib("sonabend_2022")`
@@ -46,10 +41,10 @@
 #' surv_mat = t(apply(mat, 1L, function(row) sort(row, decreasing = TRUE)))
 #'
 #' # crank is expected mortality, distr is the survival matrix
-#' surv_return(times = 1:k, surv = surv_mat)
+#' surv_return(surv = surv_mat, times = 1:k)
 #'
 #' # if crank is set, it's not overwritten
-#' surv_return(times = 1:k, surv = surv_mat, crank = rnorm(n))
+#' surv_return(surv = surv_mat, times = 1:k, crank = rnorm(n))
 #'
 #' # lp = crank
 #' surv_return(lp = rnorm(n))
@@ -62,32 +57,28 @@
 #'
 #' @export
 surv_return = function(
-  times = NULL,
   surv = NULL,
+  times = NULL,
   crank = NULL,
   lp = NULL,
   response = NULL,
-  data_type = "surv",
-  interp_meth = "const_surv"
+  interp_method = "const_surv"
   ) {
-  assert_choice(data_type, c("surv", "haz"))
-  # TODO: support hazard matrix - get_mortality will need update as well
-  if (data_type == "haz") {
-    stop("Hazard matrices as input is not yet implemented.")
-  }
-
-  assert_choice(interp_meth, c("const_surv", "linear_surv", "const_haz"))
+  assert_choice(interp_method, c("const_surv", "linear_surv", "const_haz"))
 
   if (!is.null(surv)) {
-    # survival matrix checks (it's better to do always here, and avoid troubles later)
-    times = assert_prob_matrix(x = surv, times = times, type = "surv")
-    # can't pass `times` separately in mlr3's Prediction object, so
-    # better to keep them in the matrix
+    assert_matrix(surv, mode = "numeric", any.missing = FALSE, min.rows = 1, min.cols = 1)
+
+    # perform checks on the survival matrix (better to do always here, and avoid troubles later)
+    # we also get validated times invisibly
+    times = survdistr::assert_prob(x = surv, times = times, type = "surv")
+    # TODO: pass `times` also separately in mlr3's Prediction object and don't "stick" it as colnames!
     colnames(surv) = times
   }
 
   # set crank (mandatory)
   if (is.null(crank)) {
+    # TODO: set crank = lp (priority over response)
     if (!is.null(response)) {
       # low survival time = high risk
       # high crank = high risk
@@ -109,8 +100,7 @@ surv_return = function(
   )
 
   # due to restrictions in mlr3 we pass further arguments as attributes
-  setattr(pred, "data_type", data_type)
-  setattr(pred, "interp_meth", interp_meth)
+  setattr(pred, "interp_method", interp_method)
 
   pred
 }
@@ -136,7 +126,7 @@ surv_return = function(
 #'  Small positive constant used to bound survival probabilities away from zero
 #'  and prevent infinite cumulative hazards, as \code{H(t) = -log(S(t))}.
 #' @param check (`logical(1)`)\cr
-#'  If `TRUE` (default), uses [assert_prob_matrix][survdistr::assert_prob_matrix()]
+#'  If `TRUE` (default), uses [assert_prob][survdistr::assert_prob()]
 #'  to perform several checks on the survival matrix.
 #'  Set to `FALSE` to skip checks (NOT recommended for external use).
 #'
@@ -162,9 +152,10 @@ surv_return = function(
 #' mort
 #'
 #' @export
-get_mortality = function(x, times = NULL, eps = 1e-6, check = TRUE) {
+get_mortality = function(x, times = NULL, eps = 1e-12, check = TRUE) {
+  assert_matrix(x, mode = "numeric", any.missing = FALSE, min.rows = 1, min.cols = 1)
   assert_flag(check)
-  if (check) assert_prob_matrix(x, times, type = "surv")
+  if (check) assert_prob(x, times, type = "surv")
 
   # H(t) = -log(S(t)), floored at eps to avoid -log(0) = Inf
   cumhaz = -log(pmax(x, eps))

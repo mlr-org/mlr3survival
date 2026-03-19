@@ -87,8 +87,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   lp = NULL,
   response = NULL,
   check = TRUE,
-  data_type = "surv",
-  interp_meth = "const_surv"
+  interp_method = "const_surv"
 )}\if{html}{\out{</div>}}
 }
 
@@ -125,11 +124,10 @@ One element for each observation in the test set.}
 \item{\code{check}}{(\code{logical(1)})\cr
 If \code{TRUE}, performs argument checks and predict type conversions.}
 
-\item{\code{data_type}}{(\code{character(1)})\cr
-Type of data (e.g. survival or hazard) stored in \code{distr}.}
-
-\item{\code{interp_meth}}{(\code{character(1)})\cr
-Type of interpolation used in subsequent methods of the \code{survDistr} object.}
+\item{\code{interp_method}}{(\code{character(1)})\cr
+Interpolation method; one of \code{"const_surv"} (default), \code{"const_dens"}
+(alias: \code{"linear_surv"}) and \code{"const_haz"} (alias: \code{"exp_surv"}).
+For more details and available options, see \code{\link[survdistr:interp]{survdistr::interp()}}}
 }
 \if{html}{\out{</div>}}
 }

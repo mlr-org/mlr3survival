@@ -4,7 +4,7 @@
 \alias{get_mortality}
 \title{Calculate the expected mortality risks from a survival matrix}
 \usage{
-get_mortality(x, times = NULL, eps = 1e-06, check = TRUE)
+get_mortality(x, times = NULL, eps = 1e-12, check = TRUE)
 }
 \arguments{
 \item{x}{(\code{matrix()}) \cr
@@ -19,7 +19,7 @@ Small positive constant used to bound survival probabilities away from zero
 and prevent infinite cumulative hazards, as \code{H(t) = -log(S(t))}.}
 
 \item{check}{(\code{logical(1)})\cr
-If \code{TRUE} (default), uses \link[survdistr:assert_prob_matrix]{assert_prob_matrix}
+If \code{TRUE} (default), uses \link[survdistr:assert_prob]{assert_prob}
 to perform several checks on the survival matrix.
 Set to \code{FALSE} to skip checks (NOT recommended for external use).}
 }

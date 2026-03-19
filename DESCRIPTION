@@ -19,7 +19,7 @@ Imports:
     paradox (>= 1.0.1),
     R6 (>= 2.6.1),
     Rcpp (>= 1.0.4),
-    survdistr (>= 0.0.1),
+    survdistr (>= 0.0.2),
     survival
 Suggests:
     lgr,

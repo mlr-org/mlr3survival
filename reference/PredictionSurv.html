@@ -129,8 +129,7 @@ Access the stored predicted survival time.</p></dd>
 <span>  lp <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  response <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  check <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  data_type <span class="op">=</span> <span class="st">"surv"</span>,</span>
-<span>  interp_meth <span class="op">=</span> <span class="st">"const_surv"</span></span>
+<span>  interp_method <span class="op">=</span> <span class="st">"const_surv"</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -182,14 +181,11 @@ One element for each observation in the test set.</p></dd>
 If <code>TRUE</code>, performs argument checks and predict type conversions.</p></dd>
 
 
-<dt><code>data_type</code></dt>
+<dt><code>interp_method</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
-Type of data (e.g. survival or hazard) stored in <code>distr</code>.</p></dd>
-
-
-<dt><code>interp_meth</code></dt>
-<dd><p>(<code>character(1)</code>)<br>
-Type of interpolation used in subsequent methods of the <code>survDistr</code> object.</p></dd>
+Interpolation method; one of <code>"const_surv"</code> (default), <code>"const_dens"</code>
+(alias: <code>"linear_surv"</code>) and <code>"const_haz"</code> (alias: <code>"exp_surv"</code>).
+For more details and available options, see <code><a href="https://survdistr.mlr-org.com/reference/interp.html" class="external-link">survdistr::interp()</a></code></p></dd>
 
 
 </dl><p></p></div>
@@ -222,29 +218,29 @@ Type of interpolation used in subsequent methods of the <code>survDistr</code> o
 <span class="r-in"><span><span class="va">learner</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"surv.kaplan"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">part</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/partition.html" class="external-link">partition</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">=</span> <span class="va">learner</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task</span>, <span class="va">part</span><span class="op">$</span><span class="va">train</span><span class="op">)</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">task</span>, <span class="va">part</span><span class="op">$</span><span class="va">test</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    row_ids  time status    crank     distr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;int&gt; &lt;num&gt; &lt;lgcl&gt;    &lt;num&gt;    &lt;list&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      15   371   TRUE 81.78041 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      16   520   TRUE 81.78041 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      18   118   TRUE 81.78041 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:      20    12   TRUE 81.78041 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:      29   460   TRUE 81.78041 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:      30   153   TRUE 81.78041 &lt;list[1]&gt;</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    row_ids  time status   crank     distr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;int&gt; &lt;num&gt; &lt;lgcl&gt;   &lt;num&gt;    &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      15   371   TRUE 80.9442 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      16   520   TRUE 80.9442 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      18   118   TRUE 80.9442 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:      20    12   TRUE 80.9442 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:      27    93   TRUE 80.9442 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:      29   460   TRUE 80.9442 &lt;list[1]&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">p</span><span class="op">$</span><span class="va">distr</span> <span class="co"># survDistr</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A [55 x 107] survival matrix</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A [55 x 105] survival matrix</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of time points: 107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Interpolation method: Piece-wise Constant Survival </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of time points: 105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Interpolation method: Piecewise Constant Survival </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># survival probabilities of the 4 test observations at two time points</span></span></span>
 <span class="r-in"><span><span class="va">p</span><span class="op">$</span><span class="va">distr</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span>times <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             80       100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.9026549 0.8584071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.9026549 0.8584071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.9026549 0.8584071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.9026549 0.8584071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.8849558 0.8495575</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.8849558 0.8495575</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.8849558 0.8495575</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.8849558 0.8495575</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

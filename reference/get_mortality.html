@@ -75,7 +75,7 @@ model or survival distribution assumptions.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_mortality</span><span class="op">(</span><span class="va">x</span>, times <span class="op">=</span> <span class="cn">NULL</span>, eps <span class="op">=</span> <span class="fl">1e-06</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_mortality</span><span class="op">(</span><span class="va">x</span>, times <span class="op">=</span> <span class="cn">NULL</span>, eps <span class="op">=</span> <span class="fl">1e-12</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -101,7 +101,7 @@ and prevent infinite cumulative hazards, as <code>H(t) = -log(S(t))</code>.</p><
 
 <dt id="arg-check">check<a class="anchor" aria-label="anchor" href="#arg-check"></a></dt>
 <dd><p>(<code>logical(1)</code>)<br>
-If <code>TRUE</code> (default), uses <a href="https://survdistr.mlr-org.com/reference/assert_prob_matrix.html" class="external-link">assert_prob_matrix</a>
+If <code>TRUE</code> (default), uses <a href="https://survdistr.mlr-org.com/reference/assert_prob.html" class="external-link">assert_prob</a>
 to perform several checks on the survival matrix.
 Set to <code>FALSE</code> to skip checks (NOT recommended for external use).</p></dd>
 
@@ -138,8 +138,8 @@ ISSN 1367-4803, <a href="https://doi.org/10.1093/BIOINFORMATICS/BTAC451" class="
 <span class="r-in"><span><span class="co"># get mortality scores (larger values correspond to higher risk scores)</span></span></span>
 <span class="r-in"><span><span class="va">mort</span> <span class="op">=</span> <span class="fu">get_mortality</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mort</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 42.97823 54.82505 45.70337 43.87888 60.06472 51.07290 40.24465 58.56290</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 47.22765 54.87452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 55.66627 42.58805 56.20021 46.24583 43.40607 59.96400 49.41797 40.02692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 58.13115 47.63091</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

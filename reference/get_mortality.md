@@ -13,7 +13,7 @@ et al. (2008) and has no model or survival distribution assumptions.
 ## Usage
 
 ``` r
-get_mortality(x, times = NULL, eps = 1e-06, check = TRUE)
+get_mortality(x, times = NULL, eps = 1e-12, check = TRUE)
 ```
 
 ## Arguments
@@ -40,7 +40,7 @@ get_mortality(x, times = NULL, eps = 1e-06, check = TRUE)
 
   (`logical(1)`)  
   If `TRUE` (default), uses
-  [assert_prob_matrix](https://survdistr.mlr-org.com/reference/assert_prob_matrix.html)
+  [assert_prob](https://survdistr.mlr-org.com/reference/assert_prob.html)
   to perform several checks on the survival matrix. Set to `FALSE` to
   skip checks (NOT recommended for external use).
 
@@ -78,6 +78,6 @@ colnames(x) = 1:k # time points
 # get mortality scores (larger values correspond to higher risk scores)
 mort = get_mortality(x)
 mort
-#>  [1] 42.97823 54.82505 45.70337 43.87888 60.06472 51.07290 40.24465 58.56290
-#>  [9] 47.22765 54.87452
+#>  [1] 55.66627 42.58805 56.20021 46.24583 43.40607 59.96400 49.41797 40.02692
+#>  [9] 58.13115 47.63091
 ```

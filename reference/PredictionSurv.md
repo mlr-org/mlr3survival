@@ -81,8 +81,7 @@ Creates a new instance of this
       lp = NULL,
       response = NULL,
       check = TRUE,
-      data_type = "surv",
-      interp_meth = "const_surv"
+      interp_method = "const_surv"
     )
 
 #### Arguments
@@ -135,16 +134,13 @@ Creates a new instance of this
   (`logical(1)`)  
   If `TRUE`, performs argument checks and predict type conversions.
 
-- `data_type`:
+- `interp_method`:
 
   (`character(1)`)  
-  Type of data (e.g. survival or hazard) stored in `distr`.
-
-- `interp_meth`:
-
-  (`character(1)`)  
-  Type of interpolation used in subsequent methods of the `survDistr`
-  object.
+  Interpolation method; one of `"const_surv"` (default), `"const_dens"`
+  (alias: `"linear_surv"`) and `"const_haz"` (alias: `"exp_surv"`). For
+  more details and available options, see
+  [`survdistr::interp()`](https://survdistr.mlr-org.com/reference/interp.html)
 
 ------------------------------------------------------------------------
 
@@ -171,26 +167,26 @@ learner = lrn("surv.kaplan")
 part = partition(task)
 p = learner$train(task, part$train)$predict(task, part$test)
 head(as.data.table(p))
-#>    row_ids  time status    crank     distr
-#>      <int> <num> <lgcl>    <num>    <list>
-#> 1:      15   371   TRUE 81.78041 <list[1]>
-#> 2:      16   520   TRUE 81.78041 <list[1]>
-#> 3:      18   118   TRUE 81.78041 <list[1]>
-#> 4:      20    12   TRUE 81.78041 <list[1]>
-#> 5:      29   460   TRUE 81.78041 <list[1]>
-#> 6:      30   153   TRUE 81.78041 <list[1]>
+#>    row_ids  time status   crank     distr
+#>      <int> <num> <lgcl>   <num>    <list>
+#> 1:      15   371   TRUE 80.9442 <list[1]>
+#> 2:      16   520   TRUE 80.9442 <list[1]>
+#> 3:      18   118   TRUE 80.9442 <list[1]>
+#> 4:      20    12   TRUE 80.9442 <list[1]>
+#> 5:      27    93   TRUE 80.9442 <list[1]>
+#> 6:      29   460   TRUE 80.9442 <list[1]>
 
 p$distr # survDistr
-#> A [55 x 107] survival matrix
+#> A [55 x 105] survival matrix
 #> Number of observations: 55
-#> Number of time points: 107
-#> Interpolation method: Piece-wise Constant Survival 
+#> Number of time points: 105
+#> Interpolation method: Piecewise Constant Survival 
 
 # survival probabilities of the 4 test observations at two time points
 p$distr$survival(times = c(80, 100))[1:4, ]
 #>             80       100
-#> [1,] 0.9026549 0.8584071
-#> [2,] 0.9026549 0.8584071
-#> [3,] 0.9026549 0.8584071
-#> [4,] 0.9026549 0.8584071
+#> [1,] 0.8849558 0.8495575
+#> [2,] 0.8849558 0.8495575
+#> [3,] 0.8849558 0.8495575
+#> [4,] 0.8849558 0.8495575
 ```

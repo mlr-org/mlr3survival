@@ -1,13 +1,12 @@
 # Kaplan-Meier Estimator
 
 Calls
-[`survival::survfit()`](https://rdrr.io/pkg/survival/man/survfit.html).
-
-During prediction, the survival function (`distr`) is estimated using
-[`survival::survfit()`](https://rdrr.io/pkg/survival/man/survfit.html),
-while the risk score (`crank`) is calculated as the sum of the
-cumulative hazard function (expected mortality). Survival predictions
-are given at the **unique event times** observed in the train set.
+[`survival::survfit()`](https://rdrr.io/pkg/survival/man/survfit.html)
+during training to estimate the survival function at the **unique event
+times** from the training set. During prediction, each test observation
+is assigned the same survival probabilities at these times. The risk
+score (`crank`) is calculated as the sum of the cumulative hazard
+function (also called expected mortality) at the event times.
 
 ## Dictionary
 
@@ -148,3 +147,58 @@ The objects of this class are cloneable with this method.
 - `deep`:
 
   Whether to make a deep clone.
+
+## Examples
+
+``` r
+# Define the Learner
+learner = lrn("surv.kaplan")
+learner
+#> 
+#> ── <LearnerSurvKaplan> (surv.kaplan): Kaplan-Meier Estimator ───────────────────
+#> • Model: -
+#> • Parameters: list()
+#> • Packages: mlr3, mlr3survival, and survival
+#> • Predict Types: [crank] and distr
+#> • Feature Types: logical, integer, numeric, character, factor, and ordered
+#> • Encapsulation: none (fallback: -)
+#> • Properties: importance, missings, selected_features, and weights
+#> • Other settings: use_weights = 'use'
+
+# Define a Task
+task = tsk("lung")
+
+# Stratification based on event
+task$set_col_roles(cols = "status", add_to = "stratum")
+
+# Create train and test set
+part = partition(task)
+
+# Train the learner on the train set
+learner$train(task, row_ids = part$train)
+learner$native_model
+#> Call: survfit(formula = task$formula(1), data = task$data(cols = task$target_names), 
+#>     weights = NULL)
+#> 
+#>        n events median 0.95LCL 0.95UCL
+#> [1,] 112     81    310     267     390
+
+# Make predictions for the test set
+predictions = learner$predict(task, row_ids = part$test)
+predictions
+#> 
+#> ── <PredictionSurv> for 56 observations: ───────────────────────────────────────
+#>  row_ids time status    crank     distr
+#>        9  567   TRUE 52.63894 <list[1]>
+#>       13  301   TRUE 52.63894 <list[1]>
+#>       21  473   TRUE 52.63894 <list[1]>
+#>      ---  ---    ---      ---       ---
+#>      158  185  FALSE 52.63894 <list[1]>
+#>      159  222  FALSE 52.63894 <list[1]>
+#>      168  177  FALSE 52.63894 <list[1]>
+
+# Score the predictions
+predictions$score()
+#> surv.cindex 
+#>         0.5 
+```

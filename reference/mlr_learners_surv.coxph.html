@@ -145,6 +145,72 @@ while the survival distribution using the Breslow estimator using <code><a href=
 
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Define the Learner</span></span></span>
+<span class="r-in"><span><span class="va">learner</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"surv.coxph"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">learner</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;LearnerSurvCoxPH&gt;</span><span style="font-weight: bold;"> (surv.coxph): Cox Proportional Hazards</span> <span style="color: #00BBBB;">───────────────────</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Model: -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Parameters: list()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Packages: <span style="color: #0000BB;">mlr3</span>, <span style="color: #0000BB;">mlr3survival</span>, and <span style="color: #0000BB;">survival</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Predict Types: [crank], distr, and lp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Feature Types: logical, integer, numeric, and factor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Encapsulation: none (fallback: -)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Properties: weights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Other settings: use_weights = 'use'</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Define a Task</span></span></span>
+<span class="r-in"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"lung"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Stratification based on event</span></span></span>
+<span class="r-in"><span><span class="va">task</span><span class="op">$</span><span class="fu">set_col_roles</span><span class="op">(</span>cols <span class="op">=</span> <span class="st">"status"</span>, add_to <span class="op">=</span> <span class="st">"stratum"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create train and test set</span></span></span>
+<span class="r-in"><span><span class="va">part</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/partition.html" class="external-link">partition</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Train the learner on the train set</span></span></span>
+<span class="r-in"><span><span class="va">learner</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task</span>, row_ids <span class="op">=</span> <span class="va">part</span><span class="op">$</span><span class="va">train</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">learner</span><span class="op">$</span><span class="va">native_model</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> survival::coxph(formula = task$formula(), data = task$data(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     model = TRUE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 coef  exp(coef)   se(coef)      z       p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age        0.0112226  1.0112858  0.0142049  0.790 0.42950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> meal.cal  -0.0001446  0.9998554  0.0004184 -0.346 0.72970</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pat.karno -0.0167315  0.9834077  0.0098372 -1.701 0.08897</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ph.ecog    0.7279428  2.0708161  0.2806164  2.594 0.00948</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ph.karno   0.0274259  1.0278055  0.0136580  2.008 0.04464</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sexm       0.3791073  1.4609798  0.2420168  1.566 0.11724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt.loss   -0.0264181  0.9739278  0.0114005 -2.317 0.02049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Likelihood ratio test=17.94  on 7 df, p=0.01225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n= 112, number of events= 81 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Make predictions for the test set</span></span></span>
+<span class="r-in"><span><span class="va">predictions</span> <span class="op">=</span> <span class="va">learner</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">task</span>, row_ids <span class="op">=</span> <span class="va">part</span><span class="op">$</span><span class="va">test</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">predictions</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;PredictionSurv&gt;</span><span style="font-weight: bold;"> for </span><span style="color: #0000BB; font-weight: bold;">56</span><span style="font-weight: bold;"> observations:</span> <span style="color: #00BBBB;">───────────────────────────────────────</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  row_ids time status      crank         lp     distr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        4  310   TRUE  0.8737011  0.8737011 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        6  218   TRUE -0.2003632 -0.2003632 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        7  166   TRUE  0.3892358  0.3892358 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      ---  ---    ---        ---        ---       ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      163  197  FALSE  0.3359723  0.3359723 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      164  203  FALSE  0.1232581  0.1232581 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      167  174  FALSE  0.5195508  0.5195508 &lt;list[1]&gt;</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Score the predictions</span></span></span>
+<span class="r-in"><span><span class="va">predictions</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> surv.cindex </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.6748682 </span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

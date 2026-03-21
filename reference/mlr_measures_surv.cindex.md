@@ -178,21 +178,21 @@ p = learner$predict(task, part$test)
 # Harrell's C-index
 p$score(msr("surv.cindex")) # same as `p$score()`
 #> surv.cindex 
-#>   0.7439379 
+#>   0.7627226 
 
 # Uno's C-index
 p$score(msr("surv.cindex", weight_meth = "G2"),
         task = task, train_set = part$train)
 #> surv.cindex 
-#>   0.7606409 
+#>   0.7847344 
 
 # Harrell's C-index evaluated up to a specific time horizon
 p$score(msr("surv.cindex", t_max = 97))
 #> surv.cindex 
-#>   0.7308934 
+#>    0.755911 
 
 # Harrell's C-index evaluated up to the time corresponding to 30% of censoring
 p$score(msr("surv.cindex", p_max = 0.3))
 #> surv.cindex 
-#>   0.6787879 
+#>   0.7201681 
 ```

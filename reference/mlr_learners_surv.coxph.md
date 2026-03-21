@@ -108,3 +108,68 @@ The objects of this class are cloneable with this method.
 - `deep`:
 
   Whether to make a deep clone.
+
+## Examples
+
+``` r
+# Define the Learner
+learner = lrn("surv.coxph")
+learner
+#> 
+#> ── <LearnerSurvCoxPH> (surv.coxph): Cox Proportional Hazards ───────────────────
+#> • Model: -
+#> • Parameters: list()
+#> • Packages: mlr3, mlr3survival, and survival
+#> • Predict Types: [crank], distr, and lp
+#> • Feature Types: logical, integer, numeric, and factor
+#> • Encapsulation: none (fallback: -)
+#> • Properties: weights
+#> • Other settings: use_weights = 'use'
+
+# Define a Task
+task = tsk("lung")
+
+# Stratification based on event
+task$set_col_roles(cols = "status", add_to = "stratum")
+
+# Create train and test set
+part = partition(task)
+
+# Train the learner on the train set
+learner$train(task, row_ids = part$train)
+learner$native_model
+#> Call:
+#> survival::coxph(formula = task$formula(), data = task$data(), 
+#>     model = TRUE)
+#> 
+#>                 coef  exp(coef)   se(coef)      z       p
+#> age        0.0112226  1.0112858  0.0142049  0.790 0.42950
+#> meal.cal  -0.0001446  0.9998554  0.0004184 -0.346 0.72970
+#> pat.karno -0.0167315  0.9834077  0.0098372 -1.701 0.08897
+#> ph.ecog    0.7279428  2.0708161  0.2806164  2.594 0.00948
+#> ph.karno   0.0274259  1.0278055  0.0136580  2.008 0.04464
+#> sexm       0.3791073  1.4609798  0.2420168  1.566 0.11724
+#> wt.loss   -0.0264181  0.9739278  0.0114005 -2.317 0.02049
+#> 
+#> Likelihood ratio test=17.94  on 7 df, p=0.01225
+#> n= 112, number of events= 81 
+
+# Make predictions for the test set
+predictions = learner$predict(task, row_ids = part$test)
+predictions
+#> 
+#> ── <PredictionSurv> for 56 observations: ───────────────────────────────────────
+#>  row_ids time status      crank         lp     distr
+#>        4  310   TRUE  0.8737011  0.8737011 <list[1]>
+#>        6  218   TRUE -0.2003632 -0.2003632 <list[1]>
+#>        7  166   TRUE  0.3892358  0.3892358 <list[1]>
+#>      ---  ---    ---        ---        ---       ---
+#>      163  197  FALSE  0.3359723  0.3359723 <list[1]>
+#>      164  203  FALSE  0.1232581  0.1232581 <list[1]>
+#>      167  174  FALSE  0.5195508  0.5195508 <list[1]>
+
+# Score the predictions
+predictions$score()
+#> surv.cindex 
+#>   0.6748682 
+```

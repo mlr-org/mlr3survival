@@ -6,7 +6,8 @@ Calls
 During prediction, the survival function (`distr`) is estimated using
 [`survival::survfit()`](https://rdrr.io/pkg/survival/man/survfit.html),
 while the risk score (`crank`) is calculated as the sum of the
-cumulative hazard function (expected mortality).
+cumulative hazard function (expected mortality). Survival predictions
+are given at the **unique event times** observed in the train set.
 
 ## Dictionary
 
@@ -55,6 +56,13 @@ Other survival learners:
 [`mlr3::Learner`](https://mlr3.mlr-org.com/reference/Learner.html) -\>
 [`mlr3survival::LearnerSurv`](https://mlr3survival.mlr-org.com/reference/LearnerSurv.md)
 -\> `LearnerSurvKaplan`
+
+## Active bindings
+
+- `native_model`:
+
+  ([survival::survfit](https://rdrr.io/pkg/survival/man/survfit.html))  
+  The fitted model.
 
 ## Methods
 

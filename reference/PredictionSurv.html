@@ -219,19 +219,19 @@ For more details and available options, see <code><a href="https://survdistr.mlr
 <span class="r-in"><span><span class="va">part</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/partition.html" class="external-link">partition</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">=</span> <span class="va">learner</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task</span>, <span class="va">part</span><span class="op">$</span><span class="va">train</span><span class="op">)</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">task</span>, <span class="va">part</span><span class="op">$</span><span class="va">test</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    row_ids  time status   crank     distr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;int&gt; &lt;num&gt; &lt;lgcl&gt;   &lt;num&gt;    &lt;list&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      15   371   TRUE 80.9442 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      16   520   TRUE 80.9442 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      18   118   TRUE 80.9442 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:      20    12   TRUE 80.9442 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:      27    93   TRUE 80.9442 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:      29   460   TRUE 80.9442 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    row_ids  time status    crank     distr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;int&gt; &lt;num&gt; &lt;lgcl&gt;    &lt;num&gt;    &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      15   371   TRUE 56.92197 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      16   520   TRUE 56.92197 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      18   118   TRUE 56.92197 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:      20    12   TRUE 56.92197 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:      27    93   TRUE 56.92197 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:      29   460   TRUE 56.92197 &lt;list[1]&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">p</span><span class="op">$</span><span class="va">distr</span> <span class="co"># survDistr</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A [55 x 105] survival matrix</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A [55 x 80] survival matrix</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of time points: 105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of time points: 80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Interpolation method: Piecewise Constant Survival </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># survival probabilities of the 4 test observations at two time points</span></span></span>

@@ -167,19 +167,19 @@ learner = lrn("surv.kaplan")
 part = partition(task)
 p = learner$train(task, part$train)$predict(task, part$test)
 head(as.data.table(p))
-#>    row_ids  time status   crank     distr
-#>      <int> <num> <lgcl>   <num>    <list>
-#> 1:      15   371   TRUE 80.9442 <list[1]>
-#> 2:      16   520   TRUE 80.9442 <list[1]>
-#> 3:      18   118   TRUE 80.9442 <list[1]>
-#> 4:      20    12   TRUE 80.9442 <list[1]>
-#> 5:      27    93   TRUE 80.9442 <list[1]>
-#> 6:      29   460   TRUE 80.9442 <list[1]>
+#>    row_ids  time status    crank     distr
+#>      <int> <num> <lgcl>    <num>    <list>
+#> 1:      15   371   TRUE 56.92197 <list[1]>
+#> 2:      16   520   TRUE 56.92197 <list[1]>
+#> 3:      18   118   TRUE 56.92197 <list[1]>
+#> 4:      20    12   TRUE 56.92197 <list[1]>
+#> 5:      27    93   TRUE 56.92197 <list[1]>
+#> 6:      29   460   TRUE 56.92197 <list[1]>
 
 p$distr # survDistr
-#> A [55 x 105] survival matrix
+#> A [55 x 80] survival matrix
 #> Number of observations: 55
-#> Number of time points: 105
+#> Number of time points: 80
 #> Interpolation method: Piecewise Constant Survival 
 
 # survival probabilities of the 4 test observations at two time points

@@ -7,3 +7,4 @@
 - Use `survdistr` 0.0.2 version
 - Learner `surv.kaplan` improvements: predictions only at event time
   points be default
+- Add active field `native_model` for Kaplan-Meier (mlr3 \>= 1.4.0)

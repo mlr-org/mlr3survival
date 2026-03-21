@@ -10,7 +10,7 @@ Authors@R: c(
 Description: Survival analysis with 'mlr3'.
 License: MIT + file LICENSE
 Depends:
-    mlr3 (>= 1.2.0),
+    mlr3 (>= 1.4.0),
     R (>= 3.6.0)
 Imports:
     checkmate (>= 2.3.2),

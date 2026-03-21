@@ -9,6 +9,8 @@
 #' During prediction, the survival function (`distr`) is estimated using
 #' [survival::survfit()], while the risk score (`crank`) is calculated as the
 #' sum of the cumulative hazard function (expected mortality).
+#' Survival predictions are given at the **unique event times** observed in the
+#' train set.
 #'
 #' @templateVar id surv.kaplan
 #' @template learner
@@ -67,23 +69,51 @@ LearnerSurvKaplan = R6Class("LearnerSurvKaplan",
 
   private = list(
     .train = function(task) {
-      fit = invoke(
+      survfit_obj = invoke(
         survival::survfit,
         formula = task$formula(1),
-        data = task$data(),
+        data = task$data(cols = task$target_names),
         .args = list(weights = private$.get_weights(task))
       )
 
-      # keep features for importance
-      list(model = fit, features = task$feature_names)
+      list(
+        model = survfit_obj,
+        features = task$feature_names, # keep features for importance
+        event_times = task$unique_event_times() # add event times for use in prediction
+      )
     },
 
     .predict = function(task) {
-      times = self$model$model$time
-      surv = matrix(rep(self$model$model$surv, task$nrow), ncol = length(times),
-                    nrow = task$nrow, byrow = TRUE)
+      survfit_model = self$native_model
+      times = survfit_model$time # unique train times (event + censoring)
+      event_times = self$model$event_times # only event times from train set
 
-      surv_return(times = times, surv = surv)
+      if (length(event_times) == 0L) {
+        # no events in the training data => S(t) = 1 for all times
+        surv = matrix(1, ncol = length(times), nrow = task$nrow,
+                      dimnames = list(NULL, times))
+      } else {
+        id = which(times %in% event_times)
+        times = event_times
+
+        # S(t_event)
+        surv = matrix(
+          rep(survfit_model$surv[id], task$nrow),
+          ncol = length(times),
+          nrow = task$nrow,
+          byrow = TRUE
+        )
+      }
+
+      surv_return(surv = surv, times = times)
+    }
+  ),
+
+  active = list(
+    #' @field native_model ([survival::survfit])\cr
+    #' The fitted model.
+    native_model = function() {
+      self$model$model
     }
   )
 )

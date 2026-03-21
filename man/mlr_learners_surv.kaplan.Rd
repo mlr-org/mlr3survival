@@ -10,6 +10,8 @@ Calls \code{\link[survival:survfit]{survival::survfit()}}.
 During prediction, the survival function (\code{distr}) is estimated using
 \code{\link[survival:survfit]{survival::survfit()}}, while the risk score (\code{crank}) is calculated as the
 sum of the cumulative hazard function (expected mortality).
+Survival predictions are given at the \strong{unique event times} observed in the
+train set.
 }
 \section{Dictionary}{
 
@@ -49,6 +51,14 @@ Other survival learners:
 \concept{survival learners}
 \section{Super classes}{
 \code{\link[mlr3:Learner]{mlr3::Learner}} -> \code{\link[mlr3survival:LearnerSurv]{mlr3survival::LearnerSurv}} -> \code{LearnerSurvKaplan}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{native_model}}{(\link[survival:survfit]{survival::survfit})\cr
+The fitted model.}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{

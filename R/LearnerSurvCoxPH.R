@@ -10,6 +10,7 @@
 #'
 #' @templateVar id surv.coxph
 #' @template learner
+#' @template example
 #'
 #' @references
 #' `r format_bib("cox_1972")`

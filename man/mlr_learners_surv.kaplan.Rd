@@ -5,13 +5,11 @@
 \alias{LearnerSurvKaplan}
 \title{Kaplan-Meier Estimator}
 \description{
-Calls \code{\link[survival:survfit]{survival::survfit()}}.
-
-During prediction, the survival function (\code{distr}) is estimated using
-\code{\link[survival:survfit]{survival::survfit()}}, while the risk score (\code{crank}) is calculated as the
-sum of the cumulative hazard function (expected mortality).
-Survival predictions are given at the \strong{unique event times} observed in the
-train set.
+Calls \code{\link[survival:survfit]{survival::survfit()}} during training to estimate the survival function
+at the \strong{unique event times} from the training set. During prediction, each
+test observation is assigned the same survival probabilities at these times.
+The risk score (\code{crank}) is calculated as the sum of the cumulative hazard
+function (also called expected mortality) at the event times.
 }
 \section{Dictionary}{
 
@@ -38,6 +36,33 @@ lrn("surv.kaplan")
 Empty ParamSet
 }
 
+\examples{
+
+# Define the Learner
+learner = lrn("surv.kaplan")
+learner
+
+# Define a Task
+task = tsk("lung")
+
+# Stratification based on event
+task$set_col_roles(cols = "status", add_to = "stratum")
+
+# Create train and test set
+part = partition(task)
+
+# Train the learner on the train set
+learner$train(task, row_ids = part$train)
+learner$native_model
+
+# Make predictions for the test set
+predictions = learner$predict(task, row_ids = part$test)
+predictions
+
+# Score the predictions
+predictions$score()
+
+}
 \references{
 Kaplan EL, Meier P (1958).
 \dQuote{Nonparametric Estimation from Incomplete Observations.}

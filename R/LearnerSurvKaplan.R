@@ -4,16 +4,15 @@
 #' @name mlr_learners_surv.kaplan
 #'
 #' @description
-#' Calls [survival::survfit()].
-#'
-#' During prediction, the survival function (`distr`) is estimated using
-#' [survival::survfit()], while the risk score (`crank`) is calculated as the
-#' sum of the cumulative hazard function (expected mortality).
-#' Survival predictions are given at the **unique event times** observed in the
-#' train set.
+#' Calls [survival::survfit()] during training to estimate the survival function
+#' at the **unique event times** from the training set. During prediction, each
+#' test observation is assigned the same survival probabilities at these times.
+#' The risk score (`crank`) is calculated as the sum of the cumulative hazard
+#' function (also called expected mortality) at the event times.
 #'
 #' @templateVar id surv.kaplan
 #' @template learner
+#' @template example
 #'
 #' @references
 #' `r format_bib("kaplan_1958")`

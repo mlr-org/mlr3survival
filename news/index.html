@@ -49,7 +49,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="mlr3survival-development-version">mlr3survival (development version)<a class="anchor" aria-label="anchor" href="#mlr3survival-development-version"></a></h2>
-<ul><li>Initial porting of <code>mlr3proba</code> code.</li>
+<ul><li>Fix unloading warnings caused by namespace callbacks encountering external hooks or by survival dictionary entries that have already been removed.</li>
+<li>Initial porting of <code>mlr3proba</code> code.</li>
 <li>Fix compatibility with <code>mlr3</code> (1.3.0)</li>
 <li>Use <code>survdistr</code> 0.0.3 CRAN version</li>
 <li>Learner <code>surv.kaplan</code> improvements: predictions only at event time points be default</li>

@@ -35,10 +35,28 @@ register_mlr3survival = function() {
   ## tasks
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_types = x$task_types[!"surv"] # to ensure we don't have multiple row entries of 'surv'
-  x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
-    ~type,        ~package,       ~task,      ~learner,      ~prediction,       ~prediction_data,     ~measure,
-    "surv",       "mlr3survival", "TaskSurv", "LearnerSurv", "PredictionSurv",  "PredictionDataSurv", "MeasureSurv"
-  )), "type")
+  x$task_types = setkeyv(
+    rbind(
+      x$task_types,
+      rowwise_table(
+        ~type,
+        ~package,
+        ~task,
+        ~learner,
+        ~prediction,
+        ~prediction_data,
+        ~measure,
+        "surv",
+        "mlr3survival",
+        "TaskSurv",
+        "LearnerSurv",
+        "PredictionSurv",
+        "PredictionDataSurv",
+        "MeasureSurv"
+      )
+    ),
+    "type"
+  )
 
   x$task_col_roles$surv = x$task_col_roles$regr
   x$task_properties$surv = x$task_properties$regr
@@ -57,14 +75,16 @@ register_mlr3survival = function() {
     response = c("crank", "lp", "distr", "response")
   )
 
-  # dictionary
-  register_namespace_callback(pkgname, "mlr3", register_mlr3survival)
+  # mlr3 is an imported dependency, so its dictionaries are already available
+  # Direct registration avoids unloading callbacks that inspect unrelated IDE or package hooks
+  register_mlr3survival()
 }
 
 .onUnload = function(libpath) {
-  walk(names(learners), function(id) mlr_learners$remove(id))
-  walk(names(measures), function(id) mlr_measures$remove(id))
-  walk(names(tasks), function(id) mlr_tasks$remove(id))
+  # Another cleanup may have already removed shared dictionary entries
+  walk(intersect(names(learners), mlr_learners$keys()), function(id) mlr_learners$remove(id))
+  walk(intersect(names(measures), mlr_measures$keys()), function(id) mlr_measures$remove(id))
+  walk(intersect(names(tasks), mlr_tasks$keys()), function(id) mlr_tasks$remove(id))
 
   # reflections
   x = getFromNamespace("mlr_reflections", ns = "mlr3")

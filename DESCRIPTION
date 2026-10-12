@@ -5,7 +5,9 @@ Authors@R: c(
     person("John", "Zobolas", , "bblodfon@gmail.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-3609-8674")),
     person("Marc", "Becker", , "marcbecker@posteo.de", role = "aut",
-           comment = c(ORCID = "0000-0002-8115-0400"))
+           comment = c(ORCID = "0000-0002-8115-0400")),
+    person("Andreas", "Bender", , "bender.andreas@lmu.de", role = c("aut"),
+           comment = c(ORCID = "0000-0001-5628-8611"))
   )
 Description: Survival analysis with 'mlr3'.
 License: MIT + file LICENSE

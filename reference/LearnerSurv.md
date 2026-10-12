@@ -162,7 +162,7 @@ mlr_learners$get("surv.coxph")
 #> • Feature Types: logical, integer, numeric, and factor
 #> • Encapsulation: none (fallback: -)
 #> • Properties: weights
-#> • Other settings: use_weights = 'use'
+#> • Other settings: use_weights = 'use', predict_raw = 'FALSE'
 lrn("surv.coxph")
 #> 
 #> ── <LearnerSurvCoxPH> (surv.coxph): Cox Proportional Hazards ───────────────────
@@ -173,5 +173,5 @@ lrn("surv.coxph")
 #> • Feature Types: logical, integer, numeric, and factor
 #> • Encapsulation: none (fallback: -)
 #> • Properties: weights
-#> • Other settings: use_weights = 'use'
+#> • Other settings: use_weights = 'use', predict_raw = 'FALSE'
 ```

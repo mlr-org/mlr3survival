@@ -33,13 +33,13 @@ with the associated sugar function
 
 ## Parameters
 
-|             |           |         |                                    |              |
-|-------------|-----------|---------|------------------------------------|--------------|
-| Id          | Type      | Default | Levels                             | Range        |
-| ties        | character | efron   | efron, breslow, exact              | \-           |
-| singular.ok | logical   | TRUE    | TRUE, FALSE                        | \-           |
-| type        | character | efron   | efron, aalen, kalbfleisch-prentice | \-           |
-| stype       | integer   | 2       |                                    | \\\[1, 2\]\\ |
+|  |  |  |  |  |
+|----|----|----|----|----|
+| Id | Type | Default | Levels | Range |
+| ties | character | efron | efron, breslow, exact | \- |
+| singular.ok | logical | TRUE | TRUE, FALSE | \- |
+| type | character | efron | efron, aalen, kalbfleisch-prentice | \- |
+| stype | integer | 2 |  | \\\[1, 2\]\\ |
 
 ## References
 
@@ -112,6 +112,7 @@ The objects of this class are cloneable with this method.
 ## Examples
 
 ``` r
+
 # Define the Learner
 learner = lrn("surv.coxph")
 learner
@@ -124,7 +125,7 @@ learner
 #> • Feature Types: logical, integer, numeric, and factor
 #> • Encapsulation: none (fallback: -)
 #> • Properties: weights
-#> • Other settings: use_weights = 'use'
+#> • Other settings: use_weights = 'use', predict_raw = 'FALSE'
 
 # Define a Task
 task = tsk("lung")

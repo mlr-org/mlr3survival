@@ -151,6 +151,7 @@ The objects of this class are cloneable with this method.
 ## Examples
 
 ``` r
+
 # Define the Learner
 learner = lrn("surv.kaplan")
 learner
@@ -163,7 +164,7 @@ learner
 #> • Feature Types: logical, integer, numeric, character, factor, and ordered
 #> • Encapsulation: none (fallback: -)
 #> • Properties: importance, missings, selected_features, and weights
-#> • Other settings: use_weights = 'use'
+#> • Other settings: use_weights = 'use', predict_raw = 'FALSE'
 
 # Define a Task
 task = tsk("lung")

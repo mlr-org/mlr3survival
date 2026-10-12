@@ -2,7 +2,7 @@
 # mlr3survival <img src="man/figures/logo.png" align="right" width = "120" />
 
 <img src="man/figures/warning.png" width = "42" /> This package is
-**under development**
+**under development** and it does not yet replace *mlr3proba*
 
 Package website: [release](https://mlr3survival.mlr-org.com/)
 
@@ -16,8 +16,6 @@ Status](https://www.r-pkg.org/badges/version-ago/mlr3survival)](https://cran.r-p
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 <!-- badges: end -->
 
-## Resources (for users and developers)
-
 ## Installation
 
 Install the development version from GitHub:
@@ -29,9 +27,14 @@ pak::pak("mlr-org/mlr3survival")
 
 ## Example
 
+## Measures
+
+## Learners
+
+## Citation
+
 ## Code of Conduct
 
-Please note that the mlr3survival project is released with a
-[Contributor Code of
+This project follows a [Contributor Code of
 Conduct](https://mlr3survival.mlr-org.com/CODE_OF_CONDUCT.html). By
 contributing to this project, you agree to abide by its terms.
